@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Your Celebration — Fabsurprise</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --wine: #7A1428;
+  --wine-dark: #5A0E1C;
+  --wine-light: #921830;
+  --gold: #C9A84C;
+  --gold-light: #E2C97A;
+  --gold-pale: #F9F3E3;
+  --ivory: #F5F0E8;
+  --ivory-mid: #EDE7DC;
+  --ivory-dark: #DDD5C5;
+  --white: #FDFAF6;
+  --text-dark: #1A0A0E;
+  --text-mid: #4A2030;
+  --text-light: #8B6B5A;
+  --error: #B02020;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--ivory);
+  color: var(--text-dark);
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* LANDING */
+#landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 72px 32px 80px;
+  background: var(--ivory);
+}
+
+.landing-inner { max-width: 520px; width: 100%; }
+
+.brand-mark {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--wine);
+  margin-bottom: 52px;
+  font-weight: 500;
+}
+
+.landing-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 9vw, 54px);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.12;
+  margin-bottom: 28px;
+}
+
+.landing-title em { font-style: italic; color: var(--wine); }
+
+.landing-body {
+  color: var(--text-light);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 48px;
+  font-weight: 300;
+  max-width: 420px;
+}
+
+.landing-meta {
+  font-size: 11.5px;
+  color: var(--text-light);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  opacity: 0.8;
+}
+
+.btn-begin {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  background: var(--wine);
+  color: var(--white);
+  border: none;
+  padding: 18px 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+.btn-begin:hover { background: var(--wine-light); }
+.save-note { margin-top: 16px; font-size: 11.5px; color: var(--text-light); }
+
+/* FORM SCREEN */
+#form-screen { display: none; min-height: 100vh; background: var(--ivory); }
+
+/* PROGRESS */
+.progress-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--ivory-dark);
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 8px rgba(26,10,14,0.06);
+}
+
+.progress-brand {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--wine);
+  text-align: center;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.progress-steps::-webkit-scrollbar { display: none; }
+
+.step-item { display: flex; align-items: center; flex-shrink: 0; }
+
+.step-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ivory-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  color: var(--text-light);
+  font-weight: 500;
+  transition: all 0.3s;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.step-dot.active { border-color: var(--wine); background: var(--wine); color: var(--white); font-weight: 700; }
+.step-dot.done { border-color: var(--wine); color: var(--wine); }
+.step-dot.done::after { content: '✓'; font-size: 11px; }
+.step-dot.done span { display: none; }
+
+.step-line { width: 32px; height: 1px; background: var(--ivory-dark); flex-shrink: 0; }
+.step-line.done { background: var(--wine); opacity: 0.3; }
+
+/* FORM BODY */
+.form-body { max-width: 600px; margin: 0 auto; padding: 48px 24px 100px; }
+
+.section-block { display: none; animation: fadeIn 0.35s ease; }
+.section-block.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-eyebrow {
+  font-size: 10.5px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(30px, 6vw, 42px);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  font-size: 14.5px;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+
+.section-divider { width: 28px; height: 2px; background: var(--wine); margin-bottom: 36px; opacity: 0.5; }
+
+/* FIELDS */
+.field-group { margin-bottom: 24px; }
+
+.field-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  margin-bottom: 9px;
+}
+
+.field-label .optional {
+  font-weight: 400;
+  font-size: 10px;
+  color: var(--text-light);
+  letter-spacing: 0.5px;
+  text-transform: none;
+  margin-left: 6px;
+}
+
+.field-input, .field-select, .field-textarea {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--ivory-dark);
+  padding: 14px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  color: var(--text-dark);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.field-input::placeholder, .field-textarea::placeholder { color: var(--text-light); font-weight: 300; }
+.field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--wine); box-shadow: 0 0 0 2px rgba(122,20,40,0.08); }
+.field-input.error, .field-select.error, .field-textarea.error { border-color: var(--error); }
+
+.field-error-msg { font-size: 11.5px; color: var(--error); margin-top: 6px; display: none; }
+
+.field-textarea { resize: vertical; min-height: 120px; line-height: 1.65; }
+.field-textarea.large { min-height: 160px; }
+
+.field-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6B5A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* OPTIONS */
+.option-group { display: flex; flex-direction: column; gap: 8px; }
+.option-group.horizontal { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  border: 1px solid var(--ivory-dark);
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  user-select: none;
+}
+
+.option-item:hover { border-color: var(--wine); }
+.option-item.selected { border-color: var(--wine); background: #F9F2F4; }
+.option-item input[type="radio"] { display: none; }
+
+.option-marker {
+  width: 17px;
+  height: 17px;
+  border: 1.5px solid var(--ivory-dark);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.option-item.selected .option-marker { background: var(--wine); border-color: var(--wine); }
+
+.option-marker-dot {
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.option-item.selected .option-marker-dot { opacity: 1; }
+.option-label { font-size: 14px; color: var(--text-dark); }
+
+/* SIGNATURE CARDS */
+.signature-card {
+  background: var(--wine);
+  padding: 30px 26px;
+  margin-bottom: 24px;
+}
+
+.signature-label {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.6);
+  margin-bottom: 12px;
+}
+
+.signature-question {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--ivory);
+  line-height: 1.4;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.signature-card .field-textarea {
+  background: rgba(253,250,246,0.1);
+  border-color: rgba(245,240,232,0.2);
+  color: var(--ivory);
+}
+
+.signature-card .field-textarea::placeholder { color: rgba(245,240,232,0.35); }
+.signature-card .field-textarea:focus { border-color: rgba(245,240,232,0.5); box-shadow: none; }
+
+/* HELPER CARD */
+.helper-card {
+  background: var(--gold-pale);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-left: 3px solid var(--gold);
+  padding: 22px;
+  margin-bottom: 24px;
+}
+
+.helper-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.helper-body { font-size: 13px; color: var(--text-mid); line-height: 1.65; margin-bottom: 14px; }
+
+/* REVEAL */
+.reveal-block {
+  display: none;
+  margin-top: 14px;
+  padding: 20px;
+  background: var(--ivory-mid);
+  border: 1px solid var(--ivory-dark);
+}
+
+.reveal-block.open { display: block; }
+
+/* SUBSECTION */
+.subsection-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ivory-dark);
+}
+
+/* REVIEW */
+.review-section {
+  background: var(--white);
+  border: 1px solid var(--ivory-dark);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.review-section-header {
+  background: var(--wine);
+  padding: 13px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review-section-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--ivory); font-weight: 400; }
+.review-edit-btn { font-size: 11px; color: rgba(245,240,232,0.7); cursor: pointer; background: none; border: none; text-decoration: underline; text-underline-offset: 3px; }
+
+.review-rows { padding: 4px 0; }
+
+.review-row {
+  display: flex;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--ivory-mid);
+  gap: 16px;
+}
+
+.review-row:last-child { border-bottom: none; }
+.review-key { font-size: 10.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-light); min-width: 130px; flex-shrink: 0; }
+.review-val { font-size: 13.5px; color: var(--text-dark); line-height: 1.55; word-break: break-word; }
+.review-val.empty { color: var(--text-light); font-style: italic; }
+
+/* NAV */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 44px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ivory-dark);
+  gap: 12px;
+}
+
+.btn-back {
+  background: transparent;
+  border: 1px solid var(--ivory-dark);
+  color: var(--text-mid);
+  padding: 13px 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.btn-back:hover { border-color: var(--wine); color: var(--wine); }
+
+.btn-next {
+  background: var(--wine);
+  color: var(--white);
+  border: none;
+  padding: 14px 36px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex: 1;
+  max-width: 200px;
+}
+
+.btn-next:hover { background: var(--wine-light); }
+
+.btn-save {
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 11.5px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 8px;
+}
+
+/* SUCCESS */
+#success-screen {
+  display: none;
+  min-height: 100vh;
+  background: var(--wine);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.success-inner { max-width: 460px; }
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(245,240,232,0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  font-size: 24px;
+  color: var(--ivory);
+}
+
+.success-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 7vw, 50px); font-weight: 300; color: var(--ivory); margin-bottom: 24px; line-height: 1.15; }
+.success-divider { width: 28px; height: 1px; background: rgba(245,240,232,0.4); margin: 0 auto 28px; }
+.success-body { color: rgba(245,240,232,0.7); font-size: 14.5px; line-height: 1.8; margin-bottom: 16px; font-weight: 300; }
+.success-tagline { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-style: italic; color: var(--gold-light); margin: 32px 0 8px; }
+.success-sig { font-size: 11.5px; color: rgba(245,240,232,0.4); letter-spacing: 1px; }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--text-dark);
+  color: white;
+  padding: 12px 24px;
+  font-size: 13px;
+  z-index: 999;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 480px) {
+  .field-row { grid-template-columns: 1fr; }
+  .nav-bar { flex-wrap: wrap; }
+  .btn-next { max-width: 100%; }
+  #landing { padding: 60px 24px 72px; }
+}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="landing">
+  <div class="landing-inner">
+    <div class="brand-mark">Fabsurprise</div>
+    <h1 class="landing-title">Start Your<br><em>Celebration</em></h1>
+    <p class="landing-body">
+      Your celebration is officially confirmed and we're excited to begin bringing everything together.<br><br>
+      This short planning guide helps us personalise every detail so your experience feels thoughtful, seamless and uniquely yours.
+    </p>
+    <div class="landing-meta">Estimated time: 3–5 minutes</div>
+    <button class="btn-begin" onclick="startForm()">Begin Planning</button>
+    <p class="save-note">You can save your progress and return at any time.</p>
+  </div>
+</div>
+
+<!-- FORM SCREEN -->
+<div id="form-screen">
+
+  <div class="progress-header">
+    <div class="progress-brand">Fabsurprise</div>
+    <div class="progress-steps" id="progressSteps"></div>
+  </div>
+
+  <div class="form-body">
+
+    <!-- SECTION 1: ABOUT YOU -->
+    <div class="section-block active" id="section-1">
+      <div class="section-eyebrow">Section 1 of 4</div>
+      <h2 class="section-title">About You</h2>
+      <p class="section-subtitle">We'd love to know who's planning this special moment.</p>
+      <div class="section-divider"></div>
+
+      <div class="field-group">
+        <label class="field-label">Full Name</label>
+        <input class="field-input" id="clientName" type="text" placeholder="Your full name" autocomplete="name">
+        <div class="field-error-msg" id="err-clientName">Please enter your name.</div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Phone Number</label>
+        <input class="field-input" id="clientPhone" type="tel" placeholder="+234 000 000 0000" autocomplete="tel">
+        <div class="field-error-msg" id="err-clientPhone">Please enter your phone number.</div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Email Address</label>
+        <input class="field-input" id="clientEmail" type="email" placeholder="your@email.com" autocomplete="email">
+        <div class="field-error-msg" id="err-clientEmail">Please enter your email address.</div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Preferred Contact Method</label>
+        <div class="option-group horizontal">
+          <label class="option-item" onclick="selectOption(this,'contactMethod','WhatsApp')">
+            <input type="radio" name="contactMethod" value="WhatsApp">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">WhatsApp</span>
+          </label>
+          <label class="option-item" onclick="selectOption(this,'contactMethod','Phone Call')">
+            <input type="radio" name="contactMethod" value="Phone Call">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">Phone Call</span>
+          </label>
+          <label class="option-item" onclick="selectOption(this,'contactMethod','Email')">
+            <input type="radio" name="contactMethod" value="Email">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">Email</span>
+          </label>
+        </div>
+        <div class="field-error-msg" id="err-contactMethod">Please select a contact method.</div>
+      </div>
+
+      <div class="nav-bar">
+        <div></div>
+        <button class="btn-save" onclick="saveProgress()">Save & continue later</button>
+        <button class="btn-next" onclick="nextSection(1)">Continue</button>
+      </div>
+    </div>
+
+    <!-- SECTION 2: THE CELEBRATION -->
+    <div class="section-block" id="section-2">
+      <div class="section-eyebrow">Section 2 of 4</div>
+      <h2 class="section-title">The Celebration</h2>
+      <p class="section-subtitle">Tell us about the moment we're creating together.</p>
+      <div class="section-divider"></div>
+
+      <div class="field-group">
+        <label class="field-label">Occasion</label>
+        <select class="field-select" id="occasion">
+          <option value="">Select an occasion</option>
+          <option>Birthday</option>
+          <option>Proposal</option>
+          <option>Anniversary</option>
+          <option>Baby Shower</option>
+          <option>Gender Reveal</option>
+          <option>Bridal Shower</option>
+          <option>Graduation</option>
+          <option>Valentine's Day</option>
+          <option>Mother's Day</option>
+          <option>Father's Day</option>
+          <option>Self Love Celebration</option>
+          <option>Corporate Gift</option>
+          <option>Appreciation</option>
+          <option>Other</option>
+        </select>
+        <div class="field-error-msg" id="err-occasion">Please select an occasion.</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Celebration Date</label>
+          <input class="field-input" id="celebDate" type="date">
+          <div class="field-error-msg" id="err-celebDate">Please select a date.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Preferred Setup Time <span class="optional">Optional</span></label>
+          <input class="field-input" id="setupTime" type="time">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Celebration Location</label>
+        <input class="field-input" id="celebLocation" type="text" placeholder="e.g. Home, Restaurant, Hotel">
+        <div class="field-error-msg" id="err-celebLocation">Please enter the celebration location.</div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Full Delivery / Venue Address</label>
+        <textarea class="field-textarea" id="venueAddress" placeholder="Full address including street, area, city" style="min-height:90px;"></textarea>
+        <div class="field-error-msg" id="err-venueAddress">Please enter the full address.</div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Nearby Landmark <span class="optional">Optional</span></label>
+        <input class="field-input" id="landmark" type="text" placeholder="e.g. Opposite Lekki Phase 1 gate">
+      </div>
+
+      <div class="nav-bar">
+        <button class="btn-back" onclick="prevSection(2)">Back</button>
+        <button class="btn-save" onclick="saveProgress()">Save & continue later</button>
+        <button class="btn-next" onclick="nextSection(2)">Continue</button>
+      </div>
+    </div>
+
+    <!-- SECTION 3: THE HEART OF IT -->
+    <div class="section-block" id="section-3">
+      <div class="section-eyebrow">Section 3 of 4</div>
+      <h2 class="section-title">The Heart of It</h2>
+      <p class="section-subtitle">Every meaningful celebration begins with understanding the person at the centre of it.</p>
+      <div class="section-divider"></div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Their Full Name</label>
+          <input class="field-input" id="recipientName" type="text" placeholder="Who are we celebrating?">
+          <div class="field-error-msg" id="err-recipientName">Please enter their name.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Preferred Name / Nickname <span class="optional">Optional</span></label>
+          <input class="field-input" id="preferredName" type="text" placeholder="What do you call them?">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Their Relationship to You</label>
+        <select class="field-select" id="relationship" onchange="if(this.value==='Myself'){document.getElementById('selfLoveReveal').classList.add('open')}else{document.getElementById('selfLoveReveal').classList.remove('open')}">
+          <option value="">Select relationship</option>
+          <option>Myself</option>
+          <option>Wife</option>
+          <option>Husband</option>
+          <option>Fiancée</option>
+          <option>Fiancé</option>
+          <option>Boyfriend</option>
+          <option>Girlfriend</option>
+          <option>Mum</option>
+          <option>Dad</option>
+          <option>Sister</option>
+          <option>Brother</option>
+          <option>Friend</option>
+          <option>Boss</option>
+          <option>Employee</option>
+          <option>Client</option>
+          <option>Other</option>
+        </select>
+        <div class="field-error-msg" id="err-relationship">Please select a relationship.</div>
+        <div class="reveal-block" id="selfLoveReveal" style="background:#F9F2F4;border-color:#7A1428;margin-top:12px;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#7A1428;margin-bottom:6px;">Self Love is a celebration too.</p>
+          <p style="font-size:13px;color:#4A2030;line-height:1.6;">You deserve to be celebrated just as intentionally as anyone else. We'll make this moment as beautiful as if someone planned it especially for you — because they did. You did.</p>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Religion / Culture <span class="optional">Optional</span></label>
+          <input class="field-input" id="religion" type="text" placeholder="e.g. Christian, Muslim">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Allergies / Dietary <span class="optional">Optional</span></label>
+          <input class="field-input" id="allergies" type="text" placeholder="e.g. Nut allergy, Vegan">
+        </div>
+      </div>
+
+      <div class="signature-card" style="margin-top:36px;">
+        <div class="signature-label">Signature Question</div>
+        <div class="signature-question">If you had to describe them in three words, what would they be?</div>
+        <textarea class="field-textarea" id="threeWords" placeholder="e.g. Warm, ambitious, generous..." style="min-height:90px;"></textarea>
+      </div>
+
+      <div class="signature-card">
+        <div class="signature-label">Signature Question</div>
+        <div class="signature-question">What do you hope they'll feel when they experience this celebration?</div>
+        <textarea class="field-textarea large" id="hopeTheyFeel" placeholder="e.g. I want them to feel truly seen, like the world stopped just for them..."></textarea>
+      </div>
+
+      <div class="nav-bar">
+        <button class="btn-back" onclick="prevSection(3)">Back</button>
+        <button class="btn-save" onclick="saveProgress()">Save & continue later</button>
+        <button class="btn-next" onclick="nextSection(3)">Continue</button>
+      </div>
+    </div>
+
+    <!-- SECTION 4: THE DETAILS -->
+    <div class="section-block" id="section-4">
+      <div class="section-eyebrow">Section 4 of 4</div>
+      <h2 class="section-title">The Details</h2>
+      <p class="section-subtitle">The final touches that make everything feel personal and intentional.</p>
+      <div class="section-divider"></div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Preferred Theme <span class="optional">Optional</span></label>
+          <input class="field-input" id="theme" type="text" placeholder="e.g. Garden, Old Hollywood">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Colour Palette <span class="optional">Optional</span></label>
+          <input class="field-input" id="colourPalette" type="text" placeholder="e.g. Dusty rose & ivory">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Cake Inscription <span class="optional">Optional</span></label>
+        <input class="field-input" id="cakeInscription" type="text" placeholder="Exactly what you'd like written on the cake">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Card Message <span class="optional">Optional</span></label>
+        <textarea class="field-textarea" id="cardMessage" placeholder="Write your heartfelt message here..."></textarea>
+      </div>
+
+      <div class="helper-card">
+        <div class="helper-title">Need help writing your message?</div>
+        <p class="helper-body">Sometimes the hardest part of a celebration is finding the right words. Tell us how you feel and we'll craft a beautiful message for your approval.</p>
+        <textarea class="field-textarea" id="messageHelper" placeholder="Tell us how you feel about them, what they mean to you..." style="background:white;"></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Special Date <span class="optional">Optional</span></label>
+          <input class="field-input" id="specialDate" type="text" placeholder="e.g. The day we met">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Initials <span class="optional">Optional</span></label>
+          <input class="field-input" id="initials" type="text" placeholder="e.g. A.O.B">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Meaningful Quote <span class="optional">Optional</span></label>
+        <input class="field-input" id="quote" type="text" placeholder="A quote, lyric or phrase that means something to them">
+      </div>
+
+      <div class="subsection-label">On the Day</div>
+
+      <div class="field-group">
+        <label class="field-label">Who should our team contact on the day?</label>
+        <div class="option-group">
+          <label class="option-item" onclick="selectOption(this,'dayContact','Me — the client'); document.getElementById('altContactReveal').classList.remove('open')">
+            <input type="radio" name="dayContact" value="Me — the client">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">Me — the client</span>
+          </label>
+          <label class="option-item" onclick="selectOption(this,'dayContact','The celebrated person'); document.getElementById('altContactReveal').classList.remove('open')">
+            <input type="radio" name="dayContact" value="The celebrated person">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">The celebrated person</span>
+          </label>
+          <label class="option-item" onclick="selectOption(this,'dayContact','Someone else'); document.getElementById('altContactReveal').classList.add('open')">
+            <input type="radio" name="dayContact" value="Someone else">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">Someone else</span>
+          </label>
+        </div>
+        <div class="reveal-block" id="altContactReveal">
+          <div class="field-group" style="margin-bottom:16px;">
+            <label class="field-label">Their Name</label>
+            <input class="field-input" id="altContactName" type="text" placeholder="Full name">
+          </div>
+          <div class="field-group" style="margin-bottom:0;">
+            <label class="field-label">Their Phone Number</label>
+            <input class="field-input" id="altContactPhone" type="tel" placeholder="+234 000 000 0000">
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">How should this celebration unfold?</label>
+        <div class="option-group">
+          <label class="option-item" onclick="selectOption(this,'unfoldStyle','Complete surprise')">
+            <input type="radio" name="unfoldStyle" value="Complete surprise">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">Keep everything a complete surprise</span>
+          </label>
+          <label class="option-item" onclick="selectOption(this,'unfoldStyle','Knows but not the details')">
+            <input type="radio" name="unfoldStyle" value="Knows but not the details">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">They know about it but not the details</span>
+          </label>
+          <label class="option-item" onclick="selectOption(this,'unfoldStyle','Call me before delivery')">
+            <input type="radio" name="unfoldStyle" value="Call me before delivery">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">Call me before delivery or setup</span>
+          </label>
+          <label class="option-item" onclick="selectOption(this,'unfoldStyle','Coordinate with family or friend')">
+            <input type="radio" name="unfoldStyle" value="Coordinate with family or friend">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">Coordinate quietly with a family member or friend</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Access / Venue Instructions <span class="optional">Optional</span></label>
+        <textarea class="field-textarea" id="accessInstructions" placeholder="Gate codes, security name, which floor, parking..." style="min-height:90px;"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Files to Send <span class="optional">Optional</span></label>
+        <div style="background:#F9F2F4;border:1px solid #7A1428;border-left:4px solid #7A1428;padding:18px 16px;margin-bottom:12px;">
+          <p style="font-size:13px;color:#4A2030;line-height:1.6;margin-bottom:12px;">Please send photos, logos or inspiration images directly to us on WhatsApp after submitting. The button opens WhatsApp in a new tab — your form stays open.</p>
+          <a href="https://wa.me/2349025141322?text=Hi%20Fabsurprise%2C%20I%20have%20just%20completed%20my%20onboarding%20form%20and%20I%20am%20sending%20my%20files%20now." target="_blank" style="display:inline-block;background:#25D366;color:white;padding:10px 20px;font-family:'Inter',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:1px;text-decoration:none;">Open WhatsApp to Send Files</a>
+        </div>
+        <input class="field-input" id="fileNote" type="text" placeholder="e.g. 3 photos, logo, mood board — what you'll be sending">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Anything else we should know? <span class="optional">Optional</span></label>
+        <textarea class="field-textarea" id="extraNotes" placeholder="Any final detail, however small, that will help us make this perfect..."></textarea>
+      </div>
+
+      <div class="nav-bar">
+        <button class="btn-back" onclick="prevSection(4)">Back</button>
+        <button class="btn-save" onclick="saveProgress()">Save & continue later</button>
+        <button class="btn-next" onclick="nextSection(4)">Review</button>
+      </div>
+    </div>
+
+    <!-- SECTION 5: REVIEW -->
+    <div class="section-block" id="section-5">
+      <div class="section-eyebrow">Almost there</div>
+      <h2 class="section-title">Review Your Details</h2>
+      <p class="section-subtitle">Please take a moment to review everything before we begin planning your celebration.</p>
+      <div class="section-divider"></div>
+
+      <div id="reviewContent"></div>
+
+      <div class="nav-bar">
+        <button class="btn-back" onclick="prevSection(5)">Back</button>
+        <div></div>
+        <button class="btn-next" id="submitBtn" onclick="submitForm()" style="background:var(--gold);color:var(--wine-dark);max-width:240px;">Submit & Begin</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div id="success-screen" style="display:none;min-height:100vh;background:#7A1428;align-items:center;justify-content:center;text-align:center;padding:60px 24px;">
+  <div class="success-inner">
+    <div class="success-icon">&#10003;</div>
+    <h2 class="success-title">Thank You</h2>
+    <div class="success-divider"></div>
+    <p class="success-body">
+      Thank you for completing your Start Your Celebration Guide.<br><br>
+      We've received your details and our team has officially begun planning your celebration. We'll carefully review every detail and reach out personally if we need any clarification.
+    </p>
+    <p class="success-tagline">Until then — leave the planning to us.</p>
+    <p class="success-sig">— Team Fabsurprise</p>
+    <div style="margin-top:36px;padding-top:28px;border-top:1px solid rgba(245,240,232,0.15);">
+      <p style="font-size:12px;color:rgba(245,240,232,0.55);letter-spacing:0.5px;margin-bottom:16px;">Send us a quick WhatsApp so we know to expect you.</p>
+      <a id="waNotifyBtn" href="#" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:14px 32px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-decoration:none;">Notify Us on WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
+
+let currentSection = 1;
+const totalSections = 5;
+const stepLabels = ['About You','Celebration','The Heart','Details','Review'];
+let formData = {};
+
+function renderProgress() {
+  const container = document.getElementById('progressSteps');
+  container.innerHTML = '';
+  for (let i = 1; i <= totalSections; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'step-item';
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i === currentSection ? ' active' : i < currentSection ? ' done' : '');
+    d.title = stepLabels[i-1];
+    d.innerHTML = i < currentSection ? '<span></span>' : `<span>${i}</span>`;
+    dot.appendChild(d);
+    if (i < totalSections) {
+      const line = document.createElement('div');
+      line.className = 'step-line' + (i < currentSection ? ' done' : '');
+      dot.appendChild(line);
+    }
+    container.appendChild(dot);
+  }
+}
+
+function startForm() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('form-screen').style.display = 'block';
+  renderProgress();
+  loadSaved();
+}
+
+function nextSection(from) {
+  if (!validateSection(from)) return;
+  collectSection(from);
+  if (from === 4) buildReview();
+  document.getElementById(`section-${from}`).classList.remove('active');
+  currentSection = from + 1;
+  document.getElementById(`section-${currentSection}`).classList.add('active');
+  renderProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prevSection(from) {
+  document.getElementById(`section-${from}`).classList.remove('active');
+  currentSection = from - 1;
+  document.getElementById(`section-${currentSection}`).classList.add('active');
+  renderProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateSection(num) {
+  let valid = true;
+  const required = {
+    1: [
+      { id: 'clientName', errId: 'err-clientName', type: 'input' },
+      { id: 'clientPhone', errId: 'err-clientPhone', type: 'input' },
+      { id: 'clientEmail', errId: 'err-clientEmail', type: 'input' },
+      { id: 'contactMethod', errId: 'err-contactMethod', type: 'radio' },
+    ],
+    2: [
+      { id: 'occasion', errId: 'err-occasion', type: 'select' },
+      { id: 'celebDate', errId: 'err-celebDate', type: 'input' },
+      { id: 'celebLocation', errId: 'err-celebLocation', type: 'input' },
+      { id: 'venueAddress', errId: 'err-venueAddress', type: 'input' },
+    ],
+    3: [
+      { id: 'recipientName', errId: 'err-recipientName', type: 'input' },
+      { id: 'relationship', errId: 'err-relationship', type: 'select' },
+    ],
+  };
+
+  const fields = required[num];
+  if (!fields) return true;
+
+  fields.forEach(f => {
+    const errEl = document.getElementById(f.errId);
+    let val = '';
+    if (f.type === 'radio') {
+      const checked = document.querySelector(`input[name="${f.id}"]:checked`);
+      val = checked ? checked.value : '';
+    } else {
+      const el = document.getElementById(f.id);
+      val = el ? el.value.trim() : '';
+    }
+    if (!val) {
+      valid = false;
+      if (errEl) errEl.style.display = 'block';
+      if (f.type !== 'radio') { const el = document.getElementById(f.id); if (el) el.classList.add('error'); }
+    } else {
+      if (errEl) errEl.style.display = 'none';
+      if (f.type !== 'radio') { const el = document.getElementById(f.id); if (el) el.classList.remove('error'); }
+    }
+  });
+
+  if (!valid) {
+    const firstErr = document.querySelector('.field-error-msg[style*="block"]');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  return valid;
+}
+
+function val(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+function radioVal(name) { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; }
+
+function collectSection(num) {
+  if (num === 1) {
+    formData.clientName = val('clientName');
+    formData.clientPhone = val('clientPhone');
+    formData.clientEmail = val('clientEmail');
+    formData.contactMethod = radioVal('contactMethod');
+  } else if (num === 2) {
+    formData.occasion = val('occasion');
+    formData.celebDate = val('celebDate');
+    formData.setupTime = val('setupTime');
+    formData.celebLocation = val('celebLocation');
+    formData.venueAddress = val('venueAddress');
+    formData.landmark = val('landmark');
+  } else if (num === 3) {
+    formData.recipientName = val('recipientName');
+    formData.preferredName = val('preferredName');
+    formData.relationship = val('relationship');
+    formData.religion = val('religion');
+    formData.allergies = val('allergies');
+    formData.threeWords = val('threeWords');
+    formData.hopeTheyFeel = val('hopeTheyFeel');
+  } else if (num === 4) {
+    formData.theme = val('theme');
+    formData.colourPalette = val('colourPalette');
+    formData.cakeInscription = val('cakeInscription');
+    formData.cardMessage = val('cardMessage');
+    formData.messageHelper = val('messageHelper');
+    formData.specialDate = val('specialDate');
+    formData.initials = val('initials');
+    formData.quote = val('quote');
+    formData.dayContact = radioVal('dayContact');
+    formData.altContactName = val('altContactName');
+    formData.altContactPhone = val('altContactPhone');
+    formData.unfoldStyle = radioVal('unfoldStyle');
+    formData.accessInstructions = val('accessInstructions');
+    formData.fileNote = val('fileNote');
+    formData.extraNotes = val('extraNotes');
+  }
+}
+
+function buildReview() {
+  collectSection(4);
+  const sections = [
+    { title: 'About You', goTo: 1, rows: [
+      { key: 'Name', val: formData.clientName },
+      { key: 'Phone', val: formData.clientPhone },
+      { key: 'Email', val: formData.clientEmail },
+      { key: 'Contact Via', val: formData.contactMethod },
+    ]},
+    { title: 'The Celebration', goTo: 2, rows: [
+      { key: 'Occasion', val: formData.occasion },
+      { key: 'Date', val: formData.celebDate },
+      { key: 'Setup Time', val: formData.setupTime || '—' },
+      { key: 'Location', val: formData.celebLocation },
+      { key: 'Address', val: formData.venueAddress },
+      { key: 'Landmark', val: formData.landmark || '—' },
+    ]},
+    { title: 'The Heart of It', goTo: 3, rows: [
+      { key: 'Celebrating', val: formData.recipientName },
+      { key: 'Also Known As', val: formData.preferredName || '—' },
+      { key: 'Relationship', val: formData.relationship },
+      { key: 'Religion / Culture', val: formData.religion || '—' },
+      { key: 'Allergies', val: formData.allergies || '—' },
+      { key: 'Three Words', val: formData.threeWords || '—' },
+      { key: 'Hope They Feel', val: formData.hopeTheyFeel || '—' },
+    ]},
+    { title: 'The Details', goTo: 4, rows: [
+      { key: 'Theme', val: formData.theme || '—' },
+      { key: 'Colour Palette', val: formData.colourPalette || '—' },
+      { key: 'Cake Inscription', val: formData.cakeInscription || '—' },
+      { key: 'Card Message', val: formData.cardMessage || '—' },
+      { key: 'Special Date', val: formData.specialDate || '—' },
+      { key: 'Day Contact', val: formData.dayContact || '—' },
+      { key: 'Celebration Style', val: formData.unfoldStyle || '—' },
+      { key: 'Access Instructions', val: formData.accessInstructions || '—' },
+      { key: 'Extra Notes', val: formData.extraNotes || '—' },
+    ]},
+  ];
+
+  const container = document.getElementById('reviewContent');
+  container.innerHTML = sections.map(s => `
+    <div class="review-section">
+      <div class="review-section-header">
+        <span class="review-section-title">${s.title}</span>
+        <button class="review-edit-btn" onclick="jumpTo(${s.goTo})">Edit</button>
+      </div>
+      <div class="review-rows">
+        ${s.rows.map(r => `
+          <div class="review-row">
+            <span class="review-key">${r.key}</span>
+            <span class="review-val ${r.val === '—' ? 'empty' : ''}">${r.val}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function jumpTo(section) {
+  document.getElementById(`section-${currentSection}`).classList.remove('active');
+  currentSection = section;
+  document.getElementById(`section-${currentSection}`).classList.add('active');
+  renderProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function submitForm() {
+  collectSection(4);
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Submitting...';
+  btn.style.opacity = '0.7';
+  btn.style.pointerEvents = 'none';
+
+  const now = new Date();
+  const submissionId = 'FAB-' + now.getTime();
+  const payload = {
+    submissionId,
+    submissionDate: now.toLocaleDateString('en-GB'),
+    submissionTime: now.toLocaleTimeString('en-GB'),
+    status: 'Planning',
+    ...formData
+  };
+
+  localStorage.setItem('fabsurprise_last_submission', JSON.stringify(payload));
+  localStorage.removeItem('fabsurprise_saved_progress');
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+
+  const waMsg = encodeURIComponent(
+    `Hi Fabsurprise! I'm ${payload.clientName} and I've just completed my onboarding form (Ref: ${payload.submissionId}). I'm celebrating a ${payload.occasion} for ${payload.recipientName || 'someone special'} on ${payload.celebDate}. Looking forward to working with you!`
+  );
+  const waLink = `https://wa.me/2349025141322?text=${waMsg}`;
+
+  setTimeout(() => {
+    document.getElementById('form-screen').style.display = 'none';
+    const s = document.getElementById('success-screen');
+    s.style.display = 'flex';
+    const waBtn = document.getElementById('waNotifyBtn');
+    if (waBtn) waBtn.href = waLink;
+  }, 1200);
+}
+
+function saveProgress() {
+  collectSection(currentSection);
+  const saved = { section: currentSection, formData, fields: {}, radios: {} };
+  ['clientName','clientPhone','clientEmail','occasion','celebDate','setupTime','celebLocation',
+   'venueAddress','landmark','recipientName','preferredName','relationship','religion','allergies',
+   'threeWords','hopeTheyFeel','theme','colourPalette','cakeInscription','cardMessage','messageHelper',
+   'specialDate','initials','quote','accessInstructions','fileNote','extraNotes','altContactName','altContactPhone'
+  ].forEach(id => { const el = document.getElementById(id); if (el) saved.fields[id] = el.value; });
+  saved.radios = {
+    contactMethod: radioVal('contactMethod'),
+    dayContact: radioVal('dayContact'),
+    unfoldStyle: radioVal('unfoldStyle'),
+  };
+  localStorage.setItem('fabsurprise_saved_progress', JSON.stringify(saved));
+  showToast('Progress saved. You can return to this page to continue.');
+}
+
+function loadSaved() {
+  const raw = localStorage.getItem('fabsurprise_saved_progress');
+  if (!raw) return;
+  try {
+    const saved = JSON.parse(raw);
+    if (saved.fields) {
+      Object.keys(saved.fields).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = saved.fields[id];
+      });
+    }
+    if (saved.radios) {
+      Object.keys(saved.radios).forEach(name => {
+        const v = saved.radios[name];
+        if (v) {
+          const el = document.querySelector(`input[name="${name}"][value="${v}"]`);
+          if (el) { el.closest('.option-item').classList.add('selected'); el.checked = true; }
+        }
+      });
+    }
+    if (saved.formData) formData = saved.formData;
+  } catch(e) {}
+}
+
+function selectOption(el, groupName, value) {
+  document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
+    r.closest('.option-item').classList.remove('selected');
+  });
+  el.classList.add('selected');
+  const errEl = document.getElementById(`err-${groupName}`);
+  if (errEl) errEl.style.display = 'none';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+document.addEventListener('input', function(e) {
+  if (e.target.classList.contains('field-input') || e.target.classList.contains('field-select')) {
+    e.target.classList.remove('error');
+    const errEl = document.getElementById('err-' + e.target.id);
+    if (errEl) errEl.style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>

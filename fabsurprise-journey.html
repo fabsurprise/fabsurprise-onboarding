@@ -618,29 +618,36 @@ function renderError(msg) {
 
 
 
-loadJourney();
-
-async function loadJourney() {
+function loadJourney() {
   const ref = getRef();
   if (!ref) {
     renderError('No celebration reference found in this link. Please use the link sent to you by Fabsurprise.');
     return;
   }
 
-  try {
-    const url = `${APPS_SCRIPT_URL}?action=getJourney&ref=${encodeURIComponent(ref)}`;
-    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
-    const text = await response.text();
-    const data = JSON.parse(text);
+  window._fabCallback = function(data) {
     if (data.success) {
       renderJourney(data);
     } else {
-      renderError(data.message || 'We couldn't find your celebration. Please contact us.');
+      renderError(data.message || "We couldn't find your celebration. Please contact us.");
     }
-  } catch (err) {
-    renderError('We're having trouble loading your celebration right now. Please try again or contact us on WhatsApp.');
-  }
+  };
+
+  const script = document.createElement('script');
+  script.src = APPS_SCRIPT_URL + '?action=getJourney&ref=' + encodeURIComponent(ref) + '&callback=_fabCallback';
+  script.onerror = function() {
+    renderError("We're having trouble loading your celebration right now. Please try again or contact us on WhatsApp.");
+  };
+  document.head.appendChild(script);
+
+  setTimeout(function() {
+    if (document.getElementById('app') && document.getElementById('app').querySelector('.loading')) {
+      renderError("This is taking longer than expected. Please refresh the page or contact us on WhatsApp.");
+    }
+  }, 8000);
 }
+
+loadJourney();
 
 loadJourney();
 </script>

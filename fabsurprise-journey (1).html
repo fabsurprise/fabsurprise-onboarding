@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Celebration Journey — Fabsurprise</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --wine: #7A1428;
+  --wine-dark: #5A0E1C;
+  --gold: #C9A84C;
+  --gold-light: #E2C97A;
+  --gold-pale: #F9F3E3;
+  --ivory: #F5F0E8;
+  --ivory-mid: #EDE7DC;
+  --ivory-dark: #DDD5C5;
+  --white: #FDFAF6;
+  --text-dark: #1A0A0E;
+  --text-mid: #4A2030;
+  --text-light: #8B6B5A;
+  --grey: #C5BDB5;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--ivory);
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  background: var(--wine-dark);
+  border-bottom: 3px solid var(--gold);
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.header-brand {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* HERO */
+.hero {
+  background: var(--white);
+  padding: 40px 24px 32px;
+  text-align: center;
+  border-bottom: 1px solid var(--ivory-dark);
+}
+
+.hero-eyebrow {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 7vw, 42px);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.hero-name em { font-style: italic; color: var(--wine); }
+
+.hero-occasion {
+  font-size: 13px;
+  color: var(--text-light);
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.hero-ref {
+  display: inline-block;
+  background: var(--ivory);
+  border: 1px solid var(--ivory-dark);
+  padding: 6px 16px;
+  font-size: 11px;
+  color: var(--text-light);
+  letter-spacing: 1px;
+}
+
+/* CURRENT STAGE CARD */
+.current-card {
+  margin: 28px 20px;
+  background: linear-gradient(135deg, var(--wine-dark) 0%, var(--wine) 100%);
+  padding: 32px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.current-card::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 50%;
+}
+
+.current-card::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 80px;
+  height: 80px;
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 50%;
+}
+
+.current-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+
+.current-stage-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.current-stage-desc {
+  font-size: 13.5px;
+  color: rgba(253,250,246,0.7);
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.current-message {
+  background: rgba(253,250,246,0.08);
+  border-left: 3px solid var(--gold);
+  padding: 14px 16px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-style: italic;
+  color: var(--gold-light);
+  line-height: 1.6;
+}
+
+/* TIMELINE */
+.timeline-section {
+  padding: 8px 20px 32px;
+}
+
+.timeline-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 20px;
+  padding-top: 8px;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 0;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 40px;
+}
+
+.timeline-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  transition: all 0.3s;
+  border: 2px solid var(--ivory-dark);
+  background: var(--white);
+  color: var(--grey);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.timeline-dot.completed {
+  background: var(--wine);
+  border-color: var(--wine);
+  color: white;
+  font-size: 14px;
+}
+
+.timeline-dot.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--wine-dark);
+  font-weight: 700;
+}
+
+.timeline-line {
+  width: 2px;
+  flex: 1;
+  min-height: 24px;
+  background: var(--ivory-dark);
+  margin: 4px 0;
+}
+
+.timeline-line.completed { background: var(--wine); opacity: 0.4; }
+.timeline-line.active { background: linear-gradient(to bottom, var(--gold), var(--ivory-dark)); opacity: 0.5; }
+
+.timeline-content {
+  padding: 6px 0 28px;
+  flex: 1;
+}
+
+.timeline-stage-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 400;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.timeline-stage-name.completed { color: var(--wine); }
+.timeline-stage-name.active { color: var(--text-dark); font-weight: 500; }
+.timeline-stage-name.upcoming { color: var(--grey); }
+
+.timeline-stage-desc {
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.timeline-stage-desc.completed { color: var(--text-light); }
+.timeline-stage-desc.active { color: var(--text-mid); }
+.timeline-stage-desc.upcoming { color: var(--grey); }
+
+.timeline-check {
+  font-size: 11px;
+  color: var(--wine);
+  margin-top: 4px;
+  display: none;
+}
+
+.completed .timeline-check { display: block; }
+
+/* WHATSAPP CTA */
+.wa-section {
+  margin: 0 20px 32px;
+  background: var(--white);
+  border: 1px solid var(--ivory-dark);
+  padding: 24px;
+  text-align: center;
+}
+
+.wa-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.wa-body {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.btn-wa {
+  display: inline-block;
+  background: #25D366;
+  color: white;
+  padding: 13px 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* FABMILY */
+.fabmily-section {
+  margin: 0 20px 32px;
+  background: linear-gradient(135deg, var(--wine-dark) 0%, var(--wine) 100%);
+  padding: 36px 24px;
+  text-align: center;
+}
+
+.fabmily-icon {
+  font-size: 32px;
+  color: var(--gold-light);
+  margin-bottom: 16px;
+}
+
+.fabmily-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.fabmily-body {
+  font-size: 14px;
+  color: rgba(253,250,246,0.75);
+  line-height: 1.8;
+  margin-bottom: 28px;
+  font-weight: 300;
+}
+
+.fabmily-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-review {
+  display: block;
+  background: var(--gold);
+  color: var(--wine-dark);
+  padding: 15px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.btn-refer {
+  display: block;
+  background: transparent;
+  color: var(--gold-light);
+  border: 1px solid rgba(226,201,122,0.4);
+  padding: 14px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* FOOTER */
+.footer {
+  background: var(--wine-dark);
+  padding: 24px;
+  text-align: center;
+  border-top: 2px solid var(--gold);
+}
+
+.footer p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(245,240,232,0.5);
+}
+
+/* LOADING */
+.loading {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.loading p { font-size: 13px; color: var(--text-light); letter-spacing: 1px; }
+
+/* ERROR */
+.error-block {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  gap: 12px;
+}
+
+.error-block h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  color: var(--wine);
+}
+
+.error-block p { font-size: 13.5px; color: var(--text-light); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">Fabsurprise &nbsp;·&nbsp; Luxury Celebration Studio</div>
+</div>
+
+<div id="app">
+  <div class="loading">
+    <div class="loading-dot"></div>
+    <p>Loading your celebration...</p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Every detail, handled with love — Team Fabsurprise</p>
+</div>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
+const WA_NUMBER = '2349025141322';
+
+const STAGES = [
+  {
+    key: 'Planning',
+    name: 'Planning',
+    desc: 'We\'re reviewing your details and curating ideas for your celebration.',
+    message: 'We\'ve received everything and the magic is beginning. Leave it all to us.',
+    icon: '✦'
+  },
+  {
+    key: 'Design',
+    name: 'Design',
+    desc: 'We\'re finalising the details and designing your celebration experience.',
+    message: 'Every detail is being thoughtfully designed with you and your loved one in mind.',
+    icon: '◇'
+  },
+  {
+    key: 'Create',
+    name: 'Create',
+    desc: 'Our team has begun preparing and assembling your celebration.',
+    message: 'The pieces are coming together beautifully. We can\'t wait for the reveal.',
+    icon: '○'
+  },
+  {
+    key: 'Celebrate',
+    name: 'Celebrate',
+    desc: 'Tomorrow is the big day. Everything is ready.',
+    message: 'Tomorrow, someone very special is going to feel incredibly loved. Rest easy — we\'ve got everything handled.',
+    icon: '★'
+  },
+  {
+    key: 'Preserve',
+    name: 'Preserve',
+    desc: 'Your celebration was beautiful. Your memories are being prepared.',
+    message: 'What a moment. We\'re so honoured to have been part of it.',
+    icon: '❋'
+  },
+  {
+    key: 'Fabmily',
+    name: 'Fabmily',
+    desc: 'Your celebration is complete. Welcome to the Fabmily — our community of people who believe love deserves to be expressed beautifully.',
+    message: 'You trusted us with something deeply personal, and we are so honoured. You are now part of the Fabmily — a community of people who celebrate intentionally and love generously.',
+    icon: '♡',
+    isFabmily: true
+  }
+];
+
+function getRef() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('ref') || params.get('id') || null;
+}
+
+function getStageIndex(stageKey) {
+  return STAGES.findIndex(s => s.key.toLowerCase() === (stageKey || '').toLowerCase());
+}
+
+function renderJourney(data) {
+  const stageIdx = getStageIndex(data.stage);
+  const currentStage = STAGES[stageIdx] || STAGES[0];
+  const clientName = data.clientName || 'Your';
+  // Format date nicely
+  function formatDate(dateStr) {
+    if (!dateStr || dateStr === '—') return dateStr;
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d)) return dateStr;
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    } catch(e) { return dateStr; }
+  }
+  const recipientName = data.recipientName || '';
+  const occasion = data.occasion || '';
+  const ref = data.submissionId || '';
+
+  const waMsg = encodeURIComponent(`Hi Fabsurprise! I'm ${clientName} checking in about my celebration (Ref: ${ref}). I had a quick question...`);
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="hero">
+      <div class="hero-eyebrow">Your Celebration Journey</div>
+      <h1 class="hero-name">${recipientName ? `Celebrating <em>${recipientName}</em>` : `<em>${occasion}</em>`}</h1>
+      ${occasion ? `<p class="hero-occasion">${occasion}${data.celebDate ? ' · ' + formatDate(data.celebDate) : ''}</p>` : ''}
+      ${ref ? `<span class="hero-ref">Ref: ${ref}</span>` : ''}
+    </div>
+
+    <div class="current-card">
+      <div class="current-label">Current Stage</div>
+      <div class="current-stage-name">${currentStage.name}</div>
+      <div class="current-stage-desc">${currentStage.desc}</div>
+      <div class="current-message">${currentStage.message}</div>
+    </div>
+
+    <div class="timeline-section">
+      <div class="timeline-title">Your Full Journey</div>
+      <div class="timeline">
+        ${STAGES.map((stage, i) => {
+          const status = i < stageIdx ? 'completed' : i === stageIdx ? 'active' : 'upcoming';
+          const isLast = i === STAGES.length - 1;
+          return `
+            <div class="timeline-item">
+              <div class="timeline-left">
+                <div class="timeline-dot ${status}">
+                  ${status === 'completed' ? '✓' : status === 'active' ? '●' : `${i+1}`}
+                </div>
+                ${!isLast ? `<div class="timeline-line ${status}"></div>` : ''}
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-stage-name ${status}">${stage.name}</div>
+                <div class="timeline-stage-desc ${status}">${stage.desc}</div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="wa-section">
+      <div class="wa-title">Have a question?</div>
+      <p class="wa-body">We're always here. Reach out to us directly and we'll respond personally.</p>
+      <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="btn-wa">Message Us on WhatsApp</a>
+    </div>
+    ${stageIdx >= 5 ? `
+    <div class="fabmily-section">
+      <div class="fabmily-icon">♡</div>
+      <h2 class="fabmily-title">Welcome to the Fabmily</h2>
+      <p class="fabmily-body">You trusted us with something deeply personal and we are so grateful. The Fabmily is our community of people who celebrate intentionally, love generously and believe that every moment deserves to be beautiful.<br><br>If you know someone who deserves a celebration — a partner, a parent, a friend, a colleague — we would be honoured to help you love them well too.</p>
+      <div class="fabmily-actions">
+        <a href="https://g.page/r/Ca6nTBK3YtBdEBM/review" target="_blank" class="btn-review">Leave Us a Review</a>
+        <a href="https://wa.me/?text=${encodeURIComponent('Hi! I recently used Fabsurprise for a special celebration and the experience was absolutely beautiful. If you are planning something for someone you love, reach out to them — they will take care of every detail. +2349025141322 or fabsurprise-onboarding on TinyURL.')}" target="_blank" class="btn-refer">Refer a Friend</a>
+      </div>
+    </div>
+    ` : ''}
+  `;
+}
+
+function renderError(msg) {
+  document.getElementById('app').innerHTML = `
+    <div class="error-block">
+      <h2>Celebration not found</h2>
+      <p>${msg || 'We couldn\'t find a celebration with that reference. Please check the link and try again, or reach out to us on WhatsApp.'}</p>
+      <a href="https://wa.me/${WA_NUMBER}" target="_blank" style="margin-top:16px;display:inline-block;background:var(--wine);color:white;padding:12px 24px;font-size:12px;font-weight:600;letter-spacing:1px;text-decoration:none;text-transform:uppercase;">Contact Fabsurprise</a>
+    </div>
+  `;
+}
+
+
+
+loadJourney();
+
+async function loadJourney() {
+  const ref = getRef();
+  if (!ref) {
+    renderError('No celebration reference found in this link. Please use the link sent to you by Fabsurprise.');
+    return;
+  }
+
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=getJourney&ref=${encodeURIComponent(ref)}`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const text = await response.text();
+    const data = JSON.parse(text);
+    if (data.success) {
+      renderJourney(data);
+    } else {
+      renderError(data.message || 'We couldn't find your celebration. Please contact us.');
+    }
+  } catch (err) {
+    renderError('We're having trouble loading your celebration right now. Please try again or contact us on WhatsApp.');
+  }
+}
+
+loadJourney();
+</script>
+</body>
+</html>

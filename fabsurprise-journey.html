@@ -91,6 +91,18 @@ body {
   font-size: 11px;
   color: var(--text-light);
   letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.hero-intro {
+  font-size: 13.5px;
+  color: var(--text-light);
+  line-height: 1.75;
+  margin-top: 16px;
+  font-weight: 300;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* CURRENT STAGE CARD */
@@ -531,10 +543,11 @@ function renderJourney(data) {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="hero">
-      <div class="hero-eyebrow">Your Celebration Journey</div>
+      <div class="hero-eyebrow">Follow Your Celebration Journey</div>
       <h1 class="hero-name">${recipientName ? `Celebrating <em>${recipientName}</em>` : `<em>${occasion}</em>`}</h1>
       ${occasion ? `<p class="hero-occasion">${occasion}${data.celebDate ? ' · ' + formatDate(data.celebDate) : ''}</p>` : ''}
       ${ref ? `<span class="hero-ref">Ref: ${ref}</span>` : ''}
+      <p class="hero-intro">This page allows you to follow the progress of your celebration from planning through completion. We'll keep you updated as important milestones are reached, and if you ever have any questions along the way, we're always happy to help.</p>
     </div>
 
     <div class="current-card">
@@ -569,15 +582,21 @@ function renderJourney(data) {
     </div>
 
     <div class="wa-section">
+      <div class="wa-title">Need to update something?</div>
+      <p class="wa-body">Plans sometimes change, and that's perfectly okay. If you've remembered an important detail, need to update an address, change a personalised message or ask a question, simply reach out to us on WhatsApp.</p>
+      <a href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hi Fabsurprise, I\'ve already completed my Start Your Celebration Guide, but I\'d like to update a few details about my booking.')}" target="_blank" class="btn-wa">Chat with Us on WhatsApp</a>
+    </div>
+
+    <div class="wa-section" style="margin-top:-8px;">
       <div class="wa-title">Have a question?</div>
       <p class="wa-body">We're always here. Reach out to us directly and we'll respond personally.</p>
-      <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="btn-wa">Message Us on WhatsApp</a>
+      <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="btn-wa" style="background:var(--wine);">Message Us on WhatsApp</a>
     </div>
     ${stageIdx >= 5 ? `
     <div class="fabmily-section">
       <div class="fabmily-icon">♡</div>
-      <h2 class="fabmily-title">Welcome to the Fabmily</h2>
-      <p class="fabmily-body">You trusted us with something deeply personal and we are so grateful. The Fabmily is our community of people who celebrate intentionally, love generously and believe that every moment deserves to be beautiful.<br><br>If you know someone who deserves a celebration — a partner, a parent, a friend, a colleague — we would be honoured to help you love them well too.</p>
+      <div class="fabmily-heart">🤍</div><h2 class="fabmily-title">Thank You</h2>
+      <p class="fabmily-body">Thank you for allowing us to be part of such a meaningful moment.<br><br>We hope this celebration leaves beautiful memories that will be cherished for years to come.<br><br>Whenever life gives you another reason to celebrate, we would be honoured to create something special with you again.<br><br>Welcome to the Fabsurprise Family.</p>
       <div class="fabmily-actions">
         <a href="https://g.page/r/Ca6nTBK3YtBdEBM/review" target="_blank" class="btn-review">Leave Us a Review</a>
         <a href="https://wa.me/?text=${encodeURIComponent('Hi! I recently used Fabsurprise for a special celebration and the experience was absolutely beautiful. If you are planning something for someone you love, reach out to them — they will take care of every detail. +2349025141322 or fabsurprise-onboarding on TinyURL.')}" target="_blank" class="btn-refer">Refer a Friend</a>

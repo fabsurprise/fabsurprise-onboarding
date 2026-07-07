@@ -419,7 +419,7 @@ const ADMIN_PASSWORD = 'fab2024admin';
 const JOURNEY_BASE_URL = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-journey.html';
 const WA_NUMBER = '2349025141322';
 
-const STAGES = ['Planning', 'Design', 'Create', 'Celebrate', 'Preserve', 'Continue'];
+const STAGES = ['Planning', 'Design', 'Create', 'Celebrate', 'Preserve', 'Fabmily'];
 
 const BADGE_CLASS = {
   'Planning': 'badge-planning',
@@ -427,7 +427,7 @@ const BADGE_CLASS = {
   'Create': 'badge-create',
   'Celebrate': 'badge-celebrate',
   'Preserve': 'badge-preserve',
-  'Continue': 'badge-continue',
+  'Fabmily': 'badge-continue',
 };
 
 function checkPassword() {
@@ -527,82 +527,11 @@ function selectStage(ref, stage) {
   if (updateBtn) updateBtn.disabled = false;
 }
 
-async function updateStage(ref) {
-  const newStage = selectedStages[ref];
-  if (!newStage) return;
 
-  const btn = document.getElementById(`updateBtn-${ref}`);
-  btn.textContent = 'Updating...';
-  btn.disabled = true;
 
-  try {
-    const response = await fetch(`${APPS_SCRIPT_URL}?action=updateStage&ref=${encodeURIComponent(ref)}&stage=${encodeURIComponent(newStage)}`);
-    const data = await response.json();
-    if (data.success) {
-      const badge = document.getElementById(`badge-${ref}`);
-      if (badge) {
-        badge.textContent = newStage;
-        badge.className = `stage-badge ${BADGE_CLASS[newStage] || 'badge-planning'}`;
-      }
-      STAGES.forEach(s => {
-        const stageBtn = document.getElementById(`stage-${ref}-${s}`);
-        if (stageBtn) {
-          stageBtn.classList.remove('current-stage', 'selected');
-          if (s === newStage) stageBtn.classList.add('current-stage');
-        }
-      });
-      btn.textContent = 'Update Stage';
-      showToast(`Stage updated to ${newStage} successfully!`);
-    } else {
-      btn.textContent = 'Update Stage';
-      btn.disabled = false;
-      showToast('Update failed. Please try again.');
-    }
-  } catch (err) {
-    btn.textContent = 'Update Stage';
-    btn.disabled = false;
-    showToast('Connection error. Please try again.');
-  }
-}
 
-async function searchClient() {
-  const query = document.getElementById('searchInput').value.trim();
-  if (!query) return;
 
-  const container = document.getElementById('searchResult');
-  container.innerHTML = '<div class="loading-inline">Searching...</div>';
 
-  try {
-    const response = await fetch(`${APPS_SCRIPT_URL}?action=search&query=${encodeURIComponent(query)}`);
-    const data = await response.json();
-    container.innerHTML = '';
-    if (data.success && data.results && data.results.length > 0) {
-      data.results.forEach(client => renderClientCard(client, container, false));
-    } else {
-      container.innerHTML = '<div class="loading-inline">No client found. Check the reference number or name.</div>';
-    }
-  } catch (err) {
-    container.innerHTML = '<div class="loading-inline">Search failed. Please try again.</div>';
-  }
-}
-
-async function loadAllClients() {
-  const container = document.getElementById('allClients');
-  container.innerHTML = '<div class="loading-inline">Loading all celebrations...</div>';
-
-  try {
-    const response = await fetch(`${APPS_SCRIPT_URL}?action=getAllClients`);
-    const data = await response.json();
-    container.innerHTML = '';
-    if (data.success && data.clients && data.clients.length > 0) {
-      data.clients.forEach(client => renderClientCard(client, container, false));
-    } else {
-      container.innerHTML = '<div class="loading-inline">No celebrations found yet.</div>';
-    }
-  } catch (err) {
-    container.innerHTML = '<div class="loading-inline">Failed to load. Please try again.</div>';
-  }
-}
 
 function copyLink(link, btn) {
   navigator.clipboard.writeText(link).then(() => {
@@ -622,6 +551,111 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
+
+async function searchClient() {
+  const query = document.getElementById('searchInput').value.trim();
+  if (!query) return;
+
+  const container = document.getElementById('searchResult');
+  container.innerHTML = '<div class="loading-inline">Searching...</div>';
+
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=search&query=${encodeURIComponent(query)}`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const text = await response.text();
+    const data = JSON.parse(text);
+    container.innerHTML = '';
+    if (data.success && data.results && data.results.length > 0) {
+      data.results.forEach(client => renderClientCard(client, container, false));
+    } else {
+      container.innerHTML = '<div class="loading-inline">No client found. Check the reference number or name.</div>';
+    }
+  } catch (err) {
+    container.innerHTML = '<div class="loading-inline">Search failed. Please try again.</div>';
+  }
+}
+
+async function loadAllClients() {
+  const container = document.getElementById('allClients');
+  container.innerHTML = '<div class="loading-inline">Loading all celebrations...</div>';
+
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=getAllClients`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const text = await response.text();
+    const data = JSON.parse(text);
+    container.innerHTML = '';
+    if (data.success && data.clients && data.clients.length > 0) {
+      data.clients.forEach(client => renderClientCard(client, container, false));
+    } else {
+      container.innerHTML = '<div class="loading-inline">No celebrations found yet.</div>';
+    }
+  } catch (err) {
+    container.innerHTML = '<div class="loading-inline">Failed to load. Please try again.</div>';
+  }
+}
+
+async function updateStage(ref) {
+  const newStage = selectedStages[ref];
+  if (!newStage) return;
+
+  const btn = document.getElementById(`updateBtn-${ref}`);
+  btn.textContent = 'Updating...';
+  btn.disabled = true;
+
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=updateStage&ref=${encodeURIComponent(ref)}&stage=${encodeURIComponent(newStage)}`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const text = await response.text();
+    const data = JSON.parse(text);
+    if (data.success) {
+      const badge = document.getElementById(`badge-${ref}`);
+      if (badge) {
+        badge.textContent = newStage;
+        badge.className = `stage-badge ${BADGE_CLASS[newStage] || 'badge-planning'}`;
+      }
+      STAGES.forEach(s => {
+        const stageBtn = document.getElementById(`stage-${ref}-${s}`);
+        if (stageBtn) {
+          stageBtn.classList.remove('current-stage', 'selected');
+          if (s === newStage) stageBtn.classList.add('current-stage');
+        }
+      });
+      btn.textContent = 'Update Stage';
+      showToast(`Stage updated to ${newStage} successfully!`);
+      // Show WhatsApp notify option
+      const clientPhone = document.querySelector(`#card-${ref} .detail-val`)?.closest('.client-details')?.querySelector('.detail-row:nth-child(4) .detail-val')?.textContent || '';
+      const stageMessages = {
+        'Planning': 'We have received your celebration details and our team has officially begun planning. You can follow your journey here:',
+        'Design': 'Great news! We have moved into the Design stage for your celebration. We are now finalising every detail to make it perfect. Follow your journey here:',
+        'Create': 'Exciting update! We have begun creating and assembling your celebration. Things are coming together beautifully. Follow your journey here:',
+        'Celebrate': 'Tomorrow is the big day! Everything is ready and we cannot wait. Sweet dreams — your celebration is about to begin. Follow your journey here:',
+        'Preserve': 'What a beautiful celebration! We are so honoured to have been part of it. Your memories are being preserved. Follow your journey here:',
+        'Fabmily': 'Thank you for celebrating with Fabsurprise. You are now officially part of the Fabmily! We would love to hear how it went. Please leave us a review here: https://g.page/r/Ca6nTBK3YtBdEBM/review',
+      };
+      const journeyUrl = `https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-journey.html?ref=${ref}`;
+      const stageMsg = stageMessages[newStage] || 'Your celebration journey has been updated.';
+      const waText = encodeURIComponent(`Hi! ${stageMsg} ${newStage !== 'Fabmily' ? journeyUrl : ''}`);
+      // Show notify button
+      const existingNotify = document.getElementById(`notify-${ref}`);
+      if (existingNotify) existingNotify.remove();
+      const notifyDiv = document.createElement('div');
+      notifyDiv.id = `notify-${ref}`;
+      notifyDiv.style.cssText = 'margin-top:12px;padding:14px;background:#F9F3E3;border:1px solid #C9A84C;';
+      notifyDiv.innerHTML = `<p style="font-size:12px;color:#4A2030;margin-bottom:10px;font-weight:600;">Notify client about this update?</p><a href="https://wa.me/?text=${waText}" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:10px 20px;font-size:11px;font-weight:600;letter-spacing:1px;text-decoration:none;text-transform:uppercase;">Send WhatsApp Update</a>`;
+      document.getElementById(`updateBtn-${ref}`).after(notifyDiv);
+    } else {
+      btn.textContent = 'Update Stage';
+      btn.disabled = false;
+      showToast('Update failed. Please try again.');
+    }
+  } catch (err) {
+    btn.textContent = 'Update Stage';
+    btn.disabled = false;
+    showToast('Connection error. Please try again.');
+  }
+}
+
 </script>
 </body>
 </html>

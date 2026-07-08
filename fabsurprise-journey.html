@@ -522,7 +522,7 @@ function getStageIndex(stageKey) {
 }
 
 function renderJourney(data) {
-  const stageIdx = getStageIndex(data.stage);
+  const stageIdx = getStageIndex(data.status || data.stage);
   const currentStage = STAGES[stageIdx] || STAGES[0];
   const clientName = data.clientName || 'Your';
   // Format date nicely
@@ -634,7 +634,7 @@ function loadJourney() {
   };
 
   const script = document.createElement('script');
-  script.src = APPS_SCRIPT_URL + '?action=getJourney&ref=' + encodeURIComponent(ref) + '&callback=_fabCallback';
+  script.src = APPS_SCRIPT_URL + '?action=getJourney&ref=' + encodeURIComponent(ref) + '&callback=_fabCallback&t=' + Date.now();
   script.onerror = function() {
     renderError("We're having trouble loading your celebration right now. Please try again or contact us on WhatsApp.");
   };

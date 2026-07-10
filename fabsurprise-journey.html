@@ -470,43 +470,55 @@ const STAGES = [
   {
     key: 'Planning',
     name: 'Planning',
-    desc: 'We\'re reviewing your details and curating ideas for your celebration.',
-    message: 'We\'ve received everything and the magic is beginning. Leave it all to us.',
+    desc: 'We are getting to know your celebration.',
+    detail: 'Right now, we are carefully reviewing everything you have shared so we can recommend the direction that suits you best.',
+    next: 'We will prepare your personalised recommendations and be in touch soon.',
+    message: 'We have received everything and we are already thinking about your celebration. Leave it all to us.',
     icon: '✦'
   },
   {
     key: 'Design',
     name: 'Design',
-    desc: 'We\'re finalising the details and designing your celebration experience.',
-    message: 'Every detail is being thoughtfully designed with you and your loved one in mind.',
+    desc: 'Your celebration is taking shape.',
+    detail: 'Every recommendation, detail and finishing touch is being thoughtfully refined to reflect what matters most to you.',
+    next: 'Once everything is ready, we will confirm the final plan with you.',
+    message: 'Your celebration is taking shape beautifully. Every detail is being refined with you in mind.',
     icon: '◇'
   },
   {
     key: 'Create',
     name: 'Create',
-    desc: 'Our team has begun preparing and assembling your celebration.',
-    message: 'The pieces are coming together beautifully. We can\'t wait for the reveal.',
+    desc: 'Everything is coming together beautifully.',
+    detail: 'Your celebration is now moving from ideas into reality as our team prepares each detail with care.',
+    next: 'We will keep you updated as we move closer to your celebration.',
+    message: 'Another milestone has been completed. Your celebration is moving from ideas into reality.',
     icon: '○'
   },
   {
     key: 'Celebrate',
     name: 'Celebrate',
-    desc: 'Tomorrow is the big day. Everything is ready.',
-    message: 'Tomorrow, someone very special is going to feel incredibly loved. Rest easy — we\'ve got everything handled.',
+    desc: 'You are almost there.',
+    detail: 'Everything has been carefully prepared and we are completing the final checks before your celebration begins.',
+    next: 'It is almost time to enjoy the moment.',
+    message: 'Today is the day. Everything is in place and our team is taking care of every detail behind the scenes. Take a deep breath and enjoy the experience.',
     icon: '★'
   },
   {
     key: 'Preserve',
     name: 'Preserve',
-    desc: 'Your celebration was beautiful. Your memories are being prepared.',
-    message: 'What a moment. We\'re so honoured to have been part of it.',
+    desc: 'Some moments deserve to be remembered long after they are over.',
+    detail: 'We are preparing your celebration gallery and any keepsakes included with your experience.',
+    next: 'We will let you know as soon as everything is ready for you.',
+    message: 'Your Celebration Journey has one more update waiting for you.',
     icon: '❋'
   },
   {
     key: 'Fabmily',
-    name: 'Fabmily',
-    desc: 'Your celebration is complete. Welcome to the Fabmily — our community of people who believe love deserves to be expressed beautifully.',
-    message: 'You trusted us with something deeply personal, and we are so honoured. You are now part of the Fabmily — a community of people who celebrate intentionally and love generously.',
+    name: 'Welcome to the Fabmily',
+    desc: 'Your celebration may be over, but your journey with Fabsurprise does not end here.',
+    detail: 'You will continue receiving thoughtful inspiration, exclusive experiences and gentle reminders for the moments worth celebrating. Because every beautiful celebration deserves another.',
+    next: '',
+    message: 'Thank you for trusting us with something so personal. Welcome to the Fabmily.',
     icon: '♡',
     isFabmily: true
   }
@@ -554,11 +566,12 @@ function renderJourney(data) {
       <div class="current-label">Current Stage</div>
       <div class="current-stage-name">${currentStage.name}</div>
       <div class="current-stage-desc">${currentStage.desc}</div>
-      <div class="current-message">${currentStage.message}</div>
+      <div class="current-message">${currentStage.detail || currentStage.message}</div>
+      ${currentStage.next ? '<div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(245,240,232,0.15)"><span style="color:#E2C97A;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:6px;">What happens next</span><span style="font-size:12.5px;color:rgba(245,240,232,0.6);line-height:1.7;display:block;">' + currentStage.next + '</span></div>' : ""}
     </div>
 
     <div class="timeline-section">
-      <div class="timeline-title">Your Full Journey</div>
+      <div class="timeline-title">Your Celebration Journey</div>
       <div class="timeline">
         ${STAGES.map((stage, i) => {
           const status = i < stageIdx ? 'completed' : i === stageIdx ? 'active' : 'upcoming';
@@ -582,9 +595,9 @@ function renderJourney(data) {
     </div>
 
     <div class="wa-section">
-      <div class="wa-title">Need to update something?</div>
-      <p class="wa-body">Plans sometimes change, and that's perfectly okay. If you've remembered an important detail, need to update an address, change a personalised message or ask a question, simply reach out to us on WhatsApp.</p>
-      <a href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hi Fabsurprise, I\'ve already completed my Start Your Celebration Guide, but I\'d like to update a few details about my booking.')}" target="_blank" class="btn-wa">Chat with Us on WhatsApp</a>
+      <div class="wa-title">Need to tell us something?</div>
+      <p class="wa-body">Plans can change, new ideas come to mind, and sometimes the smallest detail makes all the difference. If you would like to update any part of your celebration or ask a question, we are only a message away.</p>
+      <a href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hi Fabsurprise, I would like to share an update about my celebration.')}" target="_blank" class="btn-wa">Message Us on WhatsApp</a>
     </div>
 
     <div class="wa-section" style="margin-top:-8px;">
@@ -595,8 +608,8 @@ function renderJourney(data) {
     ${stageIdx >= 5 ? `
     <div class="fabmily-section">
       <div class="fabmily-icon">♡</div>
-      <div class="fabmily-heart">🤍</div><h2 class="fabmily-title">Thank You</h2>
-      <p class="fabmily-body">Thank you for allowing us to be part of such a meaningful moment.<br><br>We hope this celebration leaves beautiful memories that will be cherished for years to come.<br><br>Whenever life gives you another reason to celebrate, we would be honoured to create something special with you again.<br><br>Welcome to the Fabsurprise Family.</p>
+      <h2 class="fabmily-title">Welcome to the Fabmily</h2>
+      <p class="fabmily-body">Your celebration may be over, but your journey with Fabsurprise does not end here.<br><br>You will continue receiving thoughtful inspiration, exclusive experiences and gentle reminders for the moments worth celebrating.<br><br>Because every beautiful celebration deserves another.</p>
       <div class="fabmily-actions">
         <a href="https://g.page/r/Ca6nTBK3YtBdEBM/review" target="_blank" class="btn-review">Leave Us a Review</a>
         <a href="https://wa.me/?text=${encodeURIComponent('Hi! I recently used Fabsurprise for a special celebration and the experience was absolutely beautiful. If you are planning something for someone you love, reach out to them — they will take care of every detail. +2349025141322 or fabsurprise-onboarding on TinyURL.')}" target="_blank" class="btn-refer">Refer a Friend</a>

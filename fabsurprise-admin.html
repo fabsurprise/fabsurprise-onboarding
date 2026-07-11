@@ -347,6 +347,31 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
 
 .loading-inline { font-size: 13px; color: var(--text-light); text-align: center; padding: 24px; }
 
+.tab-bar { display: flex; border-bottom: 2px solid var(--ivory-dark); margin-bottom: 28px; }
+.tab-btn { padding: 12px 20px; font-family: "Inter",sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.5px; border: none; background: transparent; color: var(--text-light); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+.tab-btn.active { color: var(--wine); border-bottom-color: var(--wine); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.enq-card { background: var(--white); border: 1px solid var(--ivory-dark); margin-bottom: 14px; overflow: hidden; }
+.enq-card-header { padding: 13px 18px; display: flex; align-items: center; justify-content: space-between; }
+.enq-card-header.submitted { background: var(--wine); }
+.enq-card-header.incomplete { background: var(--ivory-mid); }
+.enq-name { font-family: "Cormorant Garamond",serif; font-size: 17px; font-weight: 400; }
+.enq-card-header.submitted .enq-name { color: var(--white); }
+.enq-card-header.incomplete .enq-name { color: var(--text-dark); }
+.enq-ref { font-size: 10px; letter-spacing: 1px; }
+.enq-card-header.submitted .enq-ref { color: rgba(245,240,232,0.5); }
+.enq-card-header.incomplete .enq-ref { color: var(--text-light); }
+.enq-details { padding: 14px 18px; border-bottom: 1px solid var(--ivory-mid); }
+.enq-actions { padding: 14px 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-enq-wa { background: #25D366; color: white; border: none; padding: 10px 18px; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-block; }
+.btn-enq-convert { background: var(--wine); color: white; border: none; padding: 10px 18px; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; }
+.filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.filter-btn { padding: 8px 16px; border: 1px solid var(--ivory-dark); background: var(--white); font-size: 11px; font-weight: 500; color: var(--text-mid); cursor: pointer; transition: all 0.2s; }
+.filter-btn.active { background: var(--wine); border-color: var(--wine); color: white; }
+.summary-strip { background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.3); border-left: 4px solid var(--gold); padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: var(--text-mid); display: flex; gap: 24px; flex-wrap: wrap; }
+.summary-stat strong { font-size: 22px; font-family: "Cormorant Garamond",serif; color: var(--wine); display: block; line-height: 1; margin-bottom: 2px; }
+
 .stage-badge {
   display: inline-block;
   padding: 3px 10px;
@@ -388,7 +413,15 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
   </div>
 
   <div class="admin-body">
-    <h1 class="admin-title">Journey Manager</h1>
+    <h1 class="admin-title">Fabsurprise Admin</h1>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('journeys')">Journey Manager</button>
+      <button class="tab-btn" onclick="switchTab('enquiries')">Enquiries</button>
+    </div>
+
+    <!-- JOURNEY MANAGER TAB -->
+    <div class="tab-panel active" id="tab-journeys">
     <p class="admin-sub">Search a client by their reference number or name to update their celebration stage.</p>
 
     <div class="search-box">
@@ -407,9 +440,35 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
     </div>
 
     <div id="allClients"></div>
-  </div>
 
-</div>
+    </div><!-- /tab-journeys -->
+
+    <!-- ENQUIRIES TAB -->
+    <div class="tab-panel" id="tab-enquiries">
+
+      <div class="summary-strip">
+        <div class="summary-stat"><strong id="statTotal">0</strong>Total</div>
+        <div class="summary-stat"><strong id="statSubmitted">0</strong>Submitted</div>
+        <div class="summary-stat"><strong id="statIncomplete">0</strong>Abandoned</div>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterEnquiries('all', this)">All</button>
+        <button class="filter-btn" onclick="filterEnquiries('Submitted', this)">Submitted</button>
+        <button class="filter-btn" onclick="filterEnquiries('Incomplete', this)">Abandoned</button>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+        <button class="btn-search" onclick="loadEnquiries()" style="padding:10px 20px;">Refresh</button>
+      </div>
+
+      <div id="enquiryList"><div class="loading-inline">Tap Refresh to load enquiries.</div></div>
+
+    </div><!-- /tab-enquiries -->
+
+  </div><!-- /admin-body -->
+
+</div><!-- /adminPanel -->
 
 <div class="toast" id="toast"></div>
 
@@ -545,6 +604,131 @@ function shareOnWa(link, name, ref) {
   window.open(`https://wa.me/?text=${msg}`, '_blank');
 }
 
+// ── TABS ──
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+  if (tab === 'enquiries') loadEnquiries();
+}
+
+// ── ENQUIRIES ──
+var allEnquiries = [];
+var currentFilter = 'all';
+
+async function loadEnquiries() {
+  document.getElementById('enquiryList').innerHTML = '<div class="loading-inline">Loading enquiries...</div>';
+  try {
+    const url = APPS_SCRIPT_URL + '?action=getIncomplete&t=' + Date.now();
+    const r = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const text = await r.text();
+    const data = JSON.parse(text);
+
+    // Also load submitted
+    const url2 = APPS_SCRIPT_URL + '?action=getAllEnquiries&t=' + Date.now();
+    const r2 = await fetch(url2, { method: 'GET', redirect: 'follow' });
+    const text2 = await r2.text();
+    const data2 = JSON.parse(text2);
+
+    allEnquiries = (data2.enquiries || []).concat(data.incomplete || []);
+
+    // Deduplicate by enquiryId
+    const seen = {};
+    allEnquiries = allEnquiries.filter(function(e) {
+      if (seen[e.enquiryId]) return false;
+      seen[e.enquiryId] = true;
+      return true;
+    });
+
+    updateSummary();
+    renderEnquiries(currentFilter);
+  } catch(err) {
+    document.getElementById('enquiryList').innerHTML = '<div class="loading-inline">Failed to load. Please try again.</div>';
+  }
+}
+
+function updateSummary() {
+  var submitted = allEnquiries.filter(function(e){ return e.status === 'Submitted'; }).length;
+  var incomplete = allEnquiries.filter(function(e){ return e.status === 'Incomplete'; }).length;
+  document.getElementById('statTotal').textContent = allEnquiries.length;
+  document.getElementById('statSubmitted').textContent = submitted;
+  document.getElementById('statIncomplete').textContent = incomplete;
+}
+
+function filterEnquiries(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderEnquiries(filter);
+}
+
+function renderEnquiries(filter) {
+  var list = filter === 'all' ? allEnquiries : allEnquiries.filter(function(e){ return e.status === filter; });
+  var container = document.getElementById('enquiryList');
+
+  if (!list.length) {
+    container.innerHTML = '<div class="loading-inline">No enquiries found.</div>';
+    return;
+  }
+
+  container.innerHTML = list.map(function(e) {
+    var isSubmitted = e.status === 'Submitted';
+    var headerClass = isSubmitted ? 'submitted' : 'incomplete';
+
+    var waFollowUp = isSubmitted
+      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you for your Design Your Moment enquiry with Fabsurprise. We have reviewed your details and we are excited to begin the conversation. When would be a good time to speak?')
+      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', we noticed you started designing your moment with Fabsurprise but did not quite finish. We completely understand life gets busy. If you would like to continue or have any questions, we are right here.');
+
+    var waNumber = (e.whatsapp || '').replace(/\D/g, '');
+    if (waNumber.startsWith('0')) waNumber = '234' + waNumber.slice(1);
+
+    return '<div class="enq-card">' +
+      '<div class="enq-card-header ' + headerClass + '">' +
+        '<div>' +
+          '<div class="enq-name">' + (e.fullName || 'Unknown') + '</div>' +
+          '<div class="enq-ref">' + (e.enquiryId || '') + ' &nbsp;|&nbsp; ' + (e.date || '') + '</div>' +
+        '</div>' +
+        '<span class="stage-badge ' + (isSubmitted ? 'badge-design' : 'badge-planning') + '">' + e.status + '</span>' +
+      '</div>' +
+      '<div class="enq-details">' +
+        (e.occasion ? '<div class="detail-row"><span class="detail-key">Occasion</span><span class="detail-val">' + e.occasion + '</span></div>' : '') +
+        (e.celebrating ? '<div class="detail-row"><span class="detail-key">Celebrating</span><span class="detail-val">' + e.celebrating + '</span></div>' : '') +
+        (e.celebDate ? '<div class="detail-row"><span class="detail-key">Date</span><span class="detail-val">' + e.celebDate + '</span></div>' : '') +
+        (e.location ? '<div class="detail-row"><span class="detail-key">Location</span><span class="detail-val">' + e.location + '</span></div>' : '') +
+        '<div class="detail-row"><span class="detail-key">WhatsApp</span><span class="detail-val">' + (e.whatsapp || 'Not provided') + '</span></div>' +
+        '<div class="detail-row"><span class="detail-key">Email</span><span class="detail-val">' + (e.email || 'Not provided') + '</span></div>' +
+        (e.stoppedAt ? '<div class="detail-row"><span class="detail-key">Stopped At</span><span class="detail-val">' + e.stoppedAt + '</span></div>' : '') +
+      '</div>' +
+      '<div class="enq-actions">' +
+        (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waFollowUp + '" target="_blank" class="btn-enq-wa">' + (isSubmitted ? 'WhatsApp' : 'Follow Up') + '</a>' : '') +
+        (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\')">Send Onboarding Link</button>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function convertToBooking(enquiryId) {
+  var enq = allEnquiries.find(function(e){ return e.enquiryId === enquiryId; });
+  if (!enq) return;
+  var onboardingLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-onboarding.html';
+  var waNumber = (enq.whatsapp || '').replace(/\D/g, '');
+  if (waNumber.startsWith('0')) waNumber = '234' + waNumber.slice(1);
+  var msg = encodeURIComponent(
+    'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Your booking is confirmed and the next step is to complete your Start Your Celebration Guide so we can capture all the details that will make this truly special. Here is your personal link: ' + onboardingLink
+  );
+  window.open('https://wa.me/' + waNumber + '?text=' + msg, '_blank');
+}
+
+function formatAdminDate(dateStr) {
+  if (!dateStr || dateStr === '—') return dateStr;
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d)) return dateStr;
+    return d.toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
+  } catch(e) { return dateStr; }
+}
+
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -626,15 +810,17 @@ async function updateStage(ref) {
       // Show WhatsApp notify option
       const clientPhone = document.querySelector(`#card-${ref} .detail-val`)?.closest('.client-details')?.querySelector('.detail-row:nth-child(4) .detail-val')?.textContent || '';
       const stageMessages = {
-        'Planning': 'We have received your celebration details and our team has officially begun planning. You can follow your journey here:',
-        'Design': 'Great news! We have moved into the Design stage for your celebration. We are now finalising every detail to make it perfect. Follow your journey here:',
-        'Create': 'Exciting update! We have begun creating and assembling your celebration. Things are coming together beautifully. Follow your journey here:',
-        'Celebrate': 'Tomorrow is the big day! Everything is ready and we cannot wait. Sweet dreams — your celebration is about to begin. Follow your journey here:',
-        'Preserve': 'What a beautiful celebration! We are so honoured to have been part of it. Your memories are being preserved. Follow your journey here:',
-        'Fabmily': 'Thank you for celebrating with Fabsurprise. You are now officially part of the Fabmily! We would love to hear how it went. Please leave us a review here: https://g.page/r/Ca6nTBK3YtBdEBM/review',
+        'Planning': 'Hi [Name], we have just updated your Celebration Journey. There is a new update waiting for you.',
+        'Design': 'Hi [Name], your Celebration Journey has just moved to its next stage. We would love for you to have a look.',
+        'Create': 'Hi [Name], another milestone has just been completed. Your Celebration Journey has been updated.',
+        'Celebrate': 'Hi [Name], today is the day. Everything is in place and our team is taking care of every detail behind the scenes. Take a deep breath and enjoy the experience.',
+        'Preserve': 'Hi [Name], your Celebration Journey has one more update waiting for you.',
+        'Fabmily': 'Hi [Name], thank you for trusting us with something so personal. You are now officially part of the Fabmily. We would love to hear how it went. Please leave us a review here: https://g.page/r/Ca6nTBK3YtBdEBM/review',
       };
       const journeyUrl = `https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-journey.html?ref=${ref}`;
-      const stageMsg = stageMessages[newStage] || 'Your celebration journey has been updated.';
+      const clientFirstName = (document.querySelector(`#card-${ref} .client-card-name`)?.textContent || '').split(' ')[0] || '';
+      const rawMsg = stageMessages[newStage] || 'Your celebration journey has been updated.';
+      const stageMsg = rawMsg.replace('[Name]', clientFirstName);
       const waText = encodeURIComponent(`Hi! ${stageMsg} ${newStage !== 'Fabmily' ? journeyUrl : ''}`);
       // Show notify button
       const existingNotify = document.getElementById(`notify-${ref}`);

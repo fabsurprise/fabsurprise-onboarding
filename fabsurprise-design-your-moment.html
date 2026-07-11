@@ -745,6 +745,34 @@ let enquiryId = 'ENQ-' + Date.now();
 let partialDone = false;
 let dupBlocked = false;
 
+// ── RESUME CHECK ──
+(function checkResume() {
+  const params = new URLSearchParams(window.location.search);
+  const resumeId = params.get('resume');
+  if (resumeId) {
+    const saved = localStorage.getItem('fab_enq_' + resumeId);
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        enquiryId = resumeId;
+        if (data.fullName) { fd.fullName = data.fullName; }
+        if (data.whatsapp) { fd.whatsapp = data.whatsapp; }
+        if (data.email) { fd.email = data.email; }
+        partialDone = true;
+        // Auto start and go to step 4
+        document.getElementById('welcome').style.display = 'none';
+        document.getElementById('form-screen').style.display = 'block';
+        // Pre-fill fields
+        if (data.fullName) document.getElementById('fullName').value = data.fullName;
+        if (data.whatsapp) document.getElementById('whatsapp').value = data.whatsapp;
+        if (data.email) document.getElementById('email').value = data.email;
+        show(4);
+        return;
+      } catch(e) {}
+    }
+  }
+})();
+
 // ── START ──
 function startForm() {
   document.getElementById('welcome').style.display = 'none';
@@ -859,6 +887,12 @@ function handleStep3() {
 function savePartial() {
   if (partialDone) return;
   partialDone = true;
+  // Save to localStorage for resume link
+  localStorage.setItem('fab_enq_' + enquiryId, JSON.stringify({
+    fullName: fd.fullName,
+    whatsapp: fd.whatsapp,
+    email: fd.email
+  }));
   var now = new Date();
   fetch(SCRIPT_URL, {
     method: 'POST',

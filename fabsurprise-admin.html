@@ -528,13 +528,17 @@ function renderClientCard(client, container, prepend) {
   card.className = 'client-card';
   card.id = `card-${ref}`;
 
+  const pri = getPriority(celebDate);
   card.innerHTML = `
     <div class="client-card-header">
       <div>
         <div class="client-card-name">${name}</div>
         <div class="client-card-ref">${ref}</div>
       </div>
-      <span class="stage-badge ${BADGE_CLASS[currentStage] || 'badge-planning'}" id="badge-${ref}">${currentStage}</span>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
+        <span class="stage-badge ${BADGE_CLASS[currentStage] || 'badge-planning'}" id="badge-${ref}">${currentStage}</span>
+        <span style="font-size:10px;font-weight:600;padding:3px 8px;background:${pri.bg};color:${pri.color};">${pri.dot || ''} ${pri.label}</span>
+      </div>
     </div>
     <div class="client-details">
       <div class="detail-row"><span class="detail-key">Occasion</span><span class="detail-val">${occasion}</span></div>
@@ -683,13 +687,17 @@ function renderEnquiries(filter) {
     var waNumber = (e.whatsapp || '').replace(/\D/g, '');
     if (waNumber.startsWith('0')) waNumber = '234' + waNumber.slice(1);
 
+    const ePri = getPriority(e.celebDate);
     return '<div class="enq-card">' +
       '<div class="enq-card-header ' + headerClass + '">' +
         '<div>' +
           '<div class="enq-name">' + (e.fullName || 'Unknown') + '</div>' +
           '<div class="enq-ref">' + (e.enquiryId || '') + ' &nbsp;|&nbsp; ' + (e.date || '') + '</div>' +
         '</div>' +
-        '<span class="stage-badge ' + (isSubmitted ? 'badge-design' : 'badge-planning') + '">' + e.status + '</span>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">' +
+          '<span class="stage-badge ' + (isSubmitted ? 'badge-design' : 'badge-planning') + '">' + e.status + '</span>' +
+          (e.celebDate ? '<span style="font-size:10px;font-weight:600;padding:3px 8px;background:' + ePri.bg + ';color:' + ePri.color + ';">' + (ePri.dot || '') + ' ' + ePri.label + '</span>' : '') +
+        '</div>' +
       '</div>' +
       '<div class="enq-details">' +
         (e.occasion ? '<div class="detail-row"><span class="detail-key">Occasion</span><span class="detail-val">' + e.occasion + '</span></div>' : '') +
@@ -701,6 +709,7 @@ function renderEnquiries(filter) {
         (e.stoppedAt ? '<div class="detail-row"><span class="detail-key">Stopped At</span><span class="detail-val">' + e.stoppedAt + '</span></div>' : '') +
       '</div>' +
       '<div class="enq-actions">' +
+        (!isSubmitted && waNumber ? '<a href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html?resume=' + e.enquiryId + '" target="_blank" style="display:inline-block;background:var(--ivory-mid);color:var(--text-mid);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;">Copy Resume Link</a>' : '') +
         (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waFollowUp + '" target="_blank" class="btn-enq-wa">' + (isSubmitted ? 'WhatsApp' : 'Follow Up') + '</a>' : '') +
         (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\')">Send Onboarding Link</button>' : '') +
       '</div>' +
@@ -718,6 +727,23 @@ function convertToBooking(enquiryId) {
     'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Your booking is confirmed and the next step is to complete your Start Your Celebration Guide so we can capture all the details that will make this truly special. Here is your personal link: ' + onboardingLink
   );
   window.open('https://wa.me/' + waNumber + '?text=' + msg, '_blank');
+}
+
+function getPriority(dateStr) {
+  if (!dateStr) return { label: 'No Date', color: '#9B7D65', bg: '#F5F0E8' };
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d)) return { label: 'No Date', color: '#9B7D65', bg: '#F5F0E8' };
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    d.setHours(0,0,0,0);
+    const diff = Math.ceil((d - today) / (1000 * 60 * 60 * 24));
+    if (diff < 0) return { label: 'Overdue', color: '#B02020', bg: '#FEE2E2', dot: '🔴' };
+    if (diff <= 2) return { label: 'Immediate', color: '#B02020', bg: '#FEE2E2', dot: '🔴' };
+    if (diff <= 7) return { label: 'Priority', color: '#92400E', bg: '#FEF3C7', dot: '🟠' };
+    if (diff <= 14) return { label: 'Upcoming', color: '#92400E', bg: '#FEF9C3', dot: '🟡' };
+    return { label: 'Flexible', color: '#166534', bg: '#DCFCE7', dot: '🟢' };
+  } catch(e) { return { label: 'No Date', color: '#9B7D65', bg: '#F5F0E8' }; }
 }
 
 function formatAdminDate(dateStr) {

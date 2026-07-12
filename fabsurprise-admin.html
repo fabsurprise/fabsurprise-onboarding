@@ -478,9 +478,16 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAl
 function normalizeWA(num) {
   var n = String(num || '').replace(/[^\d]/g, '');
   if (!n) return '';
-  if (n.charAt(0) === '0') n = '234' + n.substring(1);
-  else if (n.length === 10) n = '234' + n;
-  else if (n.substring(0,3) !== '234') n = '234' + n;
+  // 11-digit Nigerian local format e.g. 09025141322 -> 2349025141322
+  if (n.length === 11 && n.charAt(0) === '0') {
+    return '234' + n.substring(1);
+  }
+  // 10-digit Nigerian number missing both 0 and 234 e.g. 9025141322 -> 2349025141322
+  if (n.length === 10 && n.charAt(0) !== '0') {
+    return '234' + n;
+  }
+  // Anything else (already has a country code, e.g. UK 447911123456,
+  // US 12125551234, or full Nigerian 2349025141322) — leave as is
   return n;
 }
 // ── ADMIN PASSWORD — change this to your own password ──

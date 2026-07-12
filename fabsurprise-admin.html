@@ -452,6 +452,14 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
         <div class="summary-stat"><strong id="statIncomplete">0</strong>Abandoned</div>
       </div>
 
+      <div class="search-box" style="margin-bottom:16px;">
+        <label class="search-label">Find an Enquiry</label>
+        <div class="search-row">
+          <input class="search-input" id="enquirySearchInput" type="text" placeholder="ENQ-reference, name, email or WhatsApp" onkeydown="if(event.key==='Enter')searchEnquiries()" oninput="if(!this.value.trim())renderEnquiries(currentFilter)">
+          <button class="btn-search" onclick="searchEnquiries()">Search</button>
+        </div>
+      </div>
+
       <div class="filter-bar">
         <button class="filter-btn active" onclick="filterEnquiries('all', this)">All</button>
         <button class="filter-btn" onclick="filterEnquiries('Submitted', this)">Submitted</button>
@@ -660,6 +668,26 @@ function updateSummary() {
   document.getElementById('statIncomplete').textContent = incomplete;
 }
 
+function searchEnquiries() {
+  const query = document.getElementById('enquirySearchInput').value.trim().toLowerCase();
+  if (!query) { renderEnquiries(currentFilter); return; }
+
+  const container = document.getElementById('enquiryList');
+  const matches = allEnquiries.filter(function(e) {
+    return (e.enquiryId || '').toLowerCase().includes(query)
+      || (e.fullName || '').toLowerCase().includes(query)
+      || (e.email || '').toLowerCase().includes(query)
+      || (e.whatsapp || '').toLowerCase().includes(query);
+  });
+
+  if (!matches.length) {
+    container.innerHTML = '<div class="loading-inline">No enquiry found. Check the reference number, name, email or WhatsApp number.</div>';
+    return;
+  }
+
+  renderEnquiryCards(matches);
+}
+
 function filterEnquiries(filter, btn) {
   currentFilter = filter;
   document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -669,12 +697,15 @@ function filterEnquiries(filter, btn) {
 
 function renderEnquiries(filter) {
   var list = filter === 'all' ? allEnquiries : allEnquiries.filter(function(e){ return e.status === filter; });
-  var container = document.getElementById('enquiryList');
-
   if (!list.length) {
-    container.innerHTML = '<div class="loading-inline">No enquiries found.</div>';
+    document.getElementById('enquiryList').innerHTML = '<div class="loading-inline">No enquiries found.</div>';
     return;
   }
+  renderEnquiryCards(list);
+}
+
+function renderEnquiryCards(list) {
+  var container = document.getElementById('enquiryList');
 
   container.innerHTML = list.map(function(e) {
     var eStatus = e.status || 'Incomplete';

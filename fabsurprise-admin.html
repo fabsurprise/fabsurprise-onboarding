@@ -490,8 +490,8 @@ function normalizeWA(num) {
   // US 12125551234, or full Nigerian 2349025141322) — leave as is
   return n;
 }
-// ── ADMIN PASSWORD — change this to your own password ──
-const ADMIN_PASSWORD = 'fab2024admin';
+// ── ADMIN PASSWORD ──
+const ADMIN_PASSWORD = 'Temidayofab@8342';
 const JOURNEY_BASE_URL = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-journey.html';
 const WA_NUMBER = '2349025141322';
 
@@ -723,7 +723,6 @@ function convertToBooking(enquiryId) {
   if (!enq) return;
   var onboardingLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-onboarding.html';
   var waNumber = normalizeWA(enq.whatsapp);
-  if (waNumber.startsWith('0')) waNumber = '234' + waNumber.slice(1);
   var msg = encodeURIComponent(
     'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Your booking is confirmed and the next step is to complete your Start Your Celebration Guide so we can capture all the details that will make this truly special. Here is your personal link: ' + onboardingLink
   );

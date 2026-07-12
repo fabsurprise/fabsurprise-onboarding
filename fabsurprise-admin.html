@@ -474,6 +474,15 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
 
 <script>
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
+
+function normalizeWA(num) {
+  var n = String(num || '').replace(/[^\d]/g, '');
+  if (!n) return '';
+  if (n.charAt(0) === '0') n = '234' + n.substring(1);
+  else if (n.length === 10) n = '234' + n;
+  else if (n.substring(0,3) !== '234') n = '234' + n;
+  return n;
+}
 // ── ADMIN PASSWORD — change this to your own password ──
 const ADMIN_PASSWORD = 'fab2024admin';
 const JOURNEY_BASE_URL = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-journey.html';
@@ -670,8 +679,7 @@ function renderEnquiries(filter) {
       ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you for your Design Your Moment enquiry with Fabsurprise (Ref: ' + e.enquiryId + '). We have reviewed your details and we are excited to begin the conversation. When would be a good time to speak?')
       : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', we noticed you started designing your moment with Fabsurprise but did not quite finish. We completely understand life gets busy. Whenever you are ready, you can continue exactly where you left off here: ' + resumeUrl);
 
-    var waNumber = (e.whatsapp || '').replace(/\D/g, '');
-    if (waNumber.startsWith('0')) waNumber = '234' + waNumber.slice(1);
+    var waNumber = normalizeWA(e.whatsapp);
 
     const ePri = getPriority(e.celebDate);
     return '<div class="enq-card">' +
@@ -707,7 +715,7 @@ function convertToBooking(enquiryId) {
   var enq = allEnquiries.find(function(e){ return e.enquiryId === enquiryId; });
   if (!enq) return;
   var onboardingLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-onboarding.html';
-  var waNumber = (enq.whatsapp || '').replace(/\D/g, '');
+  var waNumber = normalizeWA(enq.whatsapp);
   if (waNumber.startsWith('0')) waNumber = '234' + waNumber.slice(1);
   var msg = encodeURIComponent(
     'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Your booking is confirmed and the next step is to complete your Start Your Celebration Guide so we can capture all the details that will make this truly special. Here is your personal link: ' + onboardingLink

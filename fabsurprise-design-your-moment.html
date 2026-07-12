@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Design Your Moment Fabsurprise</title>
+<title>Design Your Moment — Fabsurprise</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -35,9 +35,10 @@ body {
   min-height: 100vh;
   font-size: 15px;
   line-height: 1.65;
+  overflow-x: hidden;
 }
 
-/* ── WELCOME ── */
+/* WELCOME */
 #welcome {
   min-height: 100vh;
   display: flex;
@@ -47,13 +48,13 @@ body {
 
 .welcome-hero {
   position: relative;
-  height: 55vh;
-  min-height: 300px;
+  height: 50vh;
+  min-height: 260px;
   background: var(--wine-dark);
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  padding: 0 28px 36px;
+  padding: 0 28px 32px;
 }
 
 .welcome-hero::before {
@@ -79,12 +80,12 @@ body {
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 500;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .hero-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(34px, 9vw, 52px);
+  font-size: clamp(32px, 8vw, 48px);
   font-weight: 300;
   color: var(--white);
   line-height: 1.12;
@@ -94,18 +95,17 @@ body {
 
 .welcome-body {
   flex: 1;
-  padding: 40px 28px 52px;
+  padding: 36px 28px 48px;
   display: flex;
   flex-direction: column;
 }
 
 .welcome-opening {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 21px;
-  font-weight: 400;
+  font-size: 20px;
   color: var(--text-dark);
   line-height: 1.5;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .welcome-text {
@@ -113,7 +113,7 @@ body {
   color: var(--text-light);
   line-height: 1.85;
   font-weight: 300;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 .btn-begin {
@@ -129,31 +129,29 @@ body {
   letter-spacing: 2.5px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s;
   text-align: center;
   margin-bottom: 14px;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-begin:hover { background: var(--wine-light); }
+.welcome-reassure { font-size: 12px; color: var(--text-light); text-align: center; }
 
-.welcome-reassure {
-  font-size: 12px;
-  color: var(--text-light);
-  text-align: center;
-  line-height: 1.65;
+/* FORM */
+#form-screen {
+  display: none;
+  min-height: 100vh;
+  background: var(--ivory);
+  flex-direction: column;
 }
-
-/* ── FORM ── */
-#form-screen { display: none; min-height: 100vh; background: var(--ivory); }
 
 .progress-header {
   background: var(--white);
   border-bottom: 1px solid var(--ivory-dark);
-  padding: 16px 24px 14px;
+  padding: 14px 24px 12px;
   position: sticky;
   top: 0;
   z-index: 50;
-  box-shadow: 0 1px 8px rgba(26,10,14,0.05);
+  box-shadow: 0 1px 6px rgba(26,10,14,0.05);
 }
 
 .progress-brand {
@@ -162,46 +160,40 @@ body {
   text-transform: uppercase;
   color: var(--wine);
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   font-weight: 500;
 }
 
 .progress-track { height: 2px; background: var(--ivory-dark); overflow: hidden; }
 .progress-fill { height: 100%; background: linear-gradient(to right, var(--wine), var(--gold)); transition: width 0.4s ease; }
-.progress-text { text-align: center; font-size: 10.5px; color: var(--text-light); margin-top: 8px; }
+.progress-text { text-align: center; font-size: 10.5px; color: var(--text-light); margin-top: 7px; }
 
-/* ── QUESTION SCREENS ── */
+/* QUESTION SCREENS */
 .q-screen {
   display: none;
-  min-height: calc(100vh - 78px);
   flex-direction: column;
-  padding: 44px 28px 44px;
-  animation: fadeUp 0.3s ease;
+  padding: 36px 24px 24px;
+  min-height: calc(100vh - 72px);
 }
 
 .q-screen.active { display: flex; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 
 .q-thread {
   font-size: 10px;
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   font-weight: 500;
 }
 
 .q-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(26px, 7vw, 38px);
+  font-size: clamp(24px, 6vw, 34px);
   font-weight: 400;
   color: var(--text-dark);
   line-height: 1.2;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .q-title em { font-style: italic; color: var(--wine); }
@@ -210,52 +202,49 @@ body {
   font-size: 13.5px;
   color: var(--text-light);
   line-height: 1.7;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
   font-weight: 300;
 }
 
-.q-subtext strong { color: var(--text-mid); font-weight: 500; }
+.field-wrap { flex: 1; display: flex; flex-direction: column; }
 
-.field-wrap { flex: 1; }
-
-/* ── INPUTS ── */
 .field-input, .field-textarea {
   width: 100%;
   background: var(--white);
   border: 1.5px solid var(--ivory-dark);
-  padding: 16px 18px;
+  padding: 15px 16px;
   font-family: 'Inter', sans-serif;
   font-size: 15px;
   color: var(--text-dark);
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s;
   -webkit-appearance: none;
   border-radius: 0;
 }
 
 .field-input::placeholder, .field-textarea::placeholder { color: var(--text-light); font-weight: 300; }
-.field-input:focus, .field-textarea:focus { border-color: var(--wine); box-shadow: 0 0 0 3px rgba(122,20,40,0.06); }
+.field-input:focus, .field-textarea:focus { border-color: var(--wine); }
 .field-input.error, .field-textarea.error { border-color: var(--error); }
-.field-error { font-size: 12px; color: var(--error); margin-top: 8px; display: none; }
-.field-textarea { min-height: 150px; resize: vertical; line-height: 1.7; }
+.field-error { font-size: 12px; color: var(--error); margin-top: 6px; display: none; }
+.field-textarea { min-height: 140px; resize: none; line-height: 1.65; }
 
-/* ── OPTION CARDS ── */
-.option-list { display: flex; flex-direction: column; gap: 10px; }
+/* OPTION LIST */
+.option-list { display: flex; flex-direction: column; gap: 9px; }
 
 .opt {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
   background: var(--white);
   border: 1.5px solid var(--ivory-dark);
-  padding: 16px 18px;
+  padding: 14px 16px;
   cursor: pointer;
-  transition: all 0.2s;
-  user-select: none;
+  transition: border-color 0.15s, background 0.15s;
   -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
-.opt:hover { border-color: var(--gold); }
+.opt:active { border-color: var(--wine); background: #F9F2F4; }
 .opt.active { border-color: var(--wine); background: #F9F2F4; }
 
 .opt-dot {
@@ -264,77 +253,48 @@ body {
   border-radius: 50%;
   border: 1.5px solid var(--ivory-dark);
   flex-shrink: 0;
+  margin-top: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.15s;
 }
 
 .opt.active .opt-dot { background: var(--wine); border-color: var(--wine); }
-
-.opt-inner {
-  width: 7px;
-  height: 7px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
+.opt-inner { width: 7px; height: 7px; background: white; border-radius: 50%; opacity: 0; transition: opacity 0.15s; }
 .opt.active .opt-inner { opacity: 1; }
 .opt-text { font-size: 14.5px; color: var(--text-dark); line-height: 1.3; }
-.opt-sub { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+.opt-sub { font-size: 11.5px; color: var(--text-light); margin-top: 3px; }
 
-/* ── OCCASION GRID ── */
-.occasion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+/* OCCASION GRID */
+.occ-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
 
 .occ-card {
   background: var(--white);
   border: 1.5px solid var(--ivory-dark);
-  padding: 18px 14px;
+  padding: 16px 12px;
   cursor: pointer;
-  transition: all 0.2s;
   text-align: center;
-  user-select: none;
+  transition: border-color 0.15s, background 0.15s;
   -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
-.occ-card:hover { border-color: var(--gold); }
+.occ-card:active { border-color: var(--wine); background: #F9F2F4; }
 .occ-card.active { border-color: var(--wine); background: #F9F2F4; }
-.occ-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--text-dark); margin-bottom: 2px; }
+.occ-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--text-dark); }
 .occ-card.active .occ-name { color: var(--wine); }
-.occ-desc { font-size: 10.5px; color: var(--text-light); }
 
-/* ── BUDGET GRID ── */
-.budget-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-.bud-card {
-  background: var(--white);
-  border: 1.5px solid var(--ivory-dark);
-  padding: 18px 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.bud-card:hover { border-color: var(--gold); }
-.bud-card.active { border-color: var(--wine); background: #F9F2F4; }
-.bud-range { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--text-dark); margin-bottom: 3px; }
-.bud-card.active .bud-range { color: var(--wine); }
-.bud-label { font-size: 10.5px; color: var(--text-light); }
-
-/* ── REASSURANCE CARD ── */
+/* REASSURE CARD */
 .reassure-card {
   background: linear-gradient(135deg, var(--wine-dark), var(--wine));
-  padding: 24px 22px;
-  margin-bottom: 0;
+  padding: 22px 20px;
+  margin-bottom: 24px;
 }
 
 .reassure-card p {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 19px;
+  font-size: 18px;
   font-style: italic;
   color: var(--ivory);
   line-height: 1.55;
@@ -343,70 +303,78 @@ body {
 
 .reassure-card span {
   display: block;
-  font-family: 'Inter', sans-serif;
   font-size: 11px;
   color: var(--gold-light);
   letter-spacing: 0.5px;
   margin-top: 10px;
-  font-style: normal;
   opacity: 0.8;
 }
 
-/* ── DUPLICATE NOTICE ── */
+/* DUPLICATE NOTICE */
 .dup-notice {
   display: none;
   background: var(--gold-pale);
   border: 1px solid var(--gold);
   border-left: 4px solid var(--gold);
-  padding: 16px 18px;
-  margin-top: 14px;
+  padding: 14px 16px;
+  margin-top: 12px;
   font-size: 13px;
   color: var(--text-mid);
   line-height: 1.65;
 }
 
-/* ── NAVIGATION ── */
+.dup-notice a {
+  color: var(--wine);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* NAV — sticky at bottom */
 .q-nav {
-  margin-top: 32px;
+  position: sticky;
+  bottom: 0;
+  background: var(--ivory);
+  padding: 16px 0 20px;
+  margin-top: auto;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  border-top: 1px solid var(--ivory-dark);
 }
 
 .btn-back {
   background: transparent;
   border: 1px solid var(--ivory-dark);
   color: var(--text-mid);
-  padding: 14px 20px;
+  padding: 14px 18px;
   font-family: 'Inter', sans-serif;
   font-size: 11.5px;
   font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
   white-space: nowrap;
 }
-
-.btn-back:hover { border-color: var(--wine); color: var(--wine); }
 
 .btn-next {
   flex: 1;
   background: var(--wine);
   color: var(--white);
   border: none;
-  padding: 15px 24px;
+  padding: 15px 20px;
   font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-next:hover { background: var(--wine-light); }
 .btn-next:disabled { opacity: 0.55; pointer-events: none; }
 
-/* ── SUCCESS ── */
+/* SUCCESS */
 #success-screen {
   display: none;
   min-height: 100vh;
@@ -415,57 +383,49 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 64px 28px;
+  padding: 60px 28px;
 }
 
 .success-mark {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   border: 1px solid rgba(201,168,76,0.4);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 28px;
+  margin: 0 auto 24px;
   font-size: 22px;
   color: var(--gold-light);
 }
 
 .success-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(34px, 7vw, 48px);
+  font-size: clamp(30px, 7vw, 44px);
   font-weight: 300;
   color: var(--ivory);
   line-height: 1.15;
   margin-bottom: 20px;
 }
 
-.success-rule {
-  width: 28px;
-  height: 1px;
-  background: rgba(201,168,76,0.4);
-  margin: 0 auto 24px;
-}
+.success-rule { width: 28px; height: 1px; background: rgba(201,168,76,0.4); margin: 0 auto 22px; }
 
 .success-body {
-  font-size: 14.5px;
+  font-size: 14px;
   color: rgba(245,240,232,0.68);
   line-height: 1.9;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
   font-weight: 300;
-  max-width: 380px;
+  max-width: 360px;
 }
 
-.success-body strong {
-  color: rgba(245,240,232,0.9);
-  font-weight: 500;
-}
+.success-body strong { color: rgba(245,240,232,0.9); font-weight: 500; }
 
 .btn-wa {
   display: block;
   background: #25D366;
   color: white;
-  padding: 17px 36px;
+  padding: 16px 32px;
   font-family: 'Inter', sans-serif;
   font-size: 11.5px;
   font-weight: 700;
@@ -473,33 +433,20 @@ body {
   text-decoration: none;
   text-transform: uppercase;
   width: 100%;
-  max-width: 340px;
+  max-width: 320px;
   text-align: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 18px;
 }
 
-.success-note {
-  font-size: 11.5px;
-  color: rgba(245,240,232,0.35);
-  letter-spacing: 0.3px;
-}
+.success-note { font-size: 11.5px; color: rgba(245,240,232,0.35); }
+.success-footer { margin-top: 48px; font-family: 'Cormorant Garamond', serif; font-size: 14px; font-style: italic; color: rgba(245,240,232,0.25); }
 
-.success-footer {
-  margin-top: 52px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
-  font-style: italic;
-  color: rgba(245,240,232,0.25);
-}
-
-@media (max-width: 380px) {
-  .occasion-grid, .budget-grid { grid-template-columns: 1fr; }
-}
+@media (max-width: 380px) { .occ-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<!-- ══ WELCOME ══ -->
+<!-- WELCOME -->
 <div id="welcome">
   <div class="welcome-hero">
     <div class="hero-content">
@@ -507,45 +454,43 @@ body {
       <h1 class="hero-title">Design Your<br><em>Moment</em></h1>
     </div>
   </div>
-
   <div class="welcome-body">
     <p class="welcome-opening">There is a moment that matters to you.</p>
     <p class="welcome-text">
       Whether you are celebrating yourself, someone you love, your team or an important milestone, you have decided this moment deserves more than ordinary.<br><br>
-      Over the next few minutes, we will get to know what you are planning, understand what matters most to you and begin shaping an experience that is thoughtfully designed around your vision.
+      Over the next few minutes, we will get to know what you are planning, understand what matters most to you and begin shaping an experience thoughtfully designed around your vision.
     </p>
     <button class="btn-begin" onclick="startForm()">Let's Begin</button>
     <p class="welcome-reassure">Every memorable celebration begins with a single decision. Today, you have made yours.</p>
   </div>
 </div>
 
-<!-- ══ FORM ══ -->
+<!-- FORM -->
 <div id="form-screen">
-
   <div class="progress-header">
     <div class="progress-brand">Fabsurprise</div>
     <div class="progress-track">
-      <div class="progress-fill" id="pFill" style="width:11%"></div>
+      <div class="progress-fill" id="pFill" style="width:12.5%"></div>
     </div>
-    <div class="progress-text" id="pText">Step 1 of 9</div>
+    <div class="progress-text" id="pText">Step 1 of 8</div>
   </div>
 
-  <!-- ── Q1: NAME ── -->
+  <!-- Q1: NAME -->
   <div class="q-screen active" id="q1">
     <div class="q-thread">We'd love to know you</div>
     <h2 class="q-title">Before we get to the occasion,<br>let's get to know <em>you</em></h2>
     <p class="q-subtext">Every celebration has someone behind it. We will use your name throughout so every conversation feels personal from the very beginning.</p>
     <div class="field-wrap">
-      <input class="field-input" id="fullName" type="text" placeholder="Your full name" autocomplete="name">
-      <div class="field-error" id="err-fullName">Please enter your name so we know who we're speaking with.</div>
+      <input class="field-input" id="fullName" type="text" placeholder="Your full name" autocomplete="name" autocorrect="off">
+      <div class="field-error" id="err-fullName">Please enter your name so we know who we are speaking with.</div>
     </div>
     <div class="q-nav">
       <div></div>
-      <button class="btn-next" onclick="next(1)">Continue</button>
+      <button class="btn-next" onclick="goNext(1)">Continue</button>
     </div>
   </div>
 
-  <!-- ── Q2: WHATSAPP ── -->
+  <!-- Q2: CONTACT (WhatsApp + Email combined) -->
   <div class="q-screen" id="q2">
     <div class="q-thread" id="thread2">Let's stay connected</div>
     <h2 class="q-title">From this moment,<br>we don't want you <em>wondering what happens next</em></h2>
@@ -556,41 +501,40 @@ body {
       <input class="field-input" id="email" type="email" placeholder="Email Address" autocomplete="email">
       <div class="field-error" id="err-email">Please enter a valid email address.</div>
       <div class="dup-notice" id="dupNotice">
-        It looks like we have heard from this email before. If you would like to follow up on an existing enquiry, the quickest way is to message us directly on WhatsApp. We would be happy to pick up right where we left off.
+        It looks like we have heard from this email before. If you would like to follow up on a previous enquiry, we would love to continue the conversation.
+        <a href="https://wa.me/2349025141322?text=Hi%20Fabsurprise%2C%20I%20would%20like%20to%20follow%20up%20on%20a%20previous%20enquiry." target="_blank">Continue on WhatsApp</a>
       </div>
     </div>
     <div class="q-nav">
-      <button class="btn-back" onclick="prev(2)">Back</button>
-      <button class="btn-next" onclick="next(2)">Continue</button>
+      <button class="btn-back" onclick="goPrev(2)">Back</button>
+      <button class="btn-next" id="q2btn" onclick="goNext(2)">Continue</button>
     </div>
   </div>
 
-  <!-- Q3 merged into Q2 -->
-
-  <!-- ── Q4: WHO ── -->
-  <div class="q-screen" id="q4">
+  <!-- Q3: WHO -->
+  <div class="q-screen" id="q3">
     <div class="q-thread">Tell us who this moment is all about</div>
     <h2 class="q-title">Every celebration<br>begins with a <em>person</em></h2>
     <p class="q-subtext">Knowing who we are creating this for helps us understand the heart behind every detail we will thoughtfully bring together.</p>
     <div class="field-wrap">
       <div class="option-list" id="who-list">
-        <div class="opt" onclick="pickOpt(this,'who','My Partner')">
+        <div class="opt" onclick="pickWho(this,'My Partner')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">My Partner</div><div class="opt-sub">Husband, wife, boyfriend, girlfriend, fiancé</div></div>
         </div>
-        <div class="opt" onclick="pickOpt(this,'who','A Family Member')">
+        <div class="opt" onclick="pickWho(this,'A Family Member')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">A Family Member</div><div class="opt-sub">Mum, dad, sibling, child</div></div>
         </div>
-        <div class="opt" onclick="pickOpt(this,'who','A Friend')">
+        <div class="opt" onclick="pickWho(this,'A Friend')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">A Friend</div><div class="opt-sub">Someone who deserves to know how much they mean to you</div></div>
         </div>
-        <div class="opt" onclick="pickOpt(this,'who','A Colleague or Client')">
+        <div class="opt" onclick="pickWho(this,'A Colleague or Client')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">A Colleague or Client</div><div class="opt-sub">Employee appreciation, executive gifting, corporate recognition</div></div>
         </div>
-        <div class="opt" onclick="pickOpt(this,'who','Myself')">
+        <div class="opt" onclick="pickWho(this,'Myself')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">Myself</div><div class="opt-sub">Because you deserve to be celebrated too</div></div>
         </div>
@@ -598,18 +542,18 @@ body {
       <div class="field-error" id="err-who">Please let us know who this celebration is for.</div>
     </div>
     <div class="q-nav">
-      <button class="btn-back" onclick="prev(4)">Back</button>
-      <button class="btn-next" onclick="next(4)">Continue</button>
+      <button class="btn-back" onclick="goPrev(3)">Back</button>
+      <button class="btn-next" onclick="goNext(3)">Continue</button>
     </div>
   </div>
 
-  <!-- ── Q5: OCCASION ── -->
-  <div class="q-screen" id="q5">
-    <div class="q-thread" id="thread5">Every occasion tells a different story</div>
-    <h2 class="q-title" id="title5">What are you<br><em>celebrating?</em></h2>
-    <p class="q-subtext" id="sub5">Some celebrate themselves. Some celebrate the people they love. Some celebrate achievements. Some celebrate new beginnings. Tell us what yours is.</p>
+  <!-- Q4: OCCASION -->
+  <div class="q-screen" id="q4">
+    <div class="q-thread" id="thread4">Every occasion tells a different story</div>
+    <h2 class="q-title" id="title4">What are you<br><em>celebrating?</em></h2>
+    <p class="q-subtext" id="sub4">Some celebrate themselves. Some celebrate the people they love. Some celebrate achievements and new beginnings. Tell us what yours is.</p>
     <div class="field-wrap">
-      <div class="occasion-grid" id="occ-grid">
+      <div class="occ-grid">
         <div class="occ-card" onclick="pickOcc(this,'Birthday')"><div class="occ-name">Birthday</div></div>
         <div class="occ-card" onclick="pickOcc(this,'Proposal')"><div class="occ-name">Proposal</div></div>
         <div class="occ-card" onclick="pickOcc(this,'Anniversary')"><div class="occ-name">Anniversary</div></div>
@@ -626,274 +570,232 @@ body {
       <div class="field-error" id="err-occ">Please select the occasion.</div>
     </div>
     <div class="q-nav">
-      <button class="btn-back" onclick="prev(5)">Back</button>
-      <button class="btn-next" onclick="next(5)">Continue</button>
+      <button class="btn-back" onclick="goPrev(4)">Back</button>
+      <button class="btn-next" onclick="goNext(4)">Continue</button>
     </div>
   </div>
 
-  <!-- ── Q6: DATE ── -->
-  <div class="q-screen" id="q6">
-    <div class="q-thread" id="thread6">When are you hoping to celebrate?</div>
-    <h2 class="q-title" id="title6">When is it<br><em>happening?</em></h2>
+  <!-- Q5: DATE -->
+  <div class="q-screen" id="q5">
+    <div class="q-thread" id="thread5">When are you hoping to celebrate?</div>
+    <h2 class="q-title" id="title5">When is it<br><em>happening?</em></h2>
     <p class="q-subtext">Knowing your preferred date helps us understand how to best approach this. If you are still deciding, an estimated date is perfectly fine.</p>
     <div class="field-wrap">
       <input class="field-input" id="celebDate" type="date">
-      <div class="field-error" id="err-celebDate">Please give us a date even an estimate helps.</div>
+      <div class="field-error" id="err-celebDate">Please give us a date. An estimate is completely fine.</div>
     </div>
     <div class="q-nav">
-      <button class="btn-back" onclick="prev(6)">Back</button>
-      <button class="btn-next" onclick="next(6)">Continue</button>
+      <button class="btn-back" onclick="goPrev(5)">Back</button>
+      <button class="btn-next" onclick="goNext(5)">Continue</button>
     </div>
   </div>
 
-  <!-- ── Q7: LOCATION ── -->
-  <div class="q-screen" id="q7">
+  <!-- Q6: LOCATION -->
+  <div class="q-screen" id="q6">
     <div class="q-thread">Where will it all happen?</div>
     <h2 class="q-title">Where will this<br><em>take place?</em></h2>
     <p class="q-subtext">Whether it is your home, a hotel, a restaurant or somewhere completely different, let us know where this occasion will happen. We will take care of the rest together.</p>
     <div class="field-wrap">
-      <input class="field-input" id="location" type="text" placeholder="e.g. Lagos, Lekki Phase 1, Abuja">
+      <input class="field-input" id="location" type="text" placeholder="e.g. Lagos, Lekki Phase 1, Abuja" autocorrect="off">
       <div class="field-error" id="err-location">Please let us know where this will take place.</div>
     </div>
     <div class="q-nav">
-      <button class="btn-back" onclick="prev(7)">Back</button>
-      <button class="btn-next" onclick="next(7)">Continue</button>
+      <button class="btn-back" onclick="goPrev(6)">Back</button>
+      <button class="btn-next" onclick="goNext(6)">Continue</button>
     </div>
   </div>
 
-  <!-- ── Q8: BUDGET ── -->
-  <div class="q-screen" id="q8">
+  <!-- Q7: GUIDE STYLE -->
+  <div class="q-screen" id="q7">
     <div class="q-thread">How would you like us to guide you?</div>
     <h2 class="q-title">No two celebrations<br>begin the <em>same way</em></h2>
     <p class="q-subtext">Some people arrive with a clear idea. Others are looking for inspiration. Tell us how you would like us to support you and we will take it from there.</p>
     <div class="field-wrap">
-      <div class="option-list" id="bud-grid">
-        <div class="opt" onclick="pickBud(this,'I have an idea and would love help bringing it to life')">
+      <div class="option-list" id="guide-list">
+        <div class="opt" onclick="pickGuide(this,'I have an idea and would love help bringing it to life')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">I have an idea</div><div class="opt-sub">I know what I want and would love your help bringing it to life</div></div>
         </div>
-        <div class="opt" onclick="pickBud(this,'I would love a recommendation based on my vision')">
+        <div class="opt" onclick="pickGuide(this,'I would love a recommendation based on my vision')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">Recommend what would work best</div><div class="opt-sub">Guide me based on what I have shared</div></div>
         </div>
-        <div class="opt" onclick="pickBud(this,'I would like to explore different possibilities')">
+        <div class="opt" onclick="pickGuide(this,'I would like to explore different possibilities')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">Let's explore together</div><div class="opt-sub">I am open to ideas and would love to see what is possible</div></div>
         </div>
-        <div class="opt" onclick="pickBud(this,'I want to create something truly extraordinary')">
+        <div class="opt" onclick="pickGuide(this,'I want to create something truly extraordinary')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">I want something extraordinary</div><div class="opt-sub">This moment deserves something remarkable</div></div>
         </div>
       </div>
-      <div class="field-error" id="err-bud">Please select a budget range.</div>
+      <div class="field-error" id="err-guide">Please let us know how you would like us to guide you.</div>
     </div>
     <div class="q-nav">
-      <button class="btn-back" onclick="prev(8)">Back</button>
-      <button class="btn-next" onclick="next(8)">Continue</button>
+      <button class="btn-back" onclick="goPrev(7)">Back</button>
+      <button class="btn-next" onclick="goNext(7)">Continue</button>
     </div>
   </div>
 
-  <!-- ── Q9: DETAILS ── -->
-  <div class="q-screen" id="q9">
-    <div class="q-thread" id="thread9">Now we are listening</div>
+  <!-- Q8: VISION -->
+  <div class="q-screen" id="q8">
+    <div class="q-thread" id="thread8">Now we are listening</div>
 
-    <div class="reassure-card" style="margin-bottom:28px;">
+    <div class="reassure-card">
       <p id="reassureText">You are almost there. Tell us what is on your mind. Not the logistics. Just the picture you have been carrying around and the feeling you want to create.</p>
       <span id="reassureSub">The more you share, the more personal this becomes.</span>
     </div>
 
-    <h2 class="q-title" id="title9">Tell us what<br>you are <em>imagining</em></h2>
-    <p class="q-subtext">Your ideas, what inspired this, the experience you would love to create. You do not need to have every detail figured out. The more we understand what matters to you, the more personal your experience becomes.</p>
+    <h2 class="q-title" id="title8">Tell us what<br>you are <em>imagining</em></h2>
+    <p class="q-subtext">Your ideas, what inspired this, the experience you would love to create. You do not need to have every detail figured out.</p>
     <div class="field-wrap">
       <textarea class="field-textarea" id="details" placeholder="Tell us everything you would love us to know..."></textarea>
       <div class="field-error" id="err-details">Please share a little about what you have in mind.</div>
     </div>
     <div class="q-nav">
-      <button class="btn-back" onclick="prev(9)">Back</button>
+      <button class="btn-back" onclick="goPrev(8)">Back</button>
       <button class="btn-next" id="submitBtn" onclick="submitForm()">Send My Enquiry</button>
     </div>
   </div>
 
 </div>
 
-<!-- ══ SUCCESS ══ -->
+<!-- SUCCESS -->
 <div id="success-screen">
   <div class="success-mark">&#10003;</div>
-  <h2 class="success-title" id="successTitle">We have you.</h2>
+  <h2 class="success-title" id="successTitle">This is where the exciting part begins.</h2>
   <div class="success-rule"></div>
   <p class="success-body" id="successBody">
     We have received everything you shared and we are already thinking about what this celebration could become.<br><br>
-    Your next step is a conversation on WhatsApp. We will already have your enquiry in front of us, so instead of starting from the beginning, we will focus on refining your ideas, answering your questions and bringing your plans to life together.<br><br>
+    Your next step is a conversation on WhatsApp. We will already have your enquiry in front of us, so instead of starting from the beginning, we will focus on refining your ideas and bringing your plans to life together.<br><br>
     <strong>We cannot wait to meet you there.</strong>
   </p>
   <a id="waBtn" href="#" target="_blank" class="btn-wa">Continue to WhatsApp</a>
   <p class="success-note">A confirmation is on its way to your email.</p>
-  <p class="success-footer">Every detail, handled with love Team Fabsurprise</p>
+  <p class="success-footer">Every detail, handled with love — Team Fabsurprise</p>
 </div>
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
 const WA = '2349025141322';
-const STEPS = 8;
+const TOTAL = 8;
 
-let step = 1;
+let curStep = 1;
 let fd = {};
 let selWho = '';
 let selOcc = '';
-let selBud = '';
+let selGuide = '';
 let enquiryId = 'ENQ-' + Date.now();
-let partialDone = false;
+let partialSaved = false;
 let dupBlocked = false;
 
 // ── RESUME CHECK ──
-(function checkResume() {
+(function() {
   const params = new URLSearchParams(window.location.search);
   const resumeId = params.get('resume');
-  if (resumeId) {
+  if (!resumeId) return;
+  try {
     const saved = localStorage.getItem('fab_enq_' + resumeId);
-    if (saved) {
-      try {
-        const data = JSON.parse(saved);
-        enquiryId = resumeId;
-        if (data.fullName) { fd.fullName = data.fullName; }
-        if (data.whatsapp) { fd.whatsapp = data.whatsapp; }
-        if (data.email) { fd.email = data.email; }
-        partialDone = true;
-        // Auto start and go to step 4
-        document.getElementById('welcome').style.display = 'none';
-        document.getElementById('form-screen').style.display = 'block';
-        // Pre-fill fields
-        if (data.fullName) document.getElementById('fullName').value = data.fullName;
-        if (data.whatsapp) document.getElementById('whatsapp').value = data.whatsapp;
-        if (data.email) document.getElementById('email').value = data.email;
-        show(4);
-        return;
-      } catch(e) {}
-    }
-  }
+    if (!saved) return;
+    const data = JSON.parse(saved);
+    enquiryId = resumeId;
+    fd = data;
+    partialSaved = true;
+    if (data.fullName) document.getElementById('fullName').value = data.fullName;
+    if (data.whatsapp) document.getElementById('whatsapp').value = data.whatsapp;
+    if (data.email) document.getElementById('email').value = data.email;
+    document.getElementById('welcome').style.display = 'none';
+    document.getElementById('form-screen').style.display = 'flex';
+    showStep(3);
+  } catch(e) {}
 })();
 
-// ── START ──
 function startForm() {
   document.getElementById('welcome').style.display = 'none';
-  document.getElementById('form-screen').style.display = 'block';
-  setProgress(1);
-  window.scrollTo(0,0);
+  document.getElementById('form-screen').style.display = 'flex';
+  showStep(1);
 }
 
-// ── NAV ──
-function next(s) {
+function showStep(s) {
+  document.querySelectorAll('.q-screen').forEach(function(el) { el.classList.remove('active'); });
+  const el = document.getElementById('q' + s);
+  if (el) el.classList.add('active');
+  curStep = s;
+  const pct = Math.round((s / TOTAL) * 100);
+  document.getElementById('pFill').style.width = pct + '%';
+  document.getElementById('pText').textContent = 'Step ' + s + ' of ' + TOTAL;
+  window.scrollTo(0, 0);
+}
+
+function goNext(s) {
   if (!validate(s)) return;
   collect(s);
-  if (s === 2) { handleStep3(); return; }
-  show(s + 1);
+  if (s === 2) {
+    checkDup();
+    return;
+  }
   personalise(s + 1);
+  showStep(s + 1);
 }
 
-function prev(s) { show(s - 1); }
-
-function show(s) {
-  document.querySelectorAll('.q-screen').forEach(function(el){ el.classList.remove('active'); });
-  document.getElementById('q' + s).classList.add('active');
-  step = s;
-  setProgress(s);
-  window.scrollTo(0,0);
+function goPrev(s) {
+  showStep(s - 1);
 }
 
-function setProgress(s) {
-  document.getElementById('pFill').style.width = Math.round((s/STEPS)*100) + '%';
-  document.getElementById('pText').textContent = 'Step ' + s + ' of ' + STEPS;
-}
-
-// ── PERSONALISATION ──
-function personalise(s) {
-  var name = fd.fullName ? fd.fullName.split(' ')[0] : '';
-  var who = selWho;
-  var occ = selOcc;
-
-  if (s === 2 && name) {
-    document.getElementById('thread2').textContent = 'Hi ' + name;
-  }
-
-  if (s === 5) {
-    if (who === 'Myself') {
-      document.getElementById('title5').innerHTML = 'What are you<br><em>celebrating?</em>';
-      document.getElementById('sub5').textContent = 'Self love is one of the most powerful celebrations there is. Tell us what the occasion is.';
-    } else if (who === 'My Partner') {
-      document.getElementById('thread5').textContent = 'For the one you love';
-      document.getElementById('title5').innerHTML = 'What are you<br><em>celebrating together?</em>';
-    } else if (who === 'A Family Member') {
-      document.getElementById('thread5').textContent = 'For someone who raised you or walks beside you';
-    }
-  }
-
-  if (s === 6 && occ) {
-    var dateThreads = {
-      'Proposal': 'The moment that changes everything',
-      'Birthday': 'Mark the day they arrived',
-      'Anniversary': 'The day worth remembering',
-      'Baby Shower': 'Before the little one arrives',
-      'Graduation': 'A milestone worth honouring',
-    };
-    if (dateThreads[occ]) document.getElementById('thread6').textContent = dateThreads[occ];
-    document.getElementById('title6').innerHTML = 'When is the<br><em>' + occ.toLowerCase() + '?</em>';
-  }
-
-  if (s === 9) {
-    if (name && occ) {
-      document.getElementById('reassureText').textContent = name + ', from everything you\'ve shared, we can already tell this ' + occ.toLowerCase() + ' is going to mean a great deal. Now tell us what\'s in your mind.';
-    } else if (name) {
-      document.getElementById('reassureText').textContent = name + ', from everything you\'ve shared so far, we already have a sense of what this moment means to you. Now tell us a little more in your own words.';
-    }
-    if (who === 'Myself') {
-      document.getElementById('title9').innerHTML = 'Tell us about<br>the <em>experience you want</em>';
-    } else if (occ) {
-      document.getElementById('title9').innerHTML = 'Tell us about<br>the <em>' + occ.toLowerCase() + '</em>';
-    }
-  }
-}
-
-// ── STEP 3 HANDLER ──
-function handleStep3() {
-  var email = document.getElementById('email').value.trim();
+// ── DUPLICATE CHECK ──
+function checkDup() {
+  const email = document.getElementById('email').value.trim();
+  const btn = document.getElementById('q2btn');
+  btn.textContent = 'Checking...';
+  btn.disabled = true;
 
   window._dupCb = function(data) {
+    btn.textContent = 'Continue';
+    btn.disabled = false;
     if (data.isDuplicate) {
       dupBlocked = true;
       document.getElementById('dupNotice').style.display = 'block';
       document.getElementById('email').classList.add('error');
     } else {
       dupBlocked = false;
+      document.getElementById('dupNotice').style.display = 'none';
       savePartial();
-      show(4);
-      personalise(4);
+      personalise(3);
+      showStep(3);
     }
   };
 
-  var script = document.createElement('script');
+  const script = document.createElement('script');
   script.src = SCRIPT_URL + '?action=checkDuplicate&email=' + encodeURIComponent(email) + '&callback=_dupCb&t=' + Date.now();
+  script.onerror = function() {
+    btn.textContent = 'Continue';
+    btn.disabled = false;
+    savePartial();
+    personalise(3);
+    showStep(3);
+  };
   document.head.appendChild(script);
 
-  // Fallback after 3s
   setTimeout(function() {
-    if (step === 3 && !dupBlocked) {
+    if (curStep === 2) {
+      btn.textContent = 'Continue';
+      btn.disabled = false;
       savePartial();
-      show(4);
-      personalise(4);
+      personalise(3);
+      showStep(3);
     }
-  }, 3000);
+  }, 4000);
 }
 
 function savePartial() {
-  if (partialDone) return;
-  partialDone = true;
-  // Save to localStorage for resume link
+  if (partialSaved) return;
+  partialSaved = true;
   localStorage.setItem('fab_enq_' + enquiryId, JSON.stringify({
     fullName: fd.fullName,
     whatsapp: fd.whatsapp,
     email: fd.email
   }));
-  var now = new Date();
+  const now = new Date();
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -907,97 +809,147 @@ function savePartial() {
       whatsapp: fd.whatsapp,
       email: fd.email,
       status: 'Incomplete',
-      stoppedAt: 'Step 3'
+      stoppedAt: 'Step 2'
     })
-  }).catch(function(){});
+  }).catch(function() {});
 }
 
-// ── VALIDATION ──
+// ── PERSONALISE ──
+function personalise(s) {
+  const name = (fd.fullName || '').split(' ')[0];
+  if (s === 2 && name) {
+    document.getElementById('thread2').textContent = 'Hi ' + name + ', let\'s stay connected';
+  }
+  if (s === 4) {
+    if (selWho === 'Myself') {
+      document.getElementById('title4').innerHTML = 'What are you<br><em>celebrating?</em>';
+      document.getElementById('sub4').textContent = 'Self love is one of the most powerful celebrations there is. Tell us what the occasion is.';
+    } else if (selWho === 'My Partner') {
+      document.getElementById('thread4').textContent = 'For the one you love';
+    }
+  }
+  if (s === 5 && selOcc) {
+    const threads = {
+      'Proposal': 'The moment that changes everything',
+      'Birthday': 'Mark the day they arrived',
+      'Anniversary': 'The day worth remembering',
+      'Graduation': 'A milestone worth honouring',
+      'Self Love': 'You deserve this'
+    };
+    if (threads[selOcc]) document.getElementById('thread5').textContent = threads[selOcc];
+    document.getElementById('title5').innerHTML = 'When is the<br><em>' + selOcc.toLowerCase() + '?</em>';
+  }
+  if (s === 8) {
+    const name2 = (fd.fullName || '').split(' ')[0];
+    if (name2 && selOcc) {
+      document.getElementById('reassureText').textContent = name2 + ', from everything you have shared, we can already feel the thought behind this ' + selOcc.toLowerCase() + '. Now tell us what is in your mind.';
+    }
+    if (selOcc) {
+      document.getElementById('title8').innerHTML = 'Tell us about<br>the <em>' + selOcc.toLowerCase() + '</em>';
+    }
+  }
+}
+
+// ── VALIDATE ──
 function validate(s) {
-  var ok = true;
+  let ok = true;
 
   function clr(id) {
-    var el = document.getElementById(id);
-    var er = document.getElementById('err-' + id);
+    const el = document.getElementById(id);
+    const er = document.getElementById('err-' + id);
     if (el) el.classList.remove('error');
     if (er) er.style.display = 'none';
   }
 
   function fail(id) {
     ok = false;
-    var er = document.getElementById('err-' + id);
-    var el = document.getElementById(id);
+    const er = document.getElementById('err-' + id);
+    const el = document.getElementById(id);
     if (er) er.style.display = 'block';
     if (el) el.classList.add('error');
   }
 
   if (s === 1) { clr('fullName'); if (!document.getElementById('fullName').value.trim()) fail('fullName'); }
+
   if (s === 2) {
-    clr('whatsapp');
-    if (!document.getElementById('whatsapp').value.trim() || document.getElementById('whatsapp').value.trim().replace(/\s/g,'').length < 7) fail('whatsapp');
-    clr('email');
+    clr('whatsapp'); clr('email');
     document.getElementById('dupNotice').style.display = 'none';
-    var em2 = document.getElementById('email').value.trim();
-    if (!em2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em2)) fail('email');
+    const wa = document.getElementById('whatsapp').value.trim();
+    const em = document.getElementById('email').value.trim();
+    if (!wa || wa.replace(/\s/g,'').length < 7) fail('whatsapp');
+    if (!em || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) fail('email');
   }
-  // email validation now in step 2
-  if (s === 4) { var e4 = document.getElementById('err-who'); if (!selWho) { ok = false; e4.style.display = 'block'; } else e4.style.display = 'none'; }
-  if (s === 5) { var e5 = document.getElementById('err-occ'); if (!selOcc) { ok = false; e5.style.display = 'block'; } else e5.style.display = 'none'; }
-  if (s === 6) { clr('celebDate'); if (!document.getElementById('celebDate').value) fail('celebDate'); }
-  if (s === 7) { clr('location'); if (!document.getElementById('location').value.trim()) fail('location'); }
-  if (s === 8) { var e8 = document.getElementById('err-bud'); if (!selBud) { ok = false; e8.style.display = 'block'; } else e8.style.display = 'none'; }
-  if (s === 9) { clr('details'); if (!document.getElementById('details').value.trim()) fail('details'); }
+
+  if (s === 3) {
+    const er = document.getElementById('err-who');
+    if (!selWho) { ok = false; er.style.display = 'block'; } else er.style.display = 'none';
+  }
+
+  if (s === 4) {
+    const er = document.getElementById('err-occ');
+    if (!selOcc) { ok = false; er.style.display = 'block'; } else er.style.display = 'none';
+  }
+
+  if (s === 5) { clr('celebDate'); if (!document.getElementById('celebDate').value) fail('celebDate'); }
+  if (s === 6) { clr('location'); if (!document.getElementById('location').value.trim()) fail('location'); }
+
+  if (s === 7) {
+    const er = document.getElementById('err-guide');
+    if (!selGuide) { ok = false; er.style.display = 'block'; } else er.style.display = 'none';
+  }
+
+  if (s === 8) { clr('details'); if (!document.getElementById('details').value.trim()) fail('details'); }
 
   return ok;
 }
 
 // ── COLLECT ──
 function collect(s) {
-  if (s===1) fd.fullName = document.getElementById('fullName').value.trim();
-  if (s===2) { fd.whatsapp = document.getElementById('whatsapp').value.trim(); fd.email = document.getElementById('email').value.trim(); }
-  if (s===4) fd.who = selWho;
-  if (s===5) fd.occasion = selOcc;
-  if (s===6) fd.celebDate = document.getElementById('celebDate').value;
-  if (s===7) fd.location = document.getElementById('location').value.trim();
-  if (s===8) fd.budget = selBud;
-  if (s===9) fd.details = document.getElementById('details').value.trim();
+  if (s === 1) fd.fullName = document.getElementById('fullName').value.trim();
+  if (s === 2) { fd.whatsapp = document.getElementById('whatsapp').value.trim(); fd.email = document.getElementById('email').value.trim(); }
+  if (s === 3) fd.who = selWho;
+  if (s === 4) fd.occasion = selOcc;
+  if (s === 5) fd.celebDate = document.getElementById('celebDate').value;
+  if (s === 6) fd.location = document.getElementById('location').value.trim();
+  if (s === 7) fd.guideStyle = selGuide;
+  if (s === 8) fd.details = document.getElementById('details').value.trim();
 }
 
 // ── PICKERS ──
-function pickOpt(el, group, val) {
-  document.querySelectorAll('#who-list .opt').forEach(function(o){ o.classList.remove('active'); });
+function pickWho(el, val) {
+  document.querySelectorAll('#who-list .opt').forEach(function(o) { o.classList.remove('active'); });
   el.classList.add('active');
   selWho = val;
   document.getElementById('err-who').style.display = 'none';
 }
 
 function pickOcc(el, val) {
-  document.querySelectorAll('#occ-grid .occ-card').forEach(function(o){ o.classList.remove('active'); });
+  document.querySelectorAll('.occ-card').forEach(function(o) { o.classList.remove('active'); });
   el.classList.add('active');
   selOcc = val;
   document.getElementById('err-occ').style.display = 'none';
 }
 
-function pickBud(el, val) {
-  document.querySelectorAll('#bud-grid .bud-card').forEach(function(o){ o.classList.remove('active'); });
+function pickGuide(el, val) {
+  document.querySelectorAll('#guide-list .opt').forEach(function(o) { o.classList.remove('active'); });
   el.classList.add('active');
-  selBud = val;
-  document.getElementById('err-bud').style.display = 'none';
+  selGuide = val;
+  document.getElementById('err-guide').style.display = 'none';
 }
 
 // ── SUBMIT ──
 function submitForm() {
-  if (!validate(9)) return;
-  collect(9);
+  if (!validate(8)) return;
+  collect(8);
 
-  var btn = document.getElementById('submitBtn');
+  const btn = document.getElementById('submitBtn');
   btn.textContent = 'Sending...';
   btn.disabled = true;
 
-  var now = new Date();
-  var firstName = fd.fullName.split(' ')[0];
+  const now = new Date();
+  const firstName = fd.fullName.split(' ')[0];
 
-  var payload = {
+  const payload = {
     action: 'enquiryComplete',
     enquiryId: enquiryId,
     submissionDate: now.toLocaleDateString('en-GB'),
@@ -1010,43 +962,43 @@ function submitForm() {
     occasion: fd.occasion,
     celebDate: fd.celebDate,
     location: fd.location,
-    budget: fd.budget,
+    guideStyle: fd.guideStyle,
     details: fd.details
   };
 
-  var waMsg = encodeURIComponent(
+  const waMsg = encodeURIComponent(
     'Hi Fabsurprise,\n\nI have just completed my Design Your Moment enquiry.\n\nI am excited to begin planning and I look forward to speaking with your team.\n\nRef: ' + enquiryId
   );
-  var waLink = 'https://wa.me/' + WA + '?text=' + waMsg;
+  const waLink = 'https://wa.me/' + WA + '?text=' + waMsg;
 
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
-  }).catch(function(){});
+  }).catch(function() {});
 
-  // Personalise success screen
-  document.getElementById('successTitle').textContent = 'This is where the exciting part begins.';
+  localStorage.removeItem('fab_enq_' + enquiryId);
+
+  document.getElementById('successTitle').textContent = firstName + ', this is where the exciting part begins.';
   document.getElementById('successBody').innerHTML =
-    'We\'ve received everything you\'ve shared about your ' + fd.occasion.toLowerCase() + ' and we\'re already thinking about how to bring this to life.<br><br>' +
-    '<strong>Someone from our team will reach out to you personally on WhatsApp very shortly.</strong><br><br>' +
-    'In the meantime, you\'re welcome to start the conversation now.';
+    'We have received everything you shared about your ' + fd.occasion.toLowerCase() + ' and we are already thinking about what this could become.<br><br>' +
+    'Your next step is a conversation on WhatsApp. We will already have your enquiry in front of us, so instead of starting from the beginning, we will focus on refining your ideas and bringing your plans to life together.<br><br>' +
+    '<strong>We cannot wait to meet you there.</strong>';
 
   setTimeout(function() {
     document.getElementById('form-screen').style.display = 'none';
-    var s = document.getElementById('success-screen');
+    const s = document.getElementById('success-screen');
     s.style.display = 'flex';
     document.getElementById('waBtn').href = waLink;
-    window.scrollTo(0,0);
-  }, 1000);
+    window.scrollTo(0, 0);
+  }, 800);
 }
 
-// Clear errors on type
 document.addEventListener('input', function(e) {
   if (e.target.classList.contains('field-input') || e.target.classList.contains('field-textarea')) {
     e.target.classList.remove('error');
-    var er = document.getElementById('err-' + e.target.id);
+    const er = document.getElementById('err-' + e.target.id);
     if (er) er.style.display = 'none';
   }
 });

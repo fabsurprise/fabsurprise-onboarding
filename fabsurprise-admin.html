@@ -474,6 +474,7 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
 
 <script>
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
+// ── ADMIN PASSWORD — change this to your own password ──
 const ADMIN_PASSWORD = 'fab2024admin';
 const JOURNEY_BASE_URL = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-journey.html';
 const WA_NUMBER = '2349025141322';
@@ -680,9 +681,10 @@ function renderEnquiries(filter) {
     var isSubmitted = e.status === 'Submitted';
     var headerClass = isSubmitted ? 'submitted' : 'incomplete';
 
+    const resumeUrl = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html?resume=' + e.enquiryId;
     var waFollowUp = isSubmitted
-      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you for your Design Your Moment enquiry with Fabsurprise. We have reviewed your details and we are excited to begin the conversation. When would be a good time to speak?')
-      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', we noticed you started designing your moment with Fabsurprise but did not quite finish. We completely understand life gets busy. If you would like to continue or have any questions, we are right here.');
+      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you for your Design Your Moment enquiry with Fabsurprise (Ref: ' + e.enquiryId + '). We have reviewed your details and we are excited to begin the conversation. When would be a good time to speak?')
+      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', we noticed you started designing your moment with Fabsurprise but did not quite finish. We completely understand life gets busy. Whenever you are ready, you can continue exactly where you left off here: ' + resumeUrl);
 
     var waNumber = (e.whatsapp || '').replace(/\D/g, '');
     if (waNumber.startsWith('0')) waNumber = '234' + waNumber.slice(1);
@@ -709,7 +711,7 @@ function renderEnquiries(filter) {
         (e.stoppedAt ? '<div class="detail-row"><span class="detail-key">Stopped At</span><span class="detail-val">' + e.stoppedAt + '</span></div>' : '') +
       '</div>' +
       '<div class="enq-actions">' +
-        (!isSubmitted && waNumber ? '<a href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html?resume=' + e.enquiryId + '" target="_blank" style="display:inline-block;background:var(--ivory-mid);color:var(--text-mid);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;text-decoration:none;text-transform:uppercase;letter-spacing:0.5px;">Copy Resume Link</a>' : '') +
+        (!isSubmitted ? '<button onclick="copyResumeLink(\'' + e.enquiryId + '\')" style="background:var(--ivory-mid);color:var(--text-mid);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Copy Resume Link</button>' : '') +
         (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waFollowUp + '" target="_blank" class="btn-enq-wa">' + (isSubmitted ? 'WhatsApp' : 'Follow Up') + '</a>' : '') +
         (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\')">Send Onboarding Link</button>' : '') +
       '</div>' +
@@ -753,6 +755,15 @@ function formatAdminDate(dateStr) {
     if (isNaN(d)) return dateStr;
     return d.toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
   } catch(e) { return dateStr; }
+}
+
+function copyResumeLink(enquiryId) {
+  const link = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html?resume=' + enquiryId;
+  navigator.clipboard.writeText(link).then(function() {
+    showToast('Resume link copied! Send it to the client on WhatsApp.');
+  }).catch(function() {
+    prompt('Copy this link and send to client:', link);
+  });
 }
 
 function showToast(msg) {

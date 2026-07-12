@@ -994,11 +994,8 @@ function submitForm() {
   localStorage.removeItem('fab_enq_' + enquiryId);
 
   document.getElementById('successTitle').textContent = firstName + ', this is where the exciting part begins.';
-  const occText = (fd.who === 'Myself')
-    ? 'your ' + fd.occasion.toLowerCase()
-    : 'this ' + fd.occasion.toLowerCase();
   document.getElementById('successBody').innerHTML =
-    'We have received everything you shared about ' + occText + ' and we are already thinking about what this could become.<br><br>' +
+    'We have received everything you shared and we are already thinking about what this celebration could become.<br><br>' +
     'Your next step is a conversation on WhatsApp. We will already have your enquiry in front of us, so instead of starting from the beginning, we will focus on refining your ideas and bringing your plans to life together.<br><br>' +
     '<strong>We cannot wait to meet you there.</strong>';
 

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Next Chapter of Fabsurprise</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --wine: #7A1428;
+  --wine-dark: #5A0E1C;
+  --wine-light: #921830;
+  --gold: #C9A84C;
+  --gold-light: #E2C97A;
+  --gold-pale: #F9F3E3;
+  --ivory: #F5F0E8;
+  --ivory-mid: #EDE7DC;
+  --ivory-dark: #DDD5C5;
+  --white: #FDFAF6;
+  --text-dark: #1A0A0E;
+  --text-mid: #4A2030;
+  --text-light: #8B6B5A;
+  --error: #B02020;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--ivory);
+  color: var(--text-dark);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.screen.active { display: flex; }
+
+/* ── SCREEN 1: WELCOME ── */
+#screen-welcome {
+  background: var(--wine-dark);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.corner-brand {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  z-index: 2;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  opacity: 0.65;
+  font-weight: 500;
+}
+
+#screen-welcome::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -20%;
+  width: 60%;
+  height: 60%;
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 50%;
+}
+
+#screen-welcome::after {
+  content: '';
+  position: absolute;
+  bottom: -25%;
+  left: -15%;
+  width: 55%;
+  height: 55%;
+  border: 1px solid rgba(201,168,76,0.08);
+  border-radius: 50%;
+}
+
+.welcome-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.15s forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.w-eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+
+.w-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(34px, 8vw, 50px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.18;
+  margin-bottom: 28px;
+}
+
+.w-title em { font-style: italic; color: var(--gold-light); }
+
+.w-subline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-style: italic;
+  color: var(--gold-light);
+  margin-bottom: 26px;
+  opacity: 0.9;
+}
+
+.w-rule {
+  width: 28px;
+  height: 1px;
+  background: rgba(201,168,76,0.4);
+  margin: 0 auto 28px;
+}
+
+.w-body {
+  font-size: 14.5px;
+  color: rgba(245,240,232,0.72);
+  line-height: 1.9;
+  font-weight: 300;
+  margin-bottom: 44px;
+}
+
+.btn-continue {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--wine-dark);
+  border: none;
+  padding: 17px 44px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-continue:hover { background: var(--gold-light); }
+
+/* ── SCREEN 2: RECONNECT FORM ── */
+#screen-form {
+  background: var(--ivory);
+}
+
+.form-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--ivory-dark);
+  padding: 16px 24px;
+  text-align: left;
+}
+
+.form-header-brand {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--wine);
+  opacity: 0.75;
+  font-weight: 500;
+}
+
+.form-body {
+  flex: 1;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 44px 24px 60px;
+}
+
+.f-eyebrow {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 14px;
+}
+
+.f-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 6vw, 38px);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.f-subtext {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.75;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.f-group { margin-bottom: 22px; }
+
+.f-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.f-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  margin-bottom: 9px;
+}
+
+.f-label .optional {
+  font-weight: 400;
+  font-size: 10px;
+  color: var(--text-light);
+  text-transform: none;
+  letter-spacing: 0.3px;
+  margin-left: 6px;
+}
+
+.f-input, .f-select {
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--ivory-dark);
+  padding: 14px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.f-input::placeholder { color: var(--text-light); font-weight: 300; }
+.f-input:focus, .f-select:focus { border-color: var(--wine); }
+.f-input.error, .f-select.error { border-color: var(--error); }
+
+.f-error {
+  font-size: 11.5px;
+  color: var(--error);
+  margin-top: 7px;
+  display: none;
+}
+
+.f-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6B5A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 42px;
+  cursor: pointer;
+}
+
+.f-note {
+  background: var(--gold-pale);
+  border-left: 3px solid var(--gold);
+  padding: 16px 18px;
+  margin-bottom: 32px;
+  font-size: 12.5px;
+  color: var(--text-mid);
+  line-height: 1.65;
+}
+
+.btn-submit {
+  width: 100%;
+  background: var(--wine);
+  color: var(--white);
+  border: none;
+  padding: 17px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-submit:hover { background: var(--wine-light); }
+.btn-submit:disabled { opacity: 0.6; pointer-events: none; }
+
+@media (max-width: 420px) {
+  .f-row { grid-template-columns: 1fr; }
+}
+
+/* ── SCREEN 3: TRANSITION ── */
+#screen-transition {
+  background: var(--wine-dark);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 28px;
+}
+
+.t-inner {
+  max-width: 400px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.1s forwards;
+}
+
+.t-mark {
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(201,168,76,0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  font-size: 22px;
+  color: var(--gold-light);
+}
+
+.t-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 8vw, 52px);
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 24px;
+  line-height: 1.1;
+}
+
+.t-title em { font-style: italic; color: var(--gold-light); }
+
+.t-rule {
+  width: 28px;
+  height: 1px;
+  background: rgba(201,168,76,0.4);
+  margin: 0 auto 26px;
+}
+
+.t-body {
+  font-size: 14.5px;
+  color: rgba(245,240,232,0.72);
+  line-height: 1.9;
+  font-weight: 300;
+  margin-bottom: 44px;
+}
+
+.btn-dym {
+  display: block;
+  width: 100%;
+  background: var(--gold);
+  color: var(--wine-dark);
+  padding: 18px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-dym:hover { background: var(--gold-light); }
+
+.t-footer {
+  margin-top: 40px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13.5px;
+  font-style: italic;
+  color: rgba(245,240,232,0.3);
+}
+
+.door-card {
+  background: rgba(201,168,76,0.06);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 44px 32px;
+}
+
+.door-eyebrow {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+
+.door-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(30px, 7vw, 42px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.15;
+}
+
+.door-title em { font-style: italic; color: var(--gold-light); }
+
+.door-body {
+  font-size: 14px;
+  color: rgba(245,240,232,0.7);
+  line-height: 1.8;
+  font-weight: 300;
+  margin: 22px 0 32px;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SCREEN 1: WELCOME ══ -->
+<div class="screen active" id="screen-welcome">
+  <div class="corner-brand">Fabsurprise</div>
+  <div class="welcome-inner">
+    <div class="w-eyebrow">A Private Invitation</div>
+    <h1 class="w-title">We're So Glad<br><em>You're Here</em></h1>
+    <p class="w-subline">Welcome to the next chapter of Fabsurprise.</p>
+    <div class="w-rule"></div>
+    <p class="w-body">
+      Thank you for accepting this invitation.<br><br>
+      Before we continue, we'd love to update your details so every future celebration with Fabsurprise feels even more personal.
+    </p>
+    <button class="btn-continue" onclick="goToForm()">Continue</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2: RECONNECT FORM ══ -->
+<div class="screen" id="screen-form">
+  <div class="form-header">
+    <div class="form-header-brand">Fabsurprise</div>
+  </div>
+
+  <div class="form-body">
+    <div class="f-eyebrow">Let's Reconnect</div>
+    <h2 class="f-title">Tell Us a Little<br>About You</h2>
+    <p class="f-subtext">This will only take a minute.</p>
+
+    <div class="f-note" style="margin-bottom:32px;">
+      This is simply a relationship update, not a new enquiry. We just want to make sure we have the best way to stay in touch with you.
+    </div>
+
+    <div class="f-row">
+      <div class="f-group">
+        <label class="f-label">First Name</label>
+        <input class="f-input" id="firstName" type="text" placeholder="First name" autocomplete="given-name">
+        <div class="f-error" id="err-firstName">Please enter your first name.</div>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Last Name</label>
+        <input class="f-input" id="lastName" type="text" placeholder="Last name" autocomplete="family-name">
+        <div class="f-error" id="err-lastName">Please enter your last name.</div>
+      </div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label">Phone Number</label>
+      <input class="f-input" id="phone" type="tel" placeholder="e.g. 08012345678" autocomplete="tel">
+      <div class="f-error" id="err-phone">Please enter a valid phone number.</div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label">Email Address</label>
+      <input class="f-input" id="email" type="email" placeholder="your@email.com" autocomplete="email">
+      <div class="f-error" id="err-email">Please enter a valid email address.</div>
+    </div>
+
+    <div class="f-row">
+      <div class="f-group">
+        <label class="f-label">Birthday <span class="optional">Optional</span></label>
+        <input class="f-input" id="birthday" type="date">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Anniversary <span class="optional">Optional</span></label>
+        <input class="f-input" id="anniversary" type="date">
+      </div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label">How do you know Fabsurprise?</label>
+      <select class="f-select" id="howKnow">
+        <option value="">Select an option</option>
+        <option>Past Client</option>
+        <option>Previous Enquiry</option>
+        <option>Referral</option>
+        <option>Social Media</option>
+        <option>Friend</option>
+        <option>Other</option>
+      </select>
+      <div class="f-error" id="err-howKnow">Please let us know how you found us.</div>
+    </div>
+
+    <button class="btn-submit" id="submitBtn" onclick="submitReconnect()">Join the Next Chapter</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 3: YOU'RE IN ══ -->
+<div class="screen" id="screen-transition">
+  <div class="t-inner">
+    <div class="t-mark">&#10003;</div>
+    <h2 class="t-title">You're <em>In.</em></h2>
+    <div class="t-rule"></div>
+    <p class="t-body">
+      Thank you for reconnecting with us. Your place in our Inner Circle has been reserved.<br><br>
+      Whenever you're ready to celebrate a milestone, surprise someone special, or create something unforgettable, your journey begins here.
+    </p>
+    <button class="btn-continue" onclick="goToDoor()">Continue</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 4: THE DOOR ══ -->
+<div class="screen" id="screen-door">
+  <div class="t-inner">
+    <div class="door-card">
+      <div class="door-eyebrow">Your Journey Begins Here</div>
+      <h2 class="door-title">Design Your<br><em>Moment</em></h2>
+      <div class="t-rule" style="margin-top:22px;"></div>
+      <p class="door-body">Every unforgettable celebration begins with a conversation.</p>
+      <a href="fabsurprise-design-your-moment.html" class="btn-dym">Begin &#8594;</a>
+    </div>
+    <p class="t-footer">Every detail, handled with love — Team Fabsurprise</p>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
+
+function goToForm() {
+  document.getElementById('screen-welcome').classList.remove('active');
+  document.getElementById('screen-form').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goToDoor() {
+  document.getElementById('screen-transition').classList.remove('active');
+  document.getElementById('screen-door').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function getCampaignSource() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('campaign') || 'The Next Chapter of Fabsurprise';
+}
+
+function getTrafficSource() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('source') || 'Direct';
+}
+
+function normalizePhone(num) {
+  var n = String(num || '').replace(/[^\d]/g, '');
+  if (!n) return '';
+  if (n.length === 11 && n.charAt(0) === '0') return '234' + n.substring(1);
+  if (n.length === 10 && n.charAt(0) !== '0') return '234' + n;
+  return n;
+}
+
+function validate() {
+  let ok = true;
+
+  function clr(id) {
+    const el = document.getElementById(id);
+    const er = document.getElementById('err-' + id);
+    if (el) el.classList.remove('error');
+    if (er) er.style.display = 'none';
+  }
+  function fail(id) {
+    ok = false;
+    const el = document.getElementById(id);
+    const er = document.getElementById('err-' + id);
+    if (el) el.classList.add('error');
+    if (er) er.style.display = 'block';
+  }
+
+  clr('firstName'); clr('lastName'); clr('phone'); clr('email'); clr('howKnow');
+
+  if (!document.getElementById('firstName').value.trim()) fail('firstName');
+  if (!document.getElementById('lastName').value.trim()) fail('lastName');
+
+  const phone = document.getElementById('phone').value.trim();
+  if (!phone || phone.replace(/\D/g, '').length < 7) fail('phone');
+
+  const email = document.getElementById('email').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) fail('email');
+
+  if (!document.getElementById('howKnow').value) fail('howKnow');
+
+  return ok;
+}
+
+function submitReconnect() {
+  if (!validate()) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+
+  const now = new Date();
+  const payload = {
+    action: 'reconnect',
+    dateJoined: now.toLocaleDateString('en-GB'),
+    timeJoined: now.toLocaleTimeString('en-GB'),
+    firstName: document.getElementById('firstName').value.trim(),
+    lastName: document.getElementById('lastName').value.trim(),
+    phone: normalizePhone(document.getElementById('phone').value.trim()),
+    email: document.getElementById('email').value.trim(),
+    birthday: document.getElementById('birthday').value,
+    anniversary: document.getElementById('anniversary').value,
+    howKnow: document.getElementById('howKnow').value,
+    campaignSource: getCampaignSource(),
+    trafficSource: getTrafficSource()
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(function() {});
+
+  setTimeout(function() {
+    document.getElementById('screen-form').classList.remove('active');
+    document.getElementById('screen-transition').classList.add('active');
+    window.scrollTo(0, 0);
+  }, 700);
+}
+
+document.addEventListener('input', function(e) {
+  if (e.target.classList.contains('f-input') || e.target.classList.contains('f-select')) {
+    e.target.classList.remove('error');
+    const er = document.getElementById('err-' + e.target.id);
+    if (er) er.style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>

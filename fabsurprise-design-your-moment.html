@@ -612,19 +612,19 @@ body {
     <p class="q-subtext">Some people arrive with a clear idea. Others are looking for inspiration. Tell us how you would like us to support you and we will take it from there.</p>
     <div class="field-wrap">
       <div class="option-list" id="guide-list">
-        <div class="opt" onclick="pickGuide(this,'I have an idea and would love help bringing it to life')">
+        <div class="opt" data-val="I have an idea and would love help bringing it to life" onclick="pickGuide(this,'I have an idea and would love help bringing it to life')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">I have an idea</div><div class="opt-sub">I know what I want and would love your help bringing it to life</div></div>
         </div>
-        <div class="opt" onclick="pickGuide(this,'I would love a recommendation based on my vision')">
+        <div class="opt" data-val="I would love a recommendation based on my vision" onclick="pickGuide(this,'I would love a recommendation based on my vision')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">Recommend what would work best</div><div class="opt-sub">Guide me based on what I have shared</div></div>
         </div>
-        <div class="opt" onclick="pickGuide(this,'I would like to explore different possibilities')">
+        <div class="opt" data-val="I would like to explore different possibilities" onclick="pickGuide(this,'I would like to explore different possibilities')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">Let's explore together</div><div class="opt-sub">I am open to ideas and would love to see what is possible</div></div>
         </div>
-        <div class="opt" onclick="pickGuide(this,'I want to create something truly extraordinary')">
+        <div class="opt" data-val="I want to create something truly extraordinary" onclick="pickGuide(this,'I want to create something truly extraordinary')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
           <div><div class="opt-text">I want something extraordinary</div><div class="opt-sub">This moment deserves something remarkable</div></div>
         </div>
@@ -703,14 +703,54 @@ window.addEventListener('DOMContentLoaded', function() {
     if (!data.success) { showStep(1); return; }
     enquiryId = resumeId;
     partialSaved = true;
-    fd.fullName = data.fullName || '';
-    fd.whatsapp = data.whatsapp || '';
-    fd.email = data.email || '';
+
+    fd.fullName   = data.fullName || '';
+    fd.whatsapp   = data.whatsapp || '';
+    fd.email      = data.email || '';
+    fd.who        = data.celebrating || '';
+    fd.occasion   = data.occasion || '';
+    fd.celebDate  = data.celebDate || '';
+    fd.location   = data.location || '';
+    fd.guideStyle = data.guideStyle || '';
+    fd.details    = data.details || '';
+
     if (fd.fullName) document.getElementById('fullName').value = fd.fullName;
     if (fd.whatsapp) document.getElementById('whatsapp').value = fd.whatsapp;
     if (fd.email) document.getElementById('email').value = fd.email;
-    personalise(3);
-    showStep(3);
+    if (fd.celebDate) document.getElementById('celebDate').value = fd.celebDate;
+    if (fd.location) document.getElementById('location').value = fd.location;
+    if (fd.details) document.getElementById('details').value = fd.details;
+
+    selWho = fd.who;
+    if (selWho) {
+      document.querySelectorAll('#who-list .opt').forEach(function(o) {
+        if (o.querySelector('.opt-text').textContent === selWho) o.classList.add('active');
+      });
+    }
+    selOcc = fd.occasion;
+    if (selOcc) {
+      document.querySelectorAll('.occ-card').forEach(function(o) {
+        if (o.querySelector('.occ-name').textContent === selOcc) o.classList.add('active');
+      });
+    }
+    selGuide = fd.guideStyle;
+    if (selGuide) {
+      document.querySelectorAll('#guide-list .opt').forEach(function(o) {
+        if (o.dataset && o.dataset.val === selGuide) o.classList.add('active');
+      });
+    }
+
+    // Figure out furthest completed step, resume just after it
+    let resumeStep = 3;
+    if (fd.fullName && fd.whatsapp && fd.email) resumeStep = 3;
+    if (fd.who) resumeStep = 4;
+    if (fd.occasion) resumeStep = 5;
+    if (fd.celebDate) resumeStep = 6;
+    if (fd.location) resumeStep = 7;
+    if (fd.guideStyle) resumeStep = 8;
+
+    personalise(resumeStep);
+    showStep(resumeStep);
   };
 
   const s = document.createElement('script');
@@ -747,6 +787,7 @@ function goNext(s) {
     checkDup();
     return;
   }
+  savePartial();
   personalise(s + 1);
   showStep(s + 1);
 }
@@ -801,13 +842,6 @@ function checkDup() {
 }
 
 function savePartial() {
-  if (partialSaved) return;
-  partialSaved = true;
-  localStorage.setItem('fab_enq_' + enquiryId, JSON.stringify({
-    fullName: fd.fullName,
-    whatsapp: fd.whatsapp,
-    email: fd.email
-  }));
   const now = new Date();
   fetch(SCRIPT_URL, {
     method: 'POST',
@@ -818,11 +852,17 @@ function savePartial() {
       enquiryId: enquiryId,
       submissionDate: now.toLocaleDateString('en-GB'),
       submissionTime: now.toLocaleTimeString('en-GB'),
-      fullName: fd.fullName,
-      whatsapp: fd.whatsapp,
-      email: fd.email,
+      fullName: fd.fullName || '',
+      whatsapp: fd.whatsapp || '',
+      email: fd.email || '',
       status: 'Incomplete',
-      stoppedAt: 'Step 2'
+      stoppedAt: 'Step ' + curStep,
+      celebrating: fd.who || '',
+      occasion: fd.occasion || '',
+      celebDate: fd.celebDate || '',
+      location: fd.location || '',
+      guideStyle: fd.guideStyle || '',
+      details: fd.details || ''
     })
   }).catch(function() {});
 }

@@ -625,27 +625,10 @@ var currentFilter = 'all';
 async function loadEnquiries() {
   document.getElementById('enquiryList').innerHTML = '<div class="loading-inline">Loading enquiries...</div>';
   try {
-    const url = APPS_SCRIPT_URL + '?action=getIncomplete&t=' + Date.now();
+    const url = APPS_SCRIPT_URL + '?action=getAllEnquiries&t=' + Date.now();
     const r = await fetch(url, { method: 'GET', redirect: 'follow' });
-    const text = await r.text();
-    const data = JSON.parse(text);
-
-    // Also load submitted
-    const url2 = APPS_SCRIPT_URL + '?action=getAllEnquiries&t=' + Date.now();
-    const r2 = await fetch(url2, { method: 'GET', redirect: 'follow' });
-    const text2 = await r2.text();
-    const data2 = JSON.parse(text2);
-
-    allEnquiries = (data2.enquiries || []).concat(data.incomplete || []);
-
-    // Deduplicate by enquiryId
-    const seen = {};
-    allEnquiries = allEnquiries.filter(function(e) {
-      if (seen[e.enquiryId]) return false;
-      seen[e.enquiryId] = true;
-      return true;
-    });
-
+    const data = JSON.parse(await r.text());
+    allEnquiries = data.enquiries || [];
     updateSummary();
     renderEnquiries(currentFilter);
   } catch(err) {
@@ -678,7 +661,8 @@ function renderEnquiries(filter) {
   }
 
   container.innerHTML = list.map(function(e) {
-    var isSubmitted = e.status === 'Submitted';
+    var eStatus = e.status || 'Incomplete';
+    var isSubmitted = eStatus === 'Submitted';
     var headerClass = isSubmitted ? 'submitted' : 'incomplete';
 
     const resumeUrl = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html?resume=' + e.enquiryId;
@@ -694,10 +678,10 @@ function renderEnquiries(filter) {
       '<div class="enq-card-header ' + headerClass + '">' +
         '<div>' +
           '<div class="enq-name">' + (e.fullName || 'Unknown') + '</div>' +
-          '<div class="enq-ref">' + (e.enquiryId || '') + ' &nbsp;|&nbsp; ' + (e.date || '') + '</div>' +
+          '<div class="enq-ref">' + (e.enquiryId || '') + ' &nbsp;|&nbsp; ' + formatAdminDate(e.date || '') + '</div>' +
         '</div>' +
         '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">' +
-          '<span class="stage-badge ' + (isSubmitted ? 'badge-design' : 'badge-planning') + '">' + e.status + '</span>' +
+          '<span class="stage-badge ' + (isSubmitted ? 'badge-design' : 'badge-planning') + '">' + eStatus + '</span>' +
           (e.celebDate ? '<span style="font-size:10px;font-weight:600;padding:3px 8px;background:' + ePri.bg + ';color:' + ePri.color + ';">' + (ePri.dot || '') + ' ' + ePri.label + '</span>' : '') +
         '</div>' +
       '</div>' +

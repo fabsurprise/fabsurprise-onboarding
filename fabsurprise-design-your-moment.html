@@ -689,26 +689,39 @@ let enquiryId = 'ENQ-' + Date.now();
 let partialSaved = false;
 let dupBlocked = false;
 
-// ── RESUME CHECK ──
-(function() {
+// ── RESUME FROM SHEET ──
+window.addEventListener('DOMContentLoaded', function() {
   const params = new URLSearchParams(window.location.search);
   const resumeId = params.get('resume');
   if (!resumeId) return;
-  try {
-    const saved = localStorage.getItem('fab_enq_' + resumeId);
-    if (!saved) return;
-    const data = JSON.parse(saved);
+
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('form-screen').style.display = 'flex';
+  document.getElementById('pText').textContent = 'Loading your details...';
+
+  window._resumeCb = function(data) {
+    if (!data.success) { showStep(1); return; }
     enquiryId = resumeId;
-    fd = data;
     partialSaved = true;
-    if (data.fullName) document.getElementById('fullName').value = data.fullName;
-    if (data.whatsapp) document.getElementById('whatsapp').value = data.whatsapp;
-    if (data.email) document.getElementById('email').value = data.email;
-    document.getElementById('welcome').style.display = 'none';
-    document.getElementById('form-screen').style.display = 'flex';
+    fd.fullName = data.fullName || '';
+    fd.whatsapp = data.whatsapp || '';
+    fd.email = data.email || '';
+    if (fd.fullName) document.getElementById('fullName').value = fd.fullName;
+    if (fd.whatsapp) document.getElementById('whatsapp').value = fd.whatsapp;
+    if (fd.email) document.getElementById('email').value = fd.email;
+    personalise(3);
     showStep(3);
-  } catch(e) {}
-})();
+  };
+
+  const s = document.createElement('script');
+  s.src = SCRIPT_URL + '?action=getEnquiry&ref=' + encodeURIComponent(resumeId) + '&callback=_resumeCb&t=' + Date.now();
+  s.onerror = function() { showStep(1); };
+  document.head.appendChild(s);
+
+  setTimeout(function() {
+    if (document.getElementById('pText').textContent === 'Loading your details...') showStep(1);
+  }, 6000);
+});
 
 function startForm() {
   document.getElementById('welcome').style.display = 'none';
@@ -981,8 +994,11 @@ function submitForm() {
   localStorage.removeItem('fab_enq_' + enquiryId);
 
   document.getElementById('successTitle').textContent = firstName + ', this is where the exciting part begins.';
+  const occText = (fd.who === 'Myself')
+    ? 'your ' + fd.occasion.toLowerCase()
+    : 'this ' + fd.occasion.toLowerCase();
   document.getElementById('successBody').innerHTML =
-    'We have received everything you shared about your ' + fd.occasion.toLowerCase() + ' and we are already thinking about what this could become.<br><br>' +
+    'We have received everything you shared about ' + occText + ' and we are already thinking about what this could become.<br><br>' +
     'Your next step is a conversation on WhatsApp. We will already have your enquiry in front of us, so instead of starting from the beginning, we will focus on refining your ideas and bringing your plans to life together.<br><br>' +
     '<strong>We cannot wait to meet you there.</strong>';
 

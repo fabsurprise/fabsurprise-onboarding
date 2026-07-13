@@ -464,6 +464,7 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
         <button class="filter-btn active" onclick="filterEnquiries('all', this)">All</button>
         <button class="filter-btn" onclick="filterEnquiries('Submitted', this)">Submitted</button>
         <button class="filter-btn" onclick="filterEnquiries('Incomplete', this)">Abandoned</button>
+        <button class="filter-btn" onclick="filterEnquiries('Archived', this)">Archived</button>
       </div>
 
       <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
@@ -591,6 +592,7 @@ function renderClientCard(client, container, prepend) {
         <button class="btn-copy-link" onclick="copyLink('${link}', this)">Copy Link</button>
         <button class="btn-wa-share" onclick="shareOnWa('${link}', '${name}', '${ref}')">Share on WhatsApp</button>
       </div>
+      <button onclick="archiveClient('${ref}', this)" style="width:100%;margin-top:12px;background:transparent;color:var(--error);border:1px solid var(--error);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Archive This Client</button>
     </div>
   `;
 
@@ -620,6 +622,30 @@ function selectStage(ref, stage) {
 
 
 
+
+async function archiveClient(ref, btn) {
+  if (!confirm('Archive this client? They will be hidden from your main list but their record stays in Google Sheets.')) return;
+  btn.textContent = 'Archiving...';
+  btn.disabled = true;
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=archiveClient&ref=${encodeURIComponent(ref)}`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const data = JSON.parse(await response.text());
+    if (data.success) {
+      const card = document.getElementById(`card-${ref}`);
+      if (card) card.remove();
+      showToast('Client archived.');
+    } else {
+      btn.textContent = 'Archive This Client';
+      btn.disabled = false;
+      showToast('Could not archive. Please try again.');
+    }
+  } catch (err) {
+    btn.textContent = 'Archive This Client';
+    btn.disabled = false;
+    showToast('Connection error. Please try again.');
+  }
+}
 
 function copyLink(link, btn) {
   navigator.clipboard.writeText(link).then(() => {
@@ -653,6 +679,9 @@ async function loadEnquiries() {
     const r = await fetch(url, { method: 'GET', redirect: 'follow' });
     const data = JSON.parse(await r.text());
     allEnquiries = data.enquiries || [];
+    allEnquiries.sort(function(a, b) {
+      return parseAdminDate(b.date) - parseAdminDate(a.date);
+    });
     updateSummary();
     renderEnquiries(currentFilter);
   } catch(err) {
@@ -696,7 +725,12 @@ function filterEnquiries(filter, btn) {
 }
 
 function renderEnquiries(filter) {
-  var list = filter === 'all' ? allEnquiries : allEnquiries.filter(function(e){ return e.status === filter; });
+  var visible = allEnquiries.filter(function(e){ return e.status !== 'Archived'; });
+  var list;
+  if (filter === 'all') list = visible;
+  else if (filter === 'Archived') list = allEnquiries.filter(function(e){ return e.status === 'Archived'; });
+  else list = visible.filter(function(e){ return e.status === filter; });
+
   if (!list.length) {
     document.getElementById('enquiryList').innerHTML = '<div class="loading-inline">No enquiries found.</div>';
     return;
@@ -710,6 +744,7 @@ function renderEnquiryCards(list) {
   container.innerHTML = list.map(function(e) {
     var eStatus = e.status || 'Incomplete';
     var isSubmitted = eStatus === 'Submitted';
+    var isArchived = eStatus === 'Archived';
     var headerClass = isSubmitted ? 'submitted' : 'incomplete';
 
     const resumeUrl = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html?resume=' + e.enquiryId;
@@ -741,12 +776,67 @@ function renderEnquiryCards(list) {
         (e.stoppedAt ? '<div class="detail-row"><span class="detail-key">Stopped At</span><span class="detail-val">' + e.stoppedAt + '</span></div>' : '') +
       '</div>' +
       '<div class="enq-actions">' +
-        (!isSubmitted ? '<button onclick="copyResumeLink(\'' + e.enquiryId + '\')" style="background:var(--ivory-mid);color:var(--text-mid);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Copy Resume Link</button>' : '') +
-        (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waFollowUp + '" target="_blank" class="btn-enq-wa">' + (isSubmitted ? 'WhatsApp' : 'Follow Up') + '</a>' : '') +
-        (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\')">Send Onboarding Link</button>' : '') +
+        (isArchived
+          ? '<button onclick="unarchiveEnquiry(\'' + e.enquiryId + '\', this)" style="background:var(--gold);color:var(--wine-dark);border:none;padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Unarchive</button>'
+          : (!isSubmitted ? '<button onclick="copyResumeLink(\'' + e.enquiryId + '\')" style="background:var(--ivory-mid);color:var(--text-mid);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Copy Resume Link</button>' : '') +
+            (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waFollowUp + '" target="_blank" class="btn-enq-wa">' + (isSubmitted ? 'WhatsApp' : 'Follow Up') + '</a>' : '') +
+            (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\')">Send Onboarding Link</button>' : '') +
+            '<button onclick="archiveEnquiry(\'' + e.enquiryId + '\', this)" style="background:transparent;color:var(--error);border:1px solid var(--error);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Archive</button>'
+          ) +
       '</div>' +
     '</div>';
   }).join('');
+}
+
+async function unarchiveEnquiry(enquiryId, btn) {
+  btn.textContent = 'Restoring...';
+  btn.disabled = true;
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=unarchiveEnquiry&ref=${encodeURIComponent(enquiryId)}`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const data = JSON.parse(await response.text());
+    if (data.success) {
+      const idx = allEnquiries.findIndex(function(e){ return e.enquiryId === enquiryId; });
+      if (idx > -1) allEnquiries[idx].status = data.restoredStatus || 'Submitted';
+      updateSummary();
+      renderEnquiries(currentFilter);
+      showToast('Enquiry restored.');
+    } else {
+      btn.textContent = 'Unarchive';
+      btn.disabled = false;
+      showToast('Could not restore. Please try again.');
+    }
+  } catch (err) {
+    btn.textContent = 'Unarchive';
+    btn.disabled = false;
+    showToast('Connection error. Please try again.');
+  }
+}
+
+async function archiveEnquiry(enquiryId, btn) {
+  if (!confirm('Archive this enquiry? It will be hidden from your main lists but not permanently deleted.')) return;
+  btn.textContent = 'Archiving...';
+  btn.disabled = true;
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=archiveEnquiry&ref=${encodeURIComponent(enquiryId)}`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const data = JSON.parse(await response.text());
+    if (data.success) {
+      const idx = allEnquiries.findIndex(function(e){ return e.enquiryId === enquiryId; });
+      if (idx > -1) allEnquiries[idx].status = 'Archived';
+      updateSummary();
+      renderEnquiries(currentFilter);
+      showToast('Enquiry archived.');
+    } else {
+      btn.textContent = 'Archive';
+      btn.disabled = false;
+      showToast('Could not archive. Please try again.');
+    }
+  } catch (err) {
+    btn.textContent = 'Archive';
+    btn.disabled = false;
+    showToast('Connection error. Please try again.');
+  }
 }
 
 function convertToBooking(enquiryId) {
@@ -775,6 +865,12 @@ function getPriority(dateStr) {
     if (diff <= 14) return { label: 'Upcoming', color: '#92400E', bg: '#FEF9C3', dot: '🟡' };
     return { label: 'Flexible', color: '#166534', bg: '#DCFCE7', dot: '🟢' };
   } catch(e) { return { label: 'No Date', color: '#9B7D65', bg: '#F5F0E8' }; }
+}
+
+function parseAdminDate(dateStr) {
+  if (!dateStr) return 0;
+  const d = new Date(dateStr);
+  return isNaN(d) ? 0 : d.getTime();
 }
 
 function formatAdminDate(dateStr) {
@@ -836,7 +932,15 @@ async function loadAllClients() {
     const data = JSON.parse(text);
     container.innerHTML = '';
     if (data.success && data.clients && data.clients.length > 0) {
-      data.clients.forEach(client => renderClientCard(client, container, false));
+      const activeClients = data.clients.filter(function(c) { return c.status !== 'Archived'; });
+      const sortedClients = activeClients.slice().sort(function(a, b) {
+        return parseAdminDate(b.submissionDate) - parseAdminDate(a.submissionDate);
+      });
+      if (!sortedClients.length) {
+        container.innerHTML = '<div class="loading-inline">No active celebrations found.</div>';
+      } else {
+        sortedClients.forEach(client => renderClientCard(client, container, false));
+      }
     } else {
       container.innerHTML = '<div class="loading-inline">No celebrations found yet.</div>';
     }

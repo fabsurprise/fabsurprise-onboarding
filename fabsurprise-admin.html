@@ -747,7 +747,7 @@ function renderEnquiryCards(list) {
     var isArchived = eStatus === 'Archived';
     var headerClass = isSubmitted ? 'submitted' : 'incomplete';
 
-    const resumeUrl = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html?resume=' + e.enquiryId;
+    const resumeUrl = 'https://tinyurl.com/fabsurprise-moment?resume=' + e.enquiryId;
     var waFollowUp = isSubmitted
       ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you so much for sharing your Design Your Moment enquiry with us (Ref: ' + e.enquiryId + ') — I\'ve just read through everything, and I\'m genuinely excited about this. When would be a good time to chat about this?')
       : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it, whenever you\'re ready to pick it back up. We completely understand how busy life can get. Just tap through and continue exactly where you stopped: ' + resumeUrl);
@@ -885,7 +885,7 @@ function formatAdminDate(dateStr) {
 }
 
 function copyResumeLink(enquiryId) {
-  const link = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html?resume=' + enquiryId;
+  const link = 'https://tinyurl.com/fabsurprise-moment?resume=' + enquiryId;
   navigator.clipboard.writeText(link).then(function() {
     showToast('Resume link copied! Send it to the client on WhatsApp.');
   }).catch(function() {

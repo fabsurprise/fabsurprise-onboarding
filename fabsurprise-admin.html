@@ -749,8 +749,8 @@ function renderEnquiryCards(list) {
 
     const resumeUrl = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html?resume=' + e.enquiryId;
     var waFollowUp = isSubmitted
-      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you for your Design Your Moment enquiry with Fabsurprise (Ref: ' + e.enquiryId + '). We have reviewed your details and we are excited to begin the conversation. When would be a good time to speak?')
-      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', we noticed you started designing your moment with Fabsurprise but did not quite finish. We completely understand life gets busy. Whenever you are ready, you can continue exactly where you left off here: ' + resumeUrl);
+      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you so much for sharing your Design Your Moment enquiry with us (Ref: ' + e.enquiryId + ') — I\'ve just read through everything, and I\'m genuinely excited about this. When would be a good time for us to talk it through?')
+      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it, whenever you\'re ready to pick it back up. Life gets busy — we completely understand. Just tap through and continue exactly where you stopped: ' + resumeUrl);
 
     var waNumber = normalizeWA(e.whatsapp);
 

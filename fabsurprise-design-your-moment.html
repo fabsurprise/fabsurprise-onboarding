@@ -457,8 +457,8 @@ body {
   <div class="welcome-body">
     <p class="welcome-opening">There is a moment that matters to you.</p>
     <p class="welcome-text">
-      Whether you are celebrating yourself, someone you love, your team or an important milestone, you have decided this moment deserves more than ordinary.<br><br>
-      Over the next few minutes, we will get to know what you are planning, understand what matters most to you and begin shaping an experience thoughtfully designed around your vision.
+      Whether you are celebrating yourself, someone you love, your team or an important milestone, you have already decided this deserves care, not convenience.<br><br>
+      We will get to know what you are planning, understand what matters most to you, and begin shaping something that feels entirely yours.
     </p>
     <button class="btn-begin" onclick="startForm()">Let's Begin</button>
     <p class="welcome-reassure">Every memorable celebration begins with a single decision. Today, you have made yours.</p>
@@ -479,7 +479,7 @@ body {
   <div class="q-screen active" id="q1">
     <div class="q-thread">We'd love to know you</div>
     <h2 class="q-title">Before we get to the occasion,<br>let's get to know <em>you</em></h2>
-    <p class="q-subtext">Every celebration has someone behind it. We will use your name throughout so every conversation feels personal from the very beginning.</p>
+    <p class="q-subtext">Every celebration has someone behind it — the one who noticed, who planned, who cared enough to begin. That's you.</p>
     <div class="field-wrap">
       <input class="field-input" id="fullName" type="text" placeholder="Your full name" autocomplete="name" autocorrect="off">
       <div class="field-error" id="err-fullName">Please enter your name so we know who we are speaking with.</div>
@@ -494,7 +494,7 @@ body {
   <div class="q-screen" id="q2">
     <div class="q-thread" id="thread2">Let's stay connected</div>
     <h2 class="q-title">From this moment,<br>we don't want you <em>wondering what happens next</em></h2>
-    <p class="q-subtext">Your WhatsApp number is how we continue the conversation personally. Your email is where we send your confirmation so everything is in one place.</p>
+    <p class="q-subtext">Your WhatsApp is how we'll continue this personally, and your email is simply where we'll send your confirmation, so nothing gets lost in between.</p>
     <div class="field-wrap">
       <input class="field-input" id="whatsapp" type="tel" placeholder="e.g. 08012345678 or +44 7911 123456" autocomplete="tel" style="margin-bottom:6px;">
       <p style="font-size:11.5px;color:var(--text-light);margin:0 0 12px;">If you are outside Nigeria, please include your country code.</p>
@@ -516,7 +516,7 @@ body {
   <div class="q-screen" id="q3">
     <div class="q-thread">Tell us who this moment is all about</div>
     <h2 class="q-title">Every celebration<br>begins with a <em>person</em></h2>
-    <p class="q-subtext">Knowing who we are creating this for helps us understand the heart behind every detail we will thoughtfully bring together.</p>
+    <p class="q-subtext">Who we're celebrating shapes everything else — the tone, the details, the way it all comes together.</p>
     <div class="field-wrap">
       <div class="option-list" id="who-list">
         <div class="opt" onclick="pickWho(this,'My Partner')">
@@ -580,7 +580,7 @@ body {
   <div class="q-screen" id="q5">
     <div class="q-thread" id="thread5">When are you hoping to celebrate?</div>
     <h2 class="q-title" id="title5">When is it<br><em>happening?</em></h2>
-    <p class="q-subtext">Knowing your preferred date helps us understand how to best approach this. If you are still deciding, an estimated date is perfectly fine.</p>
+    <p class="q-subtext">This helps us know how much time we have to get every detail right. If you're still deciding, an estimate is more than enough for now.</p>
     <div class="field-wrap">
       <input class="field-input" id="celebDate" type="date">
       <div class="field-error" id="err-celebDate">Please give us a date. An estimate is completely fine.</div>
@@ -595,7 +595,7 @@ body {
   <div class="q-screen" id="q6">
     <div class="q-thread">Where will it all happen?</div>
     <h2 class="q-title">Where will this<br><em>take place?</em></h2>
-    <p class="q-subtext">Whether it is your home, a hotel, a restaurant or somewhere completely different, let us know where this occasion will happen. We will take care of the rest together.</p>
+    <p class="q-subtext">Whether it's your home, a hotel, a restaurant, or somewhere entirely different, just let us know where. We'll take care of the rest, together.</p>
     <div class="field-wrap">
       <input class="field-input" id="location" type="text" placeholder="e.g. Lagos, Lekki Phase 1, Abuja" autocorrect="off">
       <div class="field-error" id="err-location">Please let us know where this will take place.</div>
@@ -610,7 +610,7 @@ body {
   <div class="q-screen" id="q7">
     <div class="q-thread">How would you like us to guide you?</div>
     <h2 class="q-title">No two celebrations<br>begin the <em>same way</em></h2>
-    <p class="q-subtext">Some people arrive with a clear idea. Others are looking for inspiration. Tell us how you would like us to support you and we will take it from there.</p>
+    <p class="q-subtext">Some people arrive with a clear idea. Others are simply looking for inspiration. Either way, tell us where you're starting from, and we'll meet you there.</p>
     <div class="field-wrap">
       <div class="option-list" id="guide-list">
         <div class="opt" data-val="I have an idea and would love help bringing it to life" onclick="pickGuide(this,'I have an idea and would love help bringing it to life')">
@@ -643,12 +643,12 @@ body {
     <div class="q-thread" id="thread8">Now we are listening</div>
 
     <div class="reassure-card">
-      <p id="reassureText">You are almost there. Tell us what is on your mind. Not the logistics. Just the picture you have been carrying around and the feeling you want to create.</p>
-      <span id="reassureSub">The more you share, the more personal this becomes.</span>
+      <p id="reassureText">You're almost there. Tell us what's on your mind — not the logistics, just the picture you've been carrying around, and the feeling you want to create.</p>
+      <span id="reassureSub">This is the part we look forward to most.</span>
     </div>
 
     <h2 class="q-title" id="title8">Tell us what<br>you are <em>imagining</em></h2>
-    <p class="q-subtext">Your ideas, what inspired this, the experience you would love to create. You do not need to have every detail figured out.</p>
+    <p class="q-subtext">Your ideas, what inspired this, the experience you'd love to create — you don't need every detail figured out. Just tell us enough to picture it too.</p>
     <div class="field-wrap">
       <textarea class="field-textarea" id="details" placeholder="Tell us everything you would love us to know..."></textarea>
       <div class="field-error" id="err-details">Please share a little about what you have in mind.</div>
@@ -667,9 +667,9 @@ body {
   <h2 class="success-title" id="successTitle">This is where the exciting part begins.</h2>
   <div class="success-rule"></div>
   <p class="success-body" id="successBody">
-    We have received everything you shared and we are already thinking about what this celebration could become.<br><br>
-    Your next step is a conversation on WhatsApp. We will already have your enquiry in front of us, so instead of starting from the beginning, we will focus on refining your ideas and bringing your plans to life together.<br><br>
-    <strong>We cannot wait to meet you there.</strong>
+    We've received everything you shared, and it's already given us a real sense of what this celebration could be.<br><br>
+    Your next step is a conversation on WhatsApp — we'll have everything you've told us right in front of us, so there's no need to start over. We'll simply pick up from here and begin shaping it together.<br><br>
+    <strong>We can't wait to meet you there.</strong>
   </p>
   <a id="waBtn" href="#" target="_blank" class="btn-wa">Continue to WhatsApp</a>
   <p class="success-note">A confirmation is on its way to your email.</p>
@@ -698,7 +698,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   document.getElementById('welcome').style.display = 'none';
   document.getElementById('form-screen').style.display = 'flex';
-  document.getElementById('pText').textContent = 'Loading your details...';
+  document.getElementById('pText').textContent = 'Finding exactly where you left off...';
 
   window._resumeCb = function(data) {
     if (!data.success) { showStep(1); return; }
@@ -760,7 +760,7 @@ window.addEventListener('DOMContentLoaded', function() {
   document.head.appendChild(s);
 
   setTimeout(function() {
-    if (document.getElementById('pText').textContent === 'Loading your details...') showStep(1);
+    if (document.getElementById('pText').textContent === 'Finding exactly where you left off...') showStep(1);
   }, 6000);
 });
 
@@ -1021,7 +1021,7 @@ function submitForm() {
   };
 
   const waMsg = encodeURIComponent(
-    'Hi Fabsurprise,\n\nI have just completed my Design Your Moment enquiry.\n\nI am excited to begin planning and I look forward to speaking with your team.\n\nRef: ' + enquiryId
+    'Hi Fabsurprise,\n\nI\'ve just completed my Design Your Moment enquiry — so excited to get started and looking forward to chatting with your team!\n\nRef: ' + enquiryId
   );
   const waLink = 'https://wa.me/' + WA + '?text=' + waMsg;
 
@@ -1036,9 +1036,9 @@ function submitForm() {
 
   document.getElementById('successTitle').textContent = firstName + ', this is where the exciting part begins.';
   document.getElementById('successBody').innerHTML =
-    'We have received everything you shared and we are already thinking about what this celebration could become.<br><br>' +
-    'Your next step is a conversation on WhatsApp. We will already have your enquiry in front of us, so instead of starting from the beginning, we will focus on refining your ideas and bringing your plans to life together.<br><br>' +
-    '<strong>We cannot wait to meet you there.</strong>';
+    'We\'ve received everything you shared, and it\'s already given us a real sense of what this celebration could be.<br><br>' +
+    'Your next step is a conversation on WhatsApp — we\'ll have everything you\'ve told us right in front of us, so there\'s no need to start over. We\'ll simply pick up from here and begin shaping it together.<br><br>' +
+    '<strong>We can\'t wait to meet you there.</strong>';
 
   setTimeout(function() {
     document.getElementById('form-screen').style.display = 'none';

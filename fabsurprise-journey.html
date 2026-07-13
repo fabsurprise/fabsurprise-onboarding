@@ -454,7 +454,7 @@ body {
 <div id="app">
   <div class="loading">
     <div class="loading-dot"></div>
-    <p>Loading your celebration...</p>
+    <p>Bringing up your celebration...</p>
   </div>
 </div>
 
@@ -473,14 +473,14 @@ const STAGES = [
     desc: 'We are getting to know your celebration.',
     detail: 'Right now, we are carefully reviewing everything you have shared so we can recommend the direction that suits you best.',
     next: 'We will prepare your personalised recommendations and be in touch soon.',
-    message: 'We have received everything and we are already thinking about your celebration. Leave it all to us.',
+    message: 'We have received everything, and your celebration is already on our minds. Leave it all to us.',
     icon: '✦'
   },
   {
     key: 'Design',
     name: 'Design',
     desc: 'Your celebration is taking shape.',
-    detail: 'Every recommendation, detail and finishing touch is being thoughtfully refined to reflect what matters most to you.',
+    detail: 'Every recommendation and finishing touch is being shaped around what matters most to you.',
     next: 'Once everything is ready, we will confirm the final plan with you.',
     message: 'Your celebration is taking shape beautifully. Every detail is being refined with you in mind.',
     icon: '◇'
@@ -507,16 +507,16 @@ const STAGES = [
     key: 'Preserve',
     name: 'Preserve',
     desc: 'Some moments deserve to be remembered long after they are over.',
-    detail: 'We are preparing your celebration gallery and any keepsakes included with your experience.',
+    detail: 'We are preparing everything that will let you hold onto this — your gallery, and anything else made just for this moment.',
     next: 'We will let you know as soon as everything is ready for you.',
-    message: 'Your Celebration Journey has one more update waiting for you.',
+    message: 'What a celebration that was. We are already putting together everything to help you hold onto it — take a look.',
     icon: '❋'
   },
   {
     key: 'Fabmily',
     name: 'Welcome to the Fabmily',
     desc: 'Your celebration may be over, but your journey with Fabsurprise does not end here.',
-    detail: 'You will continue receiving thoughtful inspiration, exclusive experiences and gentle reminders for the moments worth celebrating. Because every beautiful celebration deserves another.',
+    detail: 'You will continue hearing from us — thoughtful ideas, occasional invitations, gentle reminders for the moments worth celebrating. Because every beautiful celebration deserves another.',
     next: '',
     message: 'Thank you for trusting us with something so personal. Welcome to the Fabmily.',
     icon: '♡',
@@ -595,14 +595,8 @@ function renderJourney(data) {
     </div>
 
     <div class="wa-section">
-      <div class="wa-title">Need to tell us something?</div>
-      <p class="wa-body">Plans can change, new ideas come to mind, and sometimes the smallest detail makes all the difference. If you would like to update any part of your celebration or ask a question, we are only a message away.</p>
-      <a href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hi Fabsurprise, I would like to share an update about my celebration.')}" target="_blank" class="btn-wa">Message Us on WhatsApp</a>
-    </div>
-
-    <div class="wa-section" style="margin-top:-8px;">
-      <div class="wa-title">Have a question?</div>
-      <p class="wa-body">We're always here. Reach out to us directly and we'll respond personally.</p>
+      <div class="wa-title">Need to Reach Us?</div>
+      <p class="wa-body">Plans change, questions come up, and sometimes the smallest detail makes all the difference. Whatever it is, we're only a message away — and we'll always respond personally.</p>
       <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="btn-wa" style="background:var(--wine);">Message Us on WhatsApp</a>
     </div>
     ${stageIdx >= 5 ? `
@@ -610,9 +604,10 @@ function renderJourney(data) {
       <div class="fabmily-icon">♡</div>
       <h2 class="fabmily-title">Welcome to the Fabmily</h2>
       <p class="fabmily-body">Your celebration may be over, but your journey with Fabsurprise does not end here.<br><br>You will continue receiving thoughtful inspiration, exclusive experiences and gentle reminders for the moments worth celebrating.<br><br>Because every beautiful celebration deserves another.</p>
+      <p class="fabmily-body" style="margin-top:-16px;">If any of this meant something to you, we'd love to know — and if you know someone who deserves a celebration of their own, we'd be honoured to help.</p>
       <div class="fabmily-actions">
         <a href="https://g.page/r/Ca6nTBK3YtBdEBM/review" target="_blank" class="btn-review">Leave Us a Review</a>
-        <a href="https://wa.me/?text=${encodeURIComponent('Hi! I recently used Fabsurprise for a special celebration and the experience was absolutely beautiful. If you are planning something for someone you love, reach out to them — they will take care of every detail. +2349025141322 or fabsurprise-onboarding on TinyURL.')}" target="_blank" class="btn-refer">Refer a Friend</a>
+        <a href="https://wa.me/?text=${encodeURIComponent('Hi! I recently celebrated something special with Fabsurprise, and it was genuinely beautiful. If you are planning something for someone you love, they are worth talking to: https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html')}" target="_blank" class="btn-refer">Refer a Friend</a>
       </div>
     </div>
     ` : ''}

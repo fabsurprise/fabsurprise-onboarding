@@ -738,6 +738,84 @@ function renderEnquiries(filter) {
   renderEnquiryCards(list);
 }
 
+function formatRelativeTime(isoString) {
+  try {
+    const then = new Date(isoString);
+    if (isNaN(then)) return '';
+    const now = new Date();
+    const diffMs = now - then;
+    const diffMins = Math.floor(diffMs / 60000);
+    if (diffMins < 1) return 'just now';
+    if (diffMins < 60) return diffMins + (diffMins === 1 ? ' minute ago' : ' minutes ago');
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return diffHours + (diffHours === 1 ? ' hour ago' : ' hours ago');
+    const diffDays = Math.floor(diffHours / 24);
+    return diffDays + (diffDays === 1 ? ' day ago' : ' days ago');
+  } catch(e) { return ''; }
+}
+
+async function markFollowedUp(enquiryId, btn) {
+  const original = btn.textContent;
+  btn.textContent = 'Saving...';
+  btn.disabled = true;
+  try {
+    const now = new Date().toISOString();
+    const url = `${APPS_SCRIPT_URL}?action=markFollowedUp&ref=${encodeURIComponent(enquiryId)}&time=${encodeURIComponent(now)}`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const data = JSON.parse(await response.text());
+    if (data.success) {
+      const idx = allEnquiries.findIndex(function(e){ return e.enquiryId === enquiryId; });
+      if (idx > -1) allEnquiries[idx].followedUpAt = now;
+      renderEnquiries(currentFilter);
+      showToast('Marked as followed up.');
+    } else {
+      btn.textContent = original;
+      btn.disabled = false;
+      showToast('Could not save. Please try again.');
+    }
+  } catch (err) {
+    btn.textContent = original;
+    btn.disabled = false;
+    showToast('Connection error. Please try again.');
+  }
+}
+
+const PAYMENT_STAGES = ['Enquired', 'Discussing', 'Proposal Sent', 'Invoice Sent', 'Paid & Booked'];
+
+function renderPaymentStagePills(enquiryId, currentStage) {
+  const stage = currentStage || 'Enquired';
+  const pills = PAYMENT_STAGES.map(function(s) {
+    const active = s === stage;
+    return '<button onclick="updatePaymentStage(\'' + enquiryId + '\', \'' + s + '\', this)" style="padding:7px 10px;font-size:10px;font-weight:600;border:1px solid ' + (active ? 'var(--wine)' : 'var(--ivory-dark)') + ';background:' + (active ? 'var(--wine)' : 'var(--white)') + ';color:' + (active ? 'white' : 'var(--text-mid)') + ';cursor:pointer;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;">' + s + '</button>';
+  }).join('');
+  return '<div style="padding:12px 18px;background:var(--ivory);border-bottom:1px solid var(--ivory-mid);">' +
+    '<div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">Payment Stage</div>' +
+    '<div style="display:flex;gap:6px;flex-wrap:wrap;">' + pills + '</div>' +
+  '</div>';
+}
+
+async function updatePaymentStage(enquiryId, newStage, btn) {
+  const original = btn.parentElement.innerHTML;
+  btn.parentElement.style.opacity = '0.5';
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=setPaymentStage&ref=${encodeURIComponent(enquiryId)}&stage=${encodeURIComponent(newStage)}`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const data = JSON.parse(await response.text());
+    if (data.success) {
+      const idx = allEnquiries.findIndex(function(e){ return e.enquiryId === enquiryId; });
+      if (idx > -1) allEnquiries[idx].paymentStage = newStage;
+      renderEnquiries(currentFilter);
+      showToast('Payment stage updated to ' + newStage);
+    } else {
+      btn.parentElement.style.opacity = '1';
+      showToast('Could not update. Please try again.');
+    }
+  } catch (err) {
+    btn.parentElement.style.opacity = '1';
+    showToast('Connection error. Please try again.');
+  }
+}
+
 function renderEnquiryCards(list) {
   var container = document.getElementById('enquiryList');
 
@@ -777,11 +855,14 @@ function renderEnquiryCards(list) {
         (e.details ? '<div class="detail-row"><span class="detail-key">Their Vision</span><span class="detail-val" style="white-space:pre-wrap;">' + e.details + '</span></div>' : '') +
         (e.stoppedAt ? '<div class="detail-row"><span class="detail-key">Stopped At</span><span class="detail-val">' + e.stoppedAt + '</span></div>' : '') +
       '</div>' +
+      (isSubmitted ? renderPaymentStagePills(e.enquiryId, e.paymentStage) : '') +
+      (e.followedUpAt ? '<div style="padding:8px 18px;font-size:11px;color:var(--text-light);background:var(--ivory);border-bottom:1px solid var(--ivory-mid);">Followed up ' + formatRelativeTime(e.followedUpAt) + '</div>' : '') +
       '<div class="enq-actions">' +
         (isArchived
           ? '<button onclick="unarchiveEnquiry(\'' + e.enquiryId + '\', this)" style="background:var(--gold);color:var(--wine-dark);border:none;padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Unarchive</button>'
           : (!isSubmitted ? '<button onclick="copyResumeLink(\'' + e.enquiryId + '\')" style="background:var(--ivory-mid);color:var(--text-mid);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Copy Resume Link</button>' : '') +
             (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waFollowUp + '" target="_blank" class="btn-enq-wa">' + (isSubmitted ? 'WhatsApp' : 'Follow Up') + '</a>' : '') +
+            '<button onclick="markFollowedUp(\'' + e.enquiryId + '\', this)" style="background:var(--gold-pale);color:var(--text-mid);border:1px solid var(--gold);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">' + (e.followedUpAt ? 'Update Follow-Up' : 'Mark as Followed Up') + '</button>' +
             (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\')">Send Onboarding Link</button>' : '') +
             '<button onclick="archiveEnquiry(\'' + e.enquiryId + '\', this)" style="background:transparent;color:var(--error);border:1px solid var(--error);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Archive</button>'
           ) +

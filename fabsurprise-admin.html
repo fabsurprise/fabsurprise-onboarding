@@ -569,7 +569,7 @@ function renderClientCard(client, container, prepend) {
     <div class="client-details">
       <div class="detail-row"><span class="detail-key">Occasion</span><span class="detail-val">${occasion}</span></div>
       <div class="detail-row"><span class="detail-key">Celebrating</span><span class="detail-val">${recipientName || '—'}</span></div>
-      <div class="detail-row"><span class="detail-key">Date</span><span class="detail-val">${celebDate || '—'}</span></div>
+      <div class="detail-row"><span class="detail-key">Date</span><span class="detail-val">${celebDate ? formatAdminDate(celebDate) : '—'}</span></div>
       <div class="detail-row"><span class="detail-key">Phone</span><span class="detail-val">${phone || '—'}</span></div>
     </div>
     <div class="stage-update">
@@ -769,10 +769,12 @@ function renderEnquiryCards(list) {
       '<div class="enq-details">' +
         (e.occasion ? '<div class="detail-row"><span class="detail-key">Occasion</span><span class="detail-val">' + e.occasion + '</span></div>' : '') +
         (e.celebrating ? '<div class="detail-row"><span class="detail-key">Celebrating</span><span class="detail-val">' + e.celebrating + '</span></div>' : '') +
-        (e.celebDate ? '<div class="detail-row"><span class="detail-key">Date</span><span class="detail-val">' + e.celebDate + '</span></div>' : '') +
+        (e.celebDate ? '<div class="detail-row"><span class="detail-key">Date</span><span class="detail-val">' + formatAdminDate(e.celebDate) + '</span></div>' : '') +
         (e.location ? '<div class="detail-row"><span class="detail-key">Location</span><span class="detail-val">' + e.location + '</span></div>' : '') +
+        (e.guideStyle ? '<div class="detail-row"><span class="detail-key">Guide Style</span><span class="detail-val">' + e.guideStyle + '</span></div>' : '') +
         '<div class="detail-row"><span class="detail-key">WhatsApp</span><span class="detail-val">' + (e.whatsapp || 'Not provided') + '</span></div>' +
         '<div class="detail-row"><span class="detail-key">Email</span><span class="detail-val">' + (e.email || 'Not provided') + '</span></div>' +
+        (e.details ? '<div class="detail-row"><span class="detail-key">Their Vision</span><span class="detail-val" style="white-space:pre-wrap;">' + e.details + '</span></div>' : '') +
         (e.stoppedAt ? '<div class="detail-row"><span class="detail-key">Stopped At</span><span class="detail-val">' + e.stoppedAt + '</span></div>' : '') +
       '</div>' +
       '<div class="enq-actions">' +

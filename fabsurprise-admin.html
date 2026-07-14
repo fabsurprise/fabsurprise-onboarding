@@ -782,15 +782,26 @@ async function markFollowedUp(enquiryId, btn) {
 
 const PAYMENT_STAGES = ['Enquired', 'Discussing', 'Proposal Sent', 'Invoice Sent', 'Paid & Booked'];
 
-function renderPaymentStagePills(enquiryId, currentStage) {
+function renderPaymentStagePills(enquiryId, currentStage, stageAt) {
   const stage = currentStage || 'Enquired';
   const pills = PAYMENT_STAGES.map(function(s) {
     const active = s === stage;
     return '<button onclick="updatePaymentStage(\'' + enquiryId + '\', \'' + s + '\', this)" style="padding:7px 10px;font-size:10px;font-weight:600;border:1px solid ' + (active ? 'var(--wine)' : 'var(--ivory-dark)') + ';background:' + (active ? 'var(--wine)' : 'var(--white)') + ';color:' + (active ? 'white' : 'var(--text-mid)') + ';cursor:pointer;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;">' + s + '</button>';
   }).join('');
+
+  let warning = '';
+  if (stage === 'Invoice Sent' && stageAt) {
+    const hoursSince = (new Date() - new Date(stageAt)) / (1000 * 60 * 60);
+    if (hoursSince >= 48) {
+      const daysSince = Math.floor(hoursSince / 24);
+      warning = '<div style="margin-top:10px;padding:8px 12px;background:#FEE2E2;border-left:3px solid #B02020;font-size:11px;color:#B02020;font-weight:600;">⚠ Invoice sent ' + daysSince + (daysSince === 1 ? ' day ago' : ' days ago') + ' — still awaiting payment</div>';
+    }
+  }
+
   return '<div style="padding:12px 18px;background:var(--ivory);border-bottom:1px solid var(--ivory-mid);">' +
     '<div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">Payment Stage</div>' +
     '<div style="display:flex;gap:6px;flex-wrap:wrap;">' + pills + '</div>' +
+    warning +
   '</div>';
 }
 
@@ -798,12 +809,16 @@ async function updatePaymentStage(enquiryId, newStage, btn) {
   const original = btn.parentElement.innerHTML;
   btn.parentElement.style.opacity = '0.5';
   try {
-    const url = `${APPS_SCRIPT_URL}?action=setPaymentStage&ref=${encodeURIComponent(enquiryId)}&stage=${encodeURIComponent(newStage)}`;
+    const now = new Date().toISOString();
+    const url = `${APPS_SCRIPT_URL}?action=setPaymentStage&ref=${encodeURIComponent(enquiryId)}&stage=${encodeURIComponent(newStage)}&time=${encodeURIComponent(now)}`;
     const response = await fetch(url, { method: 'GET', redirect: 'follow' });
     const data = JSON.parse(await response.text());
     if (data.success) {
       const idx = allEnquiries.findIndex(function(e){ return e.enquiryId === enquiryId; });
-      if (idx > -1) allEnquiries[idx].paymentStage = newStage;
+      if (idx > -1) {
+        allEnquiries[idx].paymentStage = newStage;
+        allEnquiries[idx].paymentStageAt = now;
+      }
       renderEnquiries(currentFilter);
       showToast('Payment stage updated to ' + newStage);
     } else {
@@ -827,7 +842,7 @@ function renderEnquiryCards(list) {
 
     const resumeUrl = 'https://tinyurl.com/fabsurprise-moment?resume=' + e.enquiryId;
     var waFollowUp = isSubmitted
-      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you so much for sharing your Design Your Moment enquiry with us (Ref: ' + e.enquiryId + ') — I\'ve just read through everything, and I\'m genuinely excited about this. When would be a good time to chat about this?')
+      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you so much for sharing your Design Your Moment enquiry with us — I\'ve just read through everything, and I\'m genuinely excited about this. When would be a good time to chat about this?')
       : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it, whenever you\'re ready to pick it back up. We completely understand how busy life can get. Just tap through and continue exactly where you stopped: ' + resumeUrl);
 
     var waNumber = normalizeWA(e.whatsapp);
@@ -855,7 +870,7 @@ function renderEnquiryCards(list) {
         (e.details ? '<div class="detail-row"><span class="detail-key">Their Vision</span><span class="detail-val" style="white-space:pre-wrap;">' + e.details + '</span></div>' : '') +
         (e.stoppedAt ? '<div class="detail-row"><span class="detail-key">Stopped At</span><span class="detail-val">' + e.stoppedAt + '</span></div>' : '') +
       '</div>' +
-      (isSubmitted ? renderPaymentStagePills(e.enquiryId, e.paymentStage) : '') +
+      (isSubmitted ? renderPaymentStagePills(e.enquiryId, e.paymentStage, e.paymentStageAt) : '') +
       (e.followedUpAt ? '<div style="padding:8px 18px;font-size:11px;color:var(--text-light);background:var(--ivory);border-bottom:1px solid var(--ivory-mid);">Followed up ' + formatRelativeTime(e.followedUpAt) + '</div>' : '') +
       '<div class="enq-actions">' +
         (isArchived
@@ -925,6 +940,11 @@ async function archiveEnquiry(enquiryId, btn) {
 function convertToBooking(enquiryId) {
   var enq = allEnquiries.find(function(e){ return e.enquiryId === enquiryId; });
   if (!enq) return;
+  var stage = enq.paymentStage || 'Enquired';
+  if (stage !== 'Paid & Booked') {
+    var proceed = confirm('This enquiry is still marked as "' + stage + '", not Paid & Booked. Send the onboarding link anyway?');
+    if (!proceed) return;
+  }
   var onboardingLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-onboarding.html';
   var waNumber = normalizeWA(enq.whatsapp);
   var msg = encodeURIComponent(

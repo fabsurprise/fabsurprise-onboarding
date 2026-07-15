@@ -569,12 +569,71 @@ body {
       <p class="door-body">Every unforgettable celebration begins with a conversation.</p>
       <a href="fabsurprise-design-your-moment.html" class="btn-dym">Begin &#8594;</a>
     </div>
+    <button onclick="goToQuickPath()" style="background:none;border:none;margin-top:22px;font-family:'Inter',sans-serif;font-size:12.5px;color:var(--text-light);text-decoration:underline;cursor:pointer;">I already know what I want</button>
     <p class="t-footer">Every detail, handled with love — Team Fabsurprise</p>
+  </div>
+</div>
+
+<!-- ══ SCREEN 5: I ALREADY KNOW WHAT I WANT ══ -->
+<div class="screen" id="screen-quick" style="background: var(--ivory);">
+  <div class="form-header">
+    <div class="form-header-brand">Fabsurprise</div>
+  </div>
+  <div class="form-body">
+    <div class="f-eyebrow">Let's Talk</div>
+    <h2 class="f-title">I Already Know<br>What I Want</h2>
+    <p class="f-subtext">Tell me the essentials, and I'll follow up personally to hear the rest.</p>
+
+    <div class="f-group">
+      <label class="f-label">Your Name</label>
+      <input class="f-input" id="qName" type="text" placeholder="Your name">
+      <div class="f-error" id="err-qName">Please enter your name.</div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label">What Are We Celebrating?</label>
+      <select class="f-select" id="qOccasion">
+        <option value="">Select an occasion</option>
+        <option>Birthday</option>
+        <option>Proposal</option>
+        <option>Anniversary</option>
+        <option>Baby Shower</option>
+        <option>Gender Reveal</option>
+        <option>Bridal Shower</option>
+        <option>Graduation</option>
+        <option>Self Love</option>
+        <option>Corporate Gift</option>
+        <option>Civil Wedding</option>
+        <option>Appreciation</option>
+        <option>Something else</option>
+      </select>
+      <div class="f-error" id="err-qOccasion">Please let us know what you're celebrating.</div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label">Tell Me a Little More</label>
+      <textarea class="f-input" id="qMessage" rows="4" placeholder="Whatever's on your mind — I'll take it from here." style="resize:vertical;"></textarea>
+      <div class="f-error" id="err-qMessage">Please share a few words about what you're thinking.</div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label">Your WhatsApp Number</label>
+      <input class="f-input" id="qWhatsapp" type="tel" placeholder="e.g. 08012345678">
+      <div class="f-error" id="err-qWhatsapp">Please enter a valid WhatsApp number.</div>
+    </div>
+
+    <button class="btn-submit" id="qSubmitBtn" onclick="submitQuickPath()">Send to Fab</button>
   </div>
 </div>
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
+
+function goToQuickPath() {
+  document.getElementById('screen-door').classList.remove('active');
+  document.getElementById('screen-quick').classList.add('active');
+  window.scrollTo(0, 0);
+}
 
 function goToForm() {
   document.getElementById('screen-welcome').classList.remove('active');
@@ -637,6 +696,70 @@ function validate() {
   if (!document.getElementById('howKnow').value) fail('howKnow');
 
   return ok;
+}
+
+function submitQuickPath() {
+  let ok = true;
+  function clr(id) {
+    document.getElementById(id).classList.remove('error');
+    document.getElementById('err-' + id).style.display = 'none';
+  }
+  function fail(id) {
+    ok = false;
+    document.getElementById(id).classList.add('error');
+    document.getElementById('err-' + id).style.display = 'block';
+  }
+
+  clr('qName'); clr('qOccasion'); clr('qMessage'); clr('qWhatsapp');
+
+  const name = document.getElementById('qName').value.trim();
+  const occasion = document.getElementById('qOccasion').value;
+  const message = document.getElementById('qMessage').value.trim();
+  const whatsapp = document.getElementById('qWhatsapp').value.trim();
+
+  if (!name) fail('qName');
+  if (!occasion) fail('qOccasion');
+  if (!message) fail('qMessage');
+  if (!whatsapp || whatsapp.replace(/\D/g, '').length < 7) fail('qWhatsapp');
+
+  if (!ok) return;
+
+  const btn = document.getElementById('qSubmitBtn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  const now = new Date();
+  const enquiryId = 'ENQ-' + Date.now();
+  const normalizedWa = normalizePhone(whatsapp);
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: 'enquiryComplete',
+      enquiryId: enquiryId,
+      submissionDate: now.toLocaleDateString('en-GB'),
+      submissionTime: now.toLocaleTimeString('en-GB'),
+      fullName: name,
+      whatsapp: normalizedWa,
+      email: '',
+      celebrating: '',
+      whoDetail: '',
+      occasion: occasion,
+      celebDate: '',
+      location: '',
+      guideStyle: 'I already know what I want',
+      details: message
+    })
+  }).catch(function() {});
+
+  setTimeout(function() {
+    const waMsg = encodeURIComponent(
+      'Hi Fabsurprise, I\'m ' + name + '. I already know what I want for ' + occasion + ':\n\n' + message
+    );
+    window.location.href = 'https://wa.me/2349025141322?text=' + waMsg;
+  }, 600);
 }
 
 function submitReconnect() {

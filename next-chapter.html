@@ -633,6 +633,17 @@ body {
       <div class="f-error" id="err-qOccasion">Please let us know what you're celebrating.</div>
     </div>
 
+    <div class="f-row">
+      <div class="f-group">
+        <label class="f-label">When? <span class="optional">Optional</span></label>
+        <input class="f-input" id="qDate" type="date">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Where? <span class="optional">Optional</span></label>
+        <input class="f-input" id="qLocation" type="text" placeholder="e.g. Lagos">
+      </div>
+    </div>
+
     <div class="f-group">
       <label class="f-label">Tell Me a Little More</label>
       <textarea class="f-input" id="qMessage" rows="4" placeholder="Whatever's on your mind — I'll take it from here." style="resize:vertical;"></textarea>
@@ -737,6 +748,8 @@ function submitQuickPath() {
 
   const name = document.getElementById('qName').value.trim();
   const occasion = document.getElementById('qOccasion').value;
+  const celebDate = document.getElementById('qDate').value;
+  const location = document.getElementById('qLocation').value.trim();
   const message = document.getElementById('qMessage').value.trim();
   const whatsapp = document.getElementById('qWhatsapp').value.trim();
 
@@ -770,16 +783,18 @@ function submitQuickPath() {
       celebrating: '',
       whoDetail: '',
       occasion: occasion,
-      celebDate: '',
-      location: '',
+      celebDate: celebDate,
+      location: location,
       guideStyle: 'I already know what I want',
       details: message
     })
   }).catch(function() {});
 
   setTimeout(function() {
+    const dateLine = celebDate ? '\nDate: ' + new Date(celebDate).toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'}) : '';
+    const locationLine = location ? '\nLocation: ' + location : '';
     const waMsg = encodeURIComponent(
-      'Hi Fabsurprise, I\'m ' + name + '. I already know what I want for ' + occasion + ':\n\n' + message
+      'Hi Fabsurprise, I\'m ' + name + '. I already know what I want for ' + occasion + ':' + dateLine + locationLine + '\n\n' + message
     );
     window.location.href = 'https://wa.me/2349025141322?text=' + waMsg;
   }, 600);

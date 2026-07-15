@@ -724,6 +724,42 @@ function filterEnquiries(filter, btn) {
   renderEnquiries(filter);
 }
 
+function relationshipPhrase(celebrating) {
+  const map = {
+    'My Partner': 'your partner',
+    'A Family Member': 'this family member',
+    'A Friend': 'this friend',
+    'A Colleague': 'this colleague',
+    'Myself': 'yourself'
+  };
+  return map[celebrating] || 'them';
+}
+
+function buildOccasionOpener(occasion, celebrating) {
+  const who = relationshipPhrase(celebrating);
+  const isSelf = celebrating === 'Myself';
+  const openers = {
+    'Birthday': isSelf
+      ? 'Happy birthday in advance — I hope this year gives you every reason to celebrate.'
+      : 'What a beautiful reason to celebrate! Happy birthday to ' + who + ' in advance.',
+    'Proposal': 'Congratulations on your upcoming proposal! 💍 What an exciting moment ahead.',
+    'Anniversary': isSelf
+      ? 'What a beautiful milestone to celebrate.'
+      : 'Congratulations to you both on this milestone — what a beautiful thing to celebrate.',
+    'Baby Shower': 'Congratulations on this new chapter — such a beautiful thing to prepare for.',
+    'Gender Reveal': 'How exciting! Congratulations on this joyful moment ahead.',
+    'Bridal Shower': 'Congratulations to the bride-to-be — what a special moment to plan for.',
+    'Graduation': isSelf
+      ? 'Congratulations on this achievement — you should be so proud of yourself.'
+      : 'What an achievement to celebrate! Congratulations to ' + who + '.',
+    'Self Love': 'I love that you are choosing to celebrate yourself — you deserve this.',
+    'Corporate Gift': 'Thank you for thinking of us for this — I would love to help make it meaningful.',
+    'Civil Wedding': 'Congratulations on your upcoming wedding! What a beautiful moment ahead.',
+    'Appreciation': 'What a thoughtful thing to do for ' + who + ' — I love this.'
+  };
+  return openers[occasion] || 'Thank you so much for sharing this with us.';
+}
+
 function renderEnquiries(filter) {
   var visible = allEnquiries.filter(function(e){ return e.status !== 'Archived'; });
   var list;
@@ -841,9 +877,10 @@ function renderEnquiryCards(list) {
     var headerClass = isSubmitted ? 'submitted' : 'incomplete';
 
     const resumeUrl = 'https://tinyurl.com/fabsurprise-moment?resume=' + e.enquiryId;
+    var opener = isSubmitted ? buildOccasionOpener(e.occasion, e.celebrating) : '';
     var waFollowUp = isSubmitted
-      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', thank you so much for sharing your Design Your Moment enquiry with us — I\'ve just read through everything, and I\'m genuinely excited about this. When would be a good time to chat about this?')
-      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it, whenever you\'re ready to pick it back up. We completely understand how busy life can get. Just tap through and continue exactly where you stopped: ' + resumeUrl);
+      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ',\n\n' + opener + '\n\nI\'ve just finished reading your Design Your Moment, and I\'d love to hear a little more about what you\'re planning.\n\nLet\'s start here — tell me a bit more whenever you\'re ready.')
+      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it.\n\nWe\'ve saved everything you\'ve shared so far, so you can pick up from exactly where you stopped.\n\nLet\'s continue here: ' + resumeUrl);
 
     var waNumber = normalizeWA(e.whatsapp);
 

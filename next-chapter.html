@@ -385,6 +385,29 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+.btn-quick-path {
+  display: block;
+  width: 100%;
+  background: transparent;
+  color: var(--wine);
+  border: 2px solid var(--wine);
+  padding: 16px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  margin-top: 14px;
+}
+
+.btn-quick-path:hover {
+  background: var(--wine);
+  color: var(--white);
+}
+
 .btn-dym:hover { background: var(--gold-light); }
 
 .t-footer {
@@ -569,7 +592,7 @@ body {
       <p class="door-body">Every unforgettable celebration begins with a conversation.</p>
       <a href="fabsurprise-design-your-moment.html" class="btn-dym">Begin &#8594;</a>
     </div>
-    <button onclick="goToQuickPath()" style="background:none;border:none;margin-top:22px;font-family:'Inter',sans-serif;font-size:12.5px;color:var(--text-light);text-decoration:underline;cursor:pointer;">I already know what I want</button>
+    <button onclick="goToQuickPath()" class="btn-quick-path">I Already Know What I Want</button>
     <p class="t-footer">Every detail, handled with love — Team Fabsurprise</p>
   </div>
 </div>

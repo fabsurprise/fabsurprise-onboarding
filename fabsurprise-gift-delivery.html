@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Gift Delivery — Fabsurprise</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --wine: #7A1428;
+  --wine-dark: #5A0E1C;
+  --wine-light: #921830;
+  --gold: #C9A84C;
+  --gold-light: #E2C97A;
+  --gold-pale: #F9F3E3;
+  --ivory: #F5F0E8;
+  --ivory-mid: #EDE7DC;
+  --ivory-dark: #DDD5C5;
+  --white: #FDFAF6;
+  --text-dark: #1A0A0E;
+  --text-mid: #4A2030;
+  --text-light: #8B6B5A;
+  --error: #B02020;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--ivory);
+  color: var(--text-dark);
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+#landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 72px 32px 80px;
+  background: var(--ivory);
+}
+
+.landing-inner { max-width: 520px; width: 100%; }
+
+.brand-mark {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--wine);
+  font-weight: 600;
+  margin-bottom: 28px;
+}
+
+.landing-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(34px, 7vw, 50px);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+.landing-title em { font-style: italic; color: var(--wine); }
+
+.landing-body {
+  font-size: 14.5px;
+  color: var(--text-light);
+  line-height: 1.85;
+  font-weight: 300;
+  margin-bottom: 12px;
+  max-width: 440px;
+}
+
+.landing-meta {
+  font-size: 11.5px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 24px 0 32px;
+}
+
+.btn-begin {
+  background: var(--wine);
+  color: var(--white);
+  border: none;
+  padding: 17px 40px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-begin:hover { background: var(--wine-light); }
+
+#form-screen {
+  display: none;
+  min-height: 100vh;
+  flex-direction: column;
+  background: var(--ivory);
+}
+
+#form-screen.active { display: flex; }
+
+.form-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--ivory-dark);
+  padding: 18px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.form-header-brand { font-size: 9.5px; letter-spacing: 4px; text-transform: uppercase; color: var(--wine); font-weight: 600; margin-bottom: 10px; }
+
+.progress-track { height: 3px; background: var(--ivory-mid); overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(to right, var(--wine), var(--gold)); transition: width 0.4s ease; }
+.progress-text { font-size: 10.5px; color: var(--text-light); margin-top: 8px; }
+
+.form-body { flex: 1; max-width: 560px; width: 100%; margin: 0 auto; padding: 36px 24px 120px; }
+
+.q-thread { font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 14px; }
+.q-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 6vw, 32px); font-weight: 400; color: var(--text-dark); line-height: 1.25; margin-bottom: 14px; }
+.q-title em { font-style: italic; color: var(--wine); }
+.q-subtext { font-size: 13.5px; color: var(--text-light); line-height: 1.75; margin-bottom: 28px; font-weight: 300; }
+
+.field-wrap { margin-bottom: 8px; }
+
+.field-input, .field-textarea {
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--ivory-dark);
+  padding: 15px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.field-textarea { min-height: 120px; resize: vertical; }
+.field-input::placeholder, .field-textarea::placeholder { color: var(--text-light); font-weight: 300; }
+.field-input:focus, .field-textarea:focus { border-color: var(--wine); }
+.field-input.error, .field-textarea.error { border-color: var(--error); }
+
+.field-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-mid);
+  margin-bottom: 8px;
+}
+
+.field-error { font-size: 11.5px; color: var(--error); margin-top: 7px; display: none; }
+
+.q-screen { display: none; }
+.q-screen.active { display: block; }
+
+.q-nav {
+  position: sticky;
+  bottom: 0;
+  background: var(--ivory);
+  border-top: 1px solid var(--ivory-dark);
+  padding: 16px 24px;
+  display: flex;
+  gap: 10px;
+  margin: 32px -24px -120px;
+}
+
+.btn-back, .btn-next {
+  flex: 1;
+  padding: 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-back { background: var(--ivory-mid); color: var(--text-mid); }
+.btn-next { background: var(--wine); color: var(--white); flex: 2; }
+.btn-next:hover { background: var(--wine-light); }
+
+#success-screen {
+  display: none;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 28px;
+  background: var(--wine-dark);
+}
+
+#success-screen.active { display: flex; }
+
+.success-mark {
+  width: 56px; height: 56px; border: 2px solid var(--gold);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 26px; font-size: 20px; color: var(--gold-light);
+}
+
+.success-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px,7vw,38px); font-weight: 300; color: var(--white); margin-bottom: 18px; }
+.success-body { color: rgba(245,240,232,0.75); font-size: 14px; line-height: 1.85; font-weight: 300; max-width: 420px; }
+</style>
+</head>
+<body>
+
+<div id="landing">
+  <div class="landing-inner">
+    <div class="brand-mark">Fabsurprise</div>
+    <h1 class="landing-title">Your Gift,<br><em>On Its Way</em></h1>
+    <p class="landing-body">
+      Thank you for trusting us with this. This short guide helps us capture exactly who it's for, and where it should go, so nothing gets lost between us and them.
+    </p>
+    <div class="landing-meta">Just a few quick details</div>
+    <button class="btn-begin" onclick="startForm()">Begin</button>
+  </div>
+</div>
+
+<div id="form-screen">
+  <div class="form-header">
+    <div class="form-header-brand">Fabsurprise</div>
+    <div class="progress-track"><div class="progress-fill" id="pFill" style="width:20%"></div></div>
+    <div class="progress-text" id="pText">Step 1 of 5</div>
+  </div>
+
+  <div class="form-body">
+
+    <!-- Q1: RECIPIENT -->
+    <div class="q-screen active" id="q1">
+      <div class="q-thread">Who is this for?</div>
+      <h2 class="q-title">Tell us about the<br><em>person receiving this</em></h2>
+      <p class="q-subtext">The little details help us make sure it feels personal the moment it arrives.</p>
+      <div class="field-wrap">
+        <label class="field-label">Recipient's Full Name</label>
+        <input class="field-input" id="recipientName" type="text" placeholder="Their name">
+        <div class="field-error" id="err-recipientName">Please enter the recipient's name.</div>
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Recipient's Phone Number <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <input class="field-input" id="recipientPhone" type="tel" placeholder="For delivery coordination only">
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Your Relationship to Them</label>
+        <input class="field-input" id="relationship" type="text" placeholder="e.g. Partner, Mum, Best Friend">
+        <div class="field-error" id="err-relationship">Please let us know your relationship to them.</div>
+      </div>
+      <div class="q-nav">
+        <div style="flex:1;"></div>
+        <button class="btn-next" onclick="goNext(1)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q2: OCCASION -->
+    <div class="q-screen" id="q2">
+      <div class="q-thread">What's the occasion?</div>
+      <h2 class="q-title">What are we<br><em>celebrating?</em></h2>
+      <p class="q-subtext">This helps us choose details that feel right for the moment.</p>
+      <div class="field-wrap">
+        <label class="field-label">Occasion</label>
+        <input class="field-input" id="occasion" type="text" placeholder="e.g. Birthday, Just Because, Appreciation">
+        <div class="field-error" id="err-occasion">Please let us know the occasion.</div>
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Special Date <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <input class="field-input" id="specialDate" type="date">
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="goPrev(2)">Back</button>
+        <button class="btn-next" onclick="goNext(2)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q3: DELIVERY -->
+    <div class="q-screen" id="q3">
+      <div class="q-thread">Where should this go?</div>
+      <h2 class="q-title">Delivery<br><em>Details</em></h2>
+      <p class="q-subtext">Exact and complete, so it arrives without a hitch.</p>
+      <div class="field-wrap">
+        <label class="field-label">Delivery Address</label>
+        <textarea class="field-textarea" id="deliveryAddress" placeholder="Full address, including any landmark that helps us find it"></textarea>
+        <div class="field-error" id="err-deliveryAddress">Please share the delivery address.</div>
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Preferred Delivery Date <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <input class="field-input" id="deliveryDate" type="date">
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="goPrev(3)">Back</button>
+        <button class="btn-next" onclick="goNext(3)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q4: MESSAGE -->
+    <div class="q-screen" id="q4">
+      <div class="q-thread">The words that matter</div>
+      <h2 class="q-title">What would you<br>like <em>said?</em></h2>
+      <p class="q-subtext">Whatever you'd like included, in your own words — we'll make sure it's there.</p>
+      <div class="field-wrap">
+        <label class="field-label">Card or Gift Message <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <textarea class="field-textarea" id="giftMessage" placeholder="What would you like the note to say?"></textarea>
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Anything Else We Should Know? <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <textarea class="field-textarea" id="extraNotes" placeholder="Allergies, preferences, anything that helps us get it right"></textarea>
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="goPrev(4)">Back</button>
+        <button class="btn-next" onclick="goNext(4)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q5: YOUR DETAILS -->
+    <div class="q-screen" id="q5">
+      <div class="q-thread">Just so we can reach you</div>
+      <h2 class="q-title">A Little<br><em>About You</em></h2>
+      <p class="q-subtext">So we can confirm everything's in place before it's on its way.</p>
+      <div class="field-wrap">
+        <label class="field-label">Your Full Name</label>
+        <input class="field-input" id="clientName" type="text" placeholder="Your name">
+        <div class="field-error" id="err-clientName">Please enter your name.</div>
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Your WhatsApp Number</label>
+        <input class="field-input" id="clientPhone" type="tel" placeholder="e.g. 08012345678">
+        <div class="field-error" id="err-clientPhone">Please enter a valid WhatsApp number.</div>
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Your Email <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <input class="field-input" id="clientEmail" type="email" placeholder="your@email.com">
+      </div>
+      <div class="q-nav">
+        <button class="btn-back" onclick="goPrev(5)">Back</button>
+        <button class="btn-next" id="submitBtn" onclick="submitForm()">Confirm Details</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="success-screen">
+  <div class="success-mark">&#10003;</div>
+  <h2 class="success-title" id="successTitle">Thank you.</h2>
+  <p class="success-body">
+    We've received everything, and we're already making sure it's exactly right before it's on its way.<br><br>
+    If anything needs confirming, we'll reach out personally.
+  </p>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
+const TOTAL = 5;
+let curStep = 1;
+let fd = {};
+
+function startForm() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('form-screen').classList.add('active');
+}
+
+function showStep(s) {
+  document.querySelectorAll('.q-screen').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('q' + s).classList.add('active');
+  curStep = s;
+  const pct = Math.round((s / TOTAL) * 100);
+  document.getElementById('pFill').style.width = pct + '%';
+  document.getElementById('pText').textContent = 'Step ' + s + ' of ' + TOTAL;
+  window.scrollTo(0, 0);
+}
+
+function clr(id) {
+  document.getElementById(id).classList.remove('error');
+  const er = document.getElementById('err-' + id);
+  if (er) er.style.display = 'none';
+}
+function fail(id) {
+  document.getElementById(id).classList.add('error');
+  const er = document.getElementById('err-' + id);
+  if (er) er.style.display = 'block';
+}
+
+function validate(s) {
+  let ok = true;
+  function check(id, condition) {
+    clr(id);
+    if (!condition) { ok = false; fail(id); }
+  }
+
+  if (s === 1) {
+    check('recipientName', document.getElementById('recipientName').value.trim());
+    check('relationship', document.getElementById('relationship').value.trim());
+  }
+  if (s === 2) {
+    check('occasion', document.getElementById('occasion').value.trim());
+  }
+  if (s === 3) {
+    check('deliveryAddress', document.getElementById('deliveryAddress').value.trim());
+  }
+  if (s === 5) {
+    check('clientName', document.getElementById('clientName').value.trim());
+    const phone = document.getElementById('clientPhone').value.trim();
+    check('clientPhone', phone && phone.replace(/\D/g,'').length >= 10);
+  }
+
+  return ok;
+}
+
+function collect(s) {
+  if (s === 1) {
+    fd.recipientName = document.getElementById('recipientName').value.trim();
+    fd.recipientPhone = document.getElementById('recipientPhone').value.trim();
+    fd.relationship = document.getElementById('relationship').value.trim();
+  }
+  if (s === 2) {
+    fd.occasion = document.getElementById('occasion').value.trim();
+    fd.specialDate = document.getElementById('specialDate').value;
+  }
+  if (s === 3) {
+    fd.deliveryAddress = document.getElementById('deliveryAddress').value.trim();
+    fd.deliveryDate = document.getElementById('deliveryDate').value;
+  }
+  if (s === 4) {
+    fd.giftMessage = document.getElementById('giftMessage').value.trim();
+    fd.extraNotes = document.getElementById('extraNotes').value.trim();
+  }
+  if (s === 5) {
+    fd.clientName = document.getElementById('clientName').value.trim();
+    fd.clientPhone = document.getElementById('clientPhone').value.trim();
+    fd.clientEmail = document.getElementById('clientEmail').value.trim();
+  }
+}
+
+function goNext(s) {
+  if (!validate(s)) return;
+  collect(s);
+  showStep(s + 1);
+}
+
+function goPrev(s) {
+  collect(s);
+  showStep(s - 1);
+}
+
+function normalizePhone(num) {
+  let n = String(num || '').replace(/[^\d]/g, '');
+  if (!n) return '';
+  if (n.length === 11 && n.charAt(0) === '0') return '234' + n.substring(1);
+  if (n.length === 10 && n.charAt(0) !== '0') return '234' + n;
+  return n;
+}
+
+function submitForm() {
+  if (!validate(5)) return;
+  collect(5);
+
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  const now = new Date();
+  const submissionId = 'GIFT-' + Date.now();
+
+  const payload = {
+    submissionId: submissionId,
+    submissionDate: now.toLocaleDateString('en-GB'),
+    submissionTime: now.toLocaleTimeString('en-GB'),
+    bookingType: 'Gift Delivery',
+    clientName: fd.clientName,
+    clientPhone: normalizePhone(fd.clientPhone),
+    clientEmail: fd.clientEmail || '',
+    recipientName: fd.recipientName,
+    recipientPhone: fd.recipientPhone || '',
+    relationship: fd.relationship,
+    occasion: fd.occasion,
+    specialDate: fd.specialDate || '',
+    deliveryAddress: fd.deliveryAddress,
+    deliveryDate: fd.deliveryDate || '',
+    giftMessage: fd.giftMessage || '',
+    extraNotes: fd.extraNotes || ''
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'giftDelivery', ...payload })
+  }).catch(function() {});
+
+  setTimeout(function() {
+    document.getElementById('form-screen').classList.remove('active');
+    const firstName = (fd.clientName || '').split(' ')[0];
+    document.getElementById('successTitle').textContent = firstName ? firstName + ', thank you.' : 'Thank you.';
+    document.getElementById('success-screen').classList.add('active');
+  }, 700);
+}
+</script>
+</body>
+</html>

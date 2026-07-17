@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join the Fabmily</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --wine: #7A1428;
+  --wine-dark: #5A0E1C;
+  --wine-light: #921830;
+  --gold: #C9A84C;
+  --gold-light: #E2C97A;
+  --gold-pale: #F9F3E3;
+  --ivory: #F5F0E8;
+  --ivory-mid: #EDE7DC;
+  --ivory-dark: #DDD5C5;
+  --white: #FDFAF6;
+  --text-dark: #1A0A0E;
+  --text-mid: #4A2030;
+  --text-light: #8B6B5A;
+  --error: #B02020;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--ivory);
+  color: var(--text-dark);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.screen.active { display: flex; }
+
+/* ── SCREEN 1: WELCOME + FORM (single screen, kept light) ── */
+#screen-join {
+  background: var(--ivory);
+}
+
+.hero-band {
+  width: 100%;
+  background: var(--wine-dark);
+  padding: 44px 28px 38px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-band::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -15%;
+  width: 55%;
+  height: 140%;
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 50%;
+}
+
+.brand-tag {
+  position: relative;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  opacity: 0.75;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  position: relative;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 8vw, 46px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.hero-title em { font-style: italic; color: var(--gold-light); }
+
+.hero-body {
+  position: relative;
+  font-size: 13.5px;
+  color: rgba(245,240,232,0.75);
+  line-height: 1.8;
+  font-weight: 300;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.form-body {
+  flex: 1;
+  max-width: 440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 36px 24px 60px;
+}
+
+.f-group { margin-bottom: 20px; }
+
+.f-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  margin-bottom: 9px;
+}
+
+.f-input {
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--ivory-dark);
+  padding: 14px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.f-input::placeholder { color: var(--text-light); font-weight: 300; }
+.f-input:focus { border-color: var(--wine); }
+.f-input.error { border-color: var(--error); }
+
+.f-error {
+  font-size: 11.5px;
+  color: var(--error);
+  margin-top: 7px;
+  display: none;
+}
+
+.f-note {
+  background: var(--gold-pale);
+  border-left: 3px solid var(--gold);
+  padding: 14px 16px;
+  margin-bottom: 28px;
+  font-size: 12px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+.btn-join {
+  width: 100%;
+  background: var(--wine);
+  color: var(--white);
+  border: none;
+  padding: 16px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-join:hover { background: var(--wine-light); }
+.btn-join:disabled { opacity: 0.6; pointer-events: none; }
+
+/* ── SCREEN 2: CONFIRMATION ── */
+#screen-confirm {
+  background: var(--ivory);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 28px;
+}
+
+.confirm-inner {
+  max-width: 380px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.1s forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.confirm-mark {
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 26px;
+  font-size: 20px;
+  color: var(--wine);
+}
+
+.confirm-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 7vw, 38px);
+  font-weight: 300;
+  color: var(--text-dark);
+  margin-bottom: 18px;
+  line-height: 1.15;
+}
+
+.confirm-title em { font-style: italic; color: var(--wine); }
+
+.confirm-body {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.8;
+  font-weight: 300;
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SCREEN 1: JOIN ══ -->
+<div class="screen active" id="screen-join">
+  <div class="hero-band">
+    <div class="brand-tag">Fabsurprise</div>
+    <h1 class="hero-title">Join the<br><em>Fabmily</em></h1>
+    <p class="hero-body">A community for anyone who loves thoughtful celebrations — first look at what we're creating, and a place to belong before your first moment with us even begins.</p>
+  </div>
+
+  <div class="form-body">
+    <div class="f-group">
+      <label class="f-label">Your Name</label>
+      <input class="f-input" id="mName" type="text" placeholder="Your name" autocomplete="name">
+      <div class="f-error" id="err-mName">Please enter your name.</div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label">Email Address</label>
+      <input class="f-input" id="mEmail" type="email" placeholder="your@email.com" autocomplete="email">
+      <div class="f-error" id="err-mEmail">Please enter a valid email address.</div>
+    </div>
+
+    <div class="f-group">
+      <label class="f-label">Instagram Handle <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-light);">Optional</span></label>
+      <input class="f-input" id="mInstagram" type="text" placeholder="@yourusername">
+    </div>
+
+    <div class="f-note">
+      No pressure, no spam — just a quiet way for us to stay in touch and share what we're building.
+    </div>
+
+    <button class="btn-join" id="mSubmitBtn" onclick="submitFabmily()">Join the Fabmily</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 2: CONFIRMATION ══ -->
+<div class="screen" id="screen-confirm">
+  <div class="confirm-inner">
+    <div class="confirm-mark">&#10003;</div>
+    <h2 class="confirm-title">You're <em>In.</em></h2>
+    <p class="confirm-body">
+      Welcome to the Fabmily. We're so glad you're here.<br><br>
+      Whenever there's something worth sharing, you'll be among the first to know.
+    </p>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
+
+function getCampaignSource() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('campaign') || 'Fabmily Members Signup';
+}
+
+function getTrafficSource() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('source') || 'Direct';
+}
+
+function submitFabmily() {
+  let ok = true;
+  function clr(id) {
+    document.getElementById(id).classList.remove('error');
+    document.getElementById('err-' + id).style.display = 'none';
+  }
+  function fail(id) {
+    ok = false;
+    document.getElementById(id).classList.add('error');
+    document.getElementById('err-' + id).style.display = 'block';
+  }
+
+  clr('mName'); clr('mEmail');
+
+  const name = document.getElementById('mName').value.trim();
+  const email = document.getElementById('mEmail').value.trim();
+  const instagram = document.getElementById('mInstagram').value.trim();
+
+  if (!name) fail('mName');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) fail('mEmail');
+
+  if (!ok) return;
+
+  const btn = document.getElementById('mSubmitBtn');
+  btn.textContent = 'Joining...';
+  btn.disabled = true;
+
+  const now = new Date();
+  const nameParts = name.split(' ');
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.slice(1).join(' ') || '';
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: 'reconnect',
+      dateJoined: now.toLocaleDateString('en-GB'),
+      timeJoined: now.toLocaleTimeString('en-GB'),
+      firstName: firstName,
+      lastName: lastName,
+      phone: '',
+      email: email,
+      birthday: '',
+      anniversary: '',
+      howKnow: instagram ? 'Instagram (' + instagram + ')' : 'Instagram',
+      campaignSource: getCampaignSource(),
+      trafficSource: getTrafficSource()
+    })
+  }).catch(function() {});
+
+  setTimeout(function() {
+    document.getElementById('screen-join').classList.remove('active');
+    document.getElementById('screen-confirm').classList.add('active');
+    window.scrollTo(0, 0);
+  }, 700);
+}
+</script>
+</body>
+</html>

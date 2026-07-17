@@ -225,6 +225,23 @@ body {
 .field-input::placeholder, .field-textarea::placeholder { color: var(--text-light); font-weight: 300; }
 .field-input:focus, .field-textarea:focus { border-color: var(--wine); }
 .field-input.error, .field-textarea.error { border-color: var(--error); }
+
+.field-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-mid);
+  margin-bottom: 8px;
+}
+
+select.field-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6B5A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 42px;
+  cursor: pointer;
+}
 .field-error { font-size: 12px; color: var(--error); margin-top: 6px; display: none; }
 .field-textarea { min-height: 140px; resize: none; line-height: 1.65; }
 
@@ -470,9 +487,9 @@ body {
   <div class="progress-header">
     <div class="progress-brand">Fabsurprise</div>
     <div class="progress-track">
-      <div class="progress-fill" id="pFill" style="width:12.5%"></div>
+      <div class="progress-fill" id="pFill" style="width:11.1%"></div>
     </div>
-    <div class="progress-text" id="pText">Step 1 of 8</div>
+    <div class="progress-text" id="pText">Step 1 of 9</div>
   </div>
 
   <!-- Q1: NAME -->
@@ -496,9 +513,10 @@ body {
     <h2 class="q-title">From this moment,<br>we don't want you <em>wondering what happens next</em></h2>
     <p class="q-subtext">Your WhatsApp is how we'll continue this personally, and your email is simply where we'll send your confirmation, so nothing gets lost in between.</p>
     <div class="field-wrap">
-      <input class="field-input" id="whatsapp" type="tel" placeholder="e.g. 08012345678 or +44 7911 123456" autocomplete="tel" style="margin-bottom:6px;">
+      <input class="field-input" id="whatsapp" type="tel" placeholder="e.g. 08012345678 or +44 7911 123456" autocomplete="tel" style="margin-bottom:6px;" oninput="updateWAPreview()">
+      <div id="waPreview" style="font-size:12px;color:var(--wine);margin-bottom:6px;display:none;font-weight:500;"></div>
       <p style="font-size:11.5px;color:var(--text-light);margin:0 0 12px;">If you are outside Nigeria, please include your country code.</p>
-      <div class="field-error" id="err-whatsapp">Please enter a WhatsApp number we can reach you on.</div>
+      <div class="field-error" id="err-whatsapp">That number looks incomplete — please double check it includes your full WhatsApp number.</div>
       <input class="field-input" id="email" type="email" placeholder="Email Address" autocomplete="email">
       <div class="field-error" id="err-email">Please enter a valid email address.</div>
       <div class="dup-notice" id="dupNotice">
@@ -541,6 +559,14 @@ body {
         </div>
       </div>
       <div class="field-error" id="err-who">Please let us know who this celebration is for.</div>
+
+      <div id="whoDetailWrap" style="display:none;margin-top:16px;">
+        <label class="field-label" id="whoDetailLabel">Who, specifically?</label>
+        <select class="field-input" id="whoDetail" onchange="handleWhoDetailChange()">
+          <option value="">Select an option</option>
+        </select>
+        <input class="field-input" id="whoDetailOther" type="text" placeholder="Please specify" style="display:none;margin-top:10px;" oninput="selWhoDetail = this.value.trim()">
+      </div>
     </div>
     <div class="q-nav">
       <button class="btn-back" onclick="goPrev(3)">Back</button>
@@ -638,23 +664,69 @@ body {
     </div>
   </div>
 
-  <!-- Q8: VISION -->
+  <!-- Q8: BUDGET -->
   <div class="q-screen" id="q8">
-    <div class="q-thread" id="thread8">Now we are listening</div>
+    <div class="q-thread">One more thing, before we begin shaping this</div>
+    <h2 class="q-title">Would you<br>like us to</h2>
+    <p class="q-subtext">There is no wrong answer here — just tell us what feels right for you.</p>
+    <div class="field-wrap">
+      <div class="option-list" id="budget-mode-list">
+        <div class="opt" data-val="range" onclick="pickBudgetMode(this,'range')">
+          <div class="opt-dot"><div class="opt-inner"></div></div>
+          <div><div class="opt-text">Work within a specific range</div><div class="opt-sub">Select the range that feels right below</div></div>
+        </div>
+        <div class="opt" data-val="open" onclick="pickBudgetMode(this,'open')">
+          <div class="opt-dot"><div class="opt-inner"></div></div>
+          <div><div class="opt-text">Recommend the best experience for my vision</div><div class="opt-sub">Guide me based on everything I have shared, regardless of budget</div></div>
+        </div>
+      </div>
+      <div class="field-error" id="err-budgetMode">Please let us know which feels right for you.</div>
+
+      <div id="budgetRangeWrap" style="display:none;margin-top:18px;">
+        <div class="option-list" id="budget-range-list">
+          <div class="opt" data-val="₦100,000 – ₦500,000" onclick="pickBudgetRange(this,'₦100,000 – ₦500,000')">
+            <div class="opt-dot"><div class="opt-inner"></div></div>
+            <div><div class="opt-text">₦100,000 – ₦500,000</div></div>
+          </div>
+          <div class="opt" data-val="₦500,000 – ₦1,500,000" onclick="pickBudgetRange(this,'₦500,000 – ₦1,500,000')">
+            <div class="opt-dot"><div class="opt-inner"></div></div>
+            <div><div class="opt-text">₦500,000 – ₦1,500,000</div></div>
+          </div>
+          <div class="opt" data-val="₦1,500,000 – ₦2,000,000" onclick="pickBudgetRange(this,'₦1,500,000 – ₦2,000,000')">
+            <div class="opt-dot"><div class="opt-inner"></div></div>
+            <div><div class="opt-text">₦1,500,000 – ₦2,000,000</div></div>
+          </div>
+          <div class="opt" data-val="₦2,000,000+" onclick="pickBudgetRange(this,'₦2,000,000+')">
+            <div class="opt-dot"><div class="opt-inner"></div></div>
+            <div><div class="opt-text">₦2,000,000+</div></div>
+          </div>
+        </div>
+        <div class="field-error" id="err-budgetRange">Please select a range.</div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="goPrev(8)">Back</button>
+      <button class="btn-next" onclick="goNext(8)">Continue</button>
+    </div>
+  </div>
+
+  <!-- Q9: VISION -->
+  <div class="q-screen" id="q9">
+    <div class="q-thread" id="thread9">Now we are listening</div>
 
     <div class="reassure-card">
       <p id="reassureText">You're almost there. Tell us what's on your mind — not the logistics, just the picture you've been carrying around, and the feeling you want to create.</p>
       <span id="reassureSub">This is the part we look forward to most.</span>
     </div>
 
-    <h2 class="q-title" id="title8">Tell us what<br>you are <em>imagining</em></h2>
+    <h2 class="q-title" id="title9">Tell us what<br>you are <em>imagining</em></h2>
     <p class="q-subtext">Your ideas, what inspired this, the experience you'd love to create — you don't need every detail figured out. Just tell us enough to picture it too.</p>
     <div class="field-wrap">
       <textarea class="field-textarea" id="details" placeholder="Tell us everything you would love us to know..."></textarea>
       <div class="field-error" id="err-details">Please share a little about what you have in mind.</div>
     </div>
     <div class="q-nav">
-      <button class="btn-back" onclick="goPrev(8)">Back</button>
+      <button class="btn-back" onclick="goPrev(9)">Back</button>
       <button class="btn-next" id="submitBtn" onclick="submitForm()">Send My Enquiry</button>
     </div>
   </div>
@@ -678,14 +750,63 @@ body {
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
+
+function looksLikeValidPhone(raw) {
+  const digits = raw.replace(/[^\d]/g, '');
+  if (digits.length < 10) return { ok: false, reason: 'short' };
+  if (digits.length > 15) return { ok: false, reason: 'long' };
+  return { ok: true };
+}
+
+function looksSuspicious(raw) {
+  // Softer check used only for the live warning, never blocks submission.
+  // Catches the specific pattern of a Nigerian mobile number typed without
+  // its leading 0 or country code, which breaks WhatsApp links.
+  const digits = raw.replace(/[^\d]/g, '');
+  const ngMobilePrefixes = ['70','80','81','90','91'];
+  if (digits.length === 10 && ngMobilePrefixes.includes(digits.substring(0,2))) return true;
+  if (digits.length === 11 && digits.charAt(0) !== '0' && digits.substring(0,3) !== '234') return true;
+  return false;
+}
+
+function updateWAPreview() {
+  const raw = document.getElementById('whatsapp').value.trim();
+  const preview = document.getElementById('waPreview');
+  const digits = raw.replace(/[^\d]/g, '');
+  if (digits.length < 7) {
+    preview.style.display = 'none';
+    return;
+  }
+  preview.style.display = 'block';
+  if (looksSuspicious(raw)) {
+    preview.style.color = '#B02020';
+    preview.textContent = 'If this is a Nigerian number, please include the leading 0 or your country code (e.g. 0' + digits + ' or +234' + digits.replace(/^0/, '') + ').';
+  } else {
+    preview.style.color = '';
+    preview.textContent = 'We\'ll reach you on WhatsApp at: ' + raw + ' — please double check this is correct.';
+  }
+}
 const WA = '2349025141322';
-const TOTAL = 8;
+
+function getCampaignSource() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('campaign') || 'Design Your Moment';
+}
+
+function getTrafficSource() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('source') || 'Direct';
+}
+const TOTAL = 9;
 
 let curStep = 1;
 let fd = {};
 let selWho = '';
+let selWhoDetail = '';
 let selOcc = '';
 let selGuide = '';
+let selBudgetMode = '';
+let selBudgetRange = '';
 let enquiryId = 'ENQ-' + Date.now();
 let partialSaved = false;
 let dupBlocked = false;
@@ -714,6 +835,9 @@ window.addEventListener('DOMContentLoaded', function() {
     fd.location   = data.location || '';
     fd.guideStyle = data.guideStyle || '';
     fd.details    = data.details || '';
+    fd.whoDetail  = data.whoDetail || '';
+    fd.budgetMode = data.budgetMode || '';
+    fd.budgetRange = data.budgetRange || '';
 
     if (fd.fullName) document.getElementById('fullName').value = fd.fullName;
     if (fd.whatsapp) document.getElementById('whatsapp').value = fd.whatsapp;
@@ -727,6 +851,25 @@ window.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('#who-list .opt').forEach(function(o) {
         if (o.querySelector('.opt-text').textContent === selWho) o.classList.add('active');
       });
+      if (WHO_DETAIL_OPTIONS[selWho]) {
+        const wrap = document.getElementById('whoDetailWrap');
+        const select = document.getElementById('whoDetail');
+        const otherInput = document.getElementById('whoDetailOther');
+        const label = document.getElementById('whoDetailLabel');
+        wrap.style.display = 'block';
+        label.textContent = selWho === 'My Partner' ? 'Your partner is your...' : 'Which family member?';
+        select.innerHTML = '<option value="">Select an option</option>' +
+          WHO_DETAIL_OPTIONS[selWho].map(function(o) { return '<option value="' + o + '">' + o + '</option>'; }).join('');
+        if (fd.whoDetail && WHO_DETAIL_OPTIONS[selWho].includes(fd.whoDetail)) {
+          select.value = fd.whoDetail;
+          selWhoDetail = fd.whoDetail;
+        } else if (fd.whoDetail) {
+          select.value = 'Other';
+          otherInput.style.display = 'block';
+          otherInput.value = fd.whoDetail;
+          selWhoDetail = fd.whoDetail;
+        }
+      }
     }
     selOcc = fd.occasion;
     if (selOcc) {
@@ -740,6 +883,21 @@ window.addEventListener('DOMContentLoaded', function() {
         if (o.dataset && o.dataset.val === selGuide) o.classList.add('active');
       });
     }
+    selBudgetMode = fd.budgetMode;
+    selBudgetRange = fd.budgetRange;
+    if (selBudgetMode) {
+      document.querySelectorAll('#budget-mode-list .opt').forEach(function(o) {
+        if (o.dataset && o.dataset.val === selBudgetMode) o.classList.add('active');
+      });
+      if (selBudgetMode === 'range') {
+        document.getElementById('budgetRangeWrap').style.display = 'block';
+        if (selBudgetRange) {
+          document.querySelectorAll('#budget-range-list .opt').forEach(function(o) {
+            if (o.dataset && o.dataset.val === selBudgetRange) o.classList.add('active');
+          });
+        }
+      }
+    }
 
     // Figure out furthest completed step, resume just after it
     let resumeStep = 3;
@@ -749,6 +907,7 @@ window.addEventListener('DOMContentLoaded', function() {
     if (fd.celebDate) resumeStep = 6;
     if (fd.location) resumeStep = 7;
     if (fd.guideStyle) resumeStep = 8;
+    if (fd.budgetMode) resumeStep = 9;
 
     personalise(resumeStep);
     showStep(resumeStep);
@@ -859,11 +1018,16 @@ function savePartial() {
       status: 'Incomplete',
       stoppedAt: 'Step ' + curStep,
       celebrating: fd.who || '',
+      whoDetail: fd.whoDetail || '',
       occasion: fd.occasion || '',
       celebDate: fd.celebDate || '',
       location: fd.location || '',
       guideStyle: fd.guideStyle || '',
-      details: fd.details || ''
+      budgetMode: fd.budgetMode || '',
+      budgetRange: fd.budgetRange || '',
+      details: fd.details || '',
+      campaignSource: getCampaignSource(),
+      trafficSource: getTrafficSource()
     })
   }).catch(function() {});
 }
@@ -893,13 +1057,13 @@ function personalise(s) {
     if (threads[selOcc]) document.getElementById('thread5').textContent = threads[selOcc];
     document.getElementById('title5').innerHTML = 'When is the<br><em>' + selOcc.toLowerCase() + '?</em>';
   }
-  if (s === 8) {
+  if (s === 9) {
     const name2 = (fd.fullName || '').split(' ')[0];
     if (name2 && selOcc) {
       document.getElementById('reassureText').textContent = name2 + ', from everything you have shared, we can already feel the thought behind this ' + selOcc.toLowerCase() + '. Now tell us what is in your mind.';
     }
     if (selOcc) {
-      document.getElementById('title8').innerHTML = 'Tell us about<br>the <em>' + selOcc.toLowerCase() + '</em>';
+      document.getElementById('title9').innerHTML = 'Tell us about<br>the <em>' + selOcc.toLowerCase() + '</em>';
     }
   }
 }
@@ -930,7 +1094,7 @@ function validate(s) {
     document.getElementById('dupNotice').style.display = 'none';
     const wa = document.getElementById('whatsapp').value.trim();
     const em = document.getElementById('email').value.trim();
-    if (!wa || wa.replace(/\s/g,'').length < 7) fail('whatsapp');
+    if (!looksLikeValidPhone(wa).ok) fail('whatsapp');
     if (!em || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) fail('email');
   }
 
@@ -952,7 +1116,16 @@ function validate(s) {
     if (!selGuide) { ok = false; er.style.display = 'block'; } else er.style.display = 'none';
   }
 
-  if (s === 8) { clr('details'); if (!document.getElementById('details').value.trim()) fail('details'); }
+  if (s === 8) {
+    const erMode = document.getElementById('err-budgetMode');
+    if (!selBudgetMode) { ok = false; erMode.style.display = 'block'; } else erMode.style.display = 'none';
+    if (selBudgetMode === 'range') {
+      const erRange = document.getElementById('err-budgetRange');
+      if (!selBudgetRange) { ok = false; erRange.style.display = 'block'; } else erRange.style.display = 'none';
+    }
+  }
+
+  if (s === 9) { clr('details'); if (!document.getElementById('details').value.trim()) fail('details'); }
 
   return ok;
 }
@@ -961,20 +1134,58 @@ function validate(s) {
 function collect(s) {
   if (s === 1) fd.fullName = document.getElementById('fullName').value.trim();
   if (s === 2) { fd.whatsapp = document.getElementById('whatsapp').value.trim(); fd.email = document.getElementById('email').value.trim(); }
-  if (s === 3) fd.who = selWho;
+  if (s === 3) { fd.who = selWho; fd.whoDetail = selWhoDetail; }
   if (s === 4) fd.occasion = selOcc;
   if (s === 5) fd.celebDate = document.getElementById('celebDate').value;
   if (s === 6) fd.location = document.getElementById('location').value.trim();
   if (s === 7) fd.guideStyle = selGuide;
-  if (s === 8) fd.details = document.getElementById('details').value.trim();
+  if (s === 8) { fd.budgetMode = selBudgetMode; fd.budgetRange = selBudgetMode === 'range' ? selBudgetRange : ''; }
+  if (s === 9) fd.details = document.getElementById('details').value.trim();
 }
 
 // ── PICKERS ──
+const WHO_DETAIL_OPTIONS = {
+  'My Partner': ['Husband', 'Wife', 'Boyfriend', 'Girlfriend', 'Fiancé', 'Fiancée', 'Other'],
+  'A Family Member': ['Mum', 'Dad', 'Sister', 'Brother', 'Daughter', 'Son', 'Grandmother', 'Grandfather', 'Other']
+};
+
 function pickWho(el, val) {
   document.querySelectorAll('#who-list .opt').forEach(function(o) { o.classList.remove('active'); });
   el.classList.add('active');
   selWho = val;
   document.getElementById('err-who').style.display = 'none';
+
+  const wrap = document.getElementById('whoDetailWrap');
+  const select = document.getElementById('whoDetail');
+  const otherInput = document.getElementById('whoDetailOther');
+  const label = document.getElementById('whoDetailLabel');
+
+  if (WHO_DETAIL_OPTIONS[val]) {
+    wrap.style.display = 'block';
+    label.textContent = val === 'My Partner' ? 'Your partner is your...' : 'Which family member?';
+    select.innerHTML = '<option value="">Select an option</option>' +
+      WHO_DETAIL_OPTIONS[val].map(function(o) { return '<option value="' + o + '">' + o + '</option>'; }).join('');
+    select.value = '';
+    otherInput.style.display = 'none';
+    otherInput.value = '';
+    selWhoDetail = '';
+  } else {
+    wrap.style.display = 'none';
+    selWhoDetail = '';
+  }
+}
+
+function handleWhoDetailChange() {
+  const select = document.getElementById('whoDetail');
+  const otherInput = document.getElementById('whoDetailOther');
+  if (select.value === 'Other') {
+    otherInput.style.display = 'block';
+    selWhoDetail = '';
+  } else {
+    otherInput.style.display = 'none';
+    otherInput.value = '';
+    selWhoDetail = select.value;
+  }
 }
 
 function pickOcc(el, val) {
@@ -991,9 +1202,32 @@ function pickGuide(el, val) {
   document.getElementById('err-guide').style.display = 'none';
 }
 
+function pickBudgetMode(el, val) {
+  document.querySelectorAll('#budget-mode-list .opt').forEach(function(o) { o.classList.remove('active'); });
+  el.classList.add('active');
+  selBudgetMode = val;
+  document.getElementById('err-budgetMode').style.display = 'none';
+
+  const wrap = document.getElementById('budgetRangeWrap');
+  if (val === 'range') {
+    wrap.style.display = 'block';
+  } else {
+    wrap.style.display = 'none';
+    selBudgetRange = '';
+    document.querySelectorAll('#budget-range-list .opt').forEach(function(o) { o.classList.remove('active'); });
+  }
+}
+
+function pickBudgetRange(el, val) {
+  document.querySelectorAll('#budget-range-list .opt').forEach(function(o) { o.classList.remove('active'); });
+  el.classList.add('active');
+  selBudgetRange = val;
+  document.getElementById('err-budgetRange').style.display = 'none';
+}
+
 // ── SUBMIT ──
 function submitForm() {
-  if (!validate(8)) return;
+  if (!validate(9)) return;
   collect(8);
 
   const btn = document.getElementById('submitBtn');
@@ -1013,11 +1247,16 @@ function submitForm() {
     whatsapp: fd.whatsapp,
     email: fd.email,
     celebrating: fd.who,
+    whoDetail: fd.whoDetail || '',
     occasion: fd.occasion,
     celebDate: fd.celebDate,
     location: fd.location,
     guideStyle: fd.guideStyle,
-    details: fd.details
+    budgetMode: fd.budgetMode || '',
+    budgetRange: fd.budgetRange || '',
+    details: fd.details,
+    campaignSource: getCampaignSource(),
+    trafficSource: getTrafficSource()
   };
 
   const waMsg = encodeURIComponent(

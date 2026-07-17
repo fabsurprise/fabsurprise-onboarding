@@ -927,7 +927,7 @@ function renderEnquiryCards(list) {
           : (!isSubmitted ? '<button onclick="copyResumeLink(\'' + e.enquiryId + '\')" style="background:var(--ivory-mid);color:var(--text-mid);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Copy Resume Link</button>' : '') +
             (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waFollowUp + '" target="_blank" class="btn-enq-wa">' + (isSubmitted ? 'WhatsApp' : 'Follow Up') + '</a>' : '') +
             '<button onclick="markFollowedUp(\'' + e.enquiryId + '\', this)" style="background:var(--gold-pale);color:var(--text-mid);border:1px solid var(--gold);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">' + (e.followedUpAt ? 'Update Follow-Up' : 'Mark as Followed Up') + '</button>' +
-            (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\')">Send Onboarding Link</button>' : '') +
+            (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\',\'celebration\')">Full Celebration</button><button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\',\'gift\')" style="background:var(--gold);color:var(--wine-dark);">Gift Delivery</button>' : '') +
             '<button onclick="archiveEnquiry(\'' + e.enquiryId + '\', this)" style="background:transparent;color:var(--error);border:1px solid var(--error);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Archive</button>'
           ) +
       '</div>' +
@@ -986,7 +986,7 @@ async function archiveEnquiry(enquiryId, btn) {
   }
 }
 
-function convertToBooking(enquiryId) {
+function convertToBooking(enquiryId, type) {
   var enq = allEnquiries.find(function(e){ return e.enquiryId === enquiryId; });
   if (!enq) return;
   var stage = enq.paymentStage || 'Enquired';
@@ -994,11 +994,21 @@ function convertToBooking(enquiryId) {
     var proceed = confirm('This enquiry is still marked as "' + stage + '", not Paid & Booked. Send the onboarding link anyway?');
     if (!proceed) return;
   }
-  var onboardingLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-onboarding.html';
   var waNumber = normalizeWA(enq.whatsapp);
-  var msg = encodeURIComponent(
-    'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Your booking is confirmed and the next step is to complete your Start Your Celebration Guide so we can capture all the details that will make this truly special. Here is your personal link: ' + onboardingLink
-  );
+  var onboardingLink, msg;
+
+  if (type === 'gift') {
+    onboardingLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-gift-delivery.html';
+    msg = encodeURIComponent(
+      'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to get this ready for you. Your booking is confirmed, and the next step is a quick guide so we can capture exactly who it is for and where it should go. Here is your personal link: ' + onboardingLink
+    );
+  } else {
+    onboardingLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-onboarding.html';
+    msg = encodeURIComponent(
+      'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Your booking is confirmed and the next step is to complete your Start Your Celebration Guide so we can capture all the details that will make this truly special. Here is your personal link: ' + onboardingLink
+    );
+  }
+
   window.open('https://wa.me/' + waNumber + '?text=' + msg, '_blank');
 }
 

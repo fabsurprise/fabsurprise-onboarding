@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Before We Celebrate — Fabsurprise</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --wine: #7A1428;
+  --wine-dark: #5A0E1C;
+  --wine-light: #921830;
+  --gold: #C9A84C;
+  --gold-light: #E2C97A;
+  --gold-pale: #F9F3E3;
+  --ivory: #F5F0E8;
+  --ivory-mid: #EDE7DC;
+  --ivory-dark: #DDD5C5;
+  --white: #FDFAF6;
+  --text-dark: #1A0A0E;
+  --text-mid: #4A2030;
+  --text-light: #8B6B5A;
+  --error: #B02020;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--ivory);
+  color: var(--text-dark);
+  font-size: 15px;
+  line-height: 1.7;
+  padding-bottom: 100px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--wine-dark);
+  padding: 56px 28px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -35%;
+  right: -20%;
+  width: 60%;
+  height: 140%;
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 50%;
+}
+
+.hero-inner { position: relative; max-width: 480px; margin: 0 auto; }
+
+.hero-eyebrow {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  opacity: 0.85;
+  margin-bottom: 22px;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(30px, 8vw, 42px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.hero-title em { font-style: italic; color: var(--gold-light); }
+
+.hero-body {
+  font-size: 14px;
+  color: rgba(245,240,232,0.78);
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+.hero-body strong { color: var(--gold-light); font-weight: 500; }
+
+/* ── SECTIONS ── */
+.section {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 44px 24px 8px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.section-sub {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 22px;
+  font-weight: 300;
+}
+
+.check-list { list-style: none; }
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--ivory-mid);
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+.check-item:last-child { border-bottom: none; }
+
+.check-mark {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--gold-pale);
+  color: var(--wine);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  margin-top: 1px;
+}
+
+/* ── ACCORDION ── */
+.accordion-group { border-top: 1px solid var(--ivory-dark); margin-top: 8px; }
+
+.accordion-item { border-bottom: 1px solid var(--ivory-dark); }
+
+.accordion-header {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 20px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--text-dark);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.accordion-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--wine);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--wine);
+  font-size: 13px;
+  transition: transform 0.3s ease;
+  margin-left: 16px;
+}
+
+.accordion-item.open .accordion-icon { transform: rotate(45deg); }
+
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+
+.accordion-item.open .accordion-body {
+  max-height: 800px;
+  padding-bottom: 22px;
+}
+
+.accordion-body-inner {
+  font-size: 13.5px;
+  color: var(--text-mid);
+  line-height: 1.85;
+  font-weight: 300;
+  padding-right: 8px;
+}
+
+.accordion-body-inner p { margin-bottom: 12px; }
+.accordion-body-inner p:last-child { margin-bottom: 0; }
+
+.accordion-body-inner ul { padding-left: 18px; margin-top: 8px; }
+.accordion-body-inner li { margin-bottom: 6px; }
+
+/* ── THANK YOU ── */
+.closing {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 44px 24px 20px;
+  text-align: center;
+}
+
+.closing-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--wine);
+  margin-bottom: 14px;
+}
+
+.closing-body {
+  font-size: 13.5px;
+  color: var(--text-light);
+  line-height: 1.85;
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+
+.next-note {
+  background: var(--gold-pale);
+  border-left: 3px solid var(--gold);
+  padding: 16px 18px;
+  font-size: 12.5px;
+  color: var(--text-mid);
+  line-height: 1.7;
+  text-align: left;
+}
+
+/* ── FIXED CTA ── */
+.cta-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-top: 1px solid var(--ivory-dark);
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+  z-index: 100;
+}
+
+.btn-proceed {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  background: var(--wine);
+  color: var(--white);
+  border: none;
+  padding: 17px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-proceed:hover { background: var(--wine-light); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Before We Celebrate</div>
+    <h1 class="hero-title">Thank You for<br><em>Choosing Fabsurprise</em></h1>
+    <p class="hero-body">
+      We're honoured to help you create a moment they'll never forget.<br><br>
+      Before confirming your booking, we'd love a minute of your time. This explains what to expect from us, how we'll work together, and a few details that keep everything running smoothly from beginning to end.
+    </p>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">What You Can Expect From Us</h2>
+  <p class="section-sub">From the moment your booking is confirmed, your celebration becomes our priority.</p>
+  <ul class="check-list">
+    <li class="check-item"><span class="check-mark">✓</span>Clear communication from start to finish</li>
+    <li class="check-item"><span class="check-mark">✓</span>A celebration planned around your story</li>
+    <li class="check-item"><span class="check-mark">✓</span>Ideas and recommendations created just for you</li>
+    <li class="check-item"><span class="check-mark">✓</span>Regular updates, so you always know what's happening</li>
+    <li class="check-item"><span class="check-mark">✓</span>A team that cares about every detail</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2 class="section-title">How We Can Work Together</h2>
+  <p class="section-sub">The best celebrations happen when we work together.</p>
+  <ul class="check-list">
+    <li class="check-item"><span class="check-mark">✓</span>Share the right information with us</li>
+    <li class="check-item"><span class="check-mark">✓</span>Let us know if anything changes</li>
+    <li class="check-item"><span class="check-mark">✓</span>Review and approve ideas when we send them</li>
+    <li class="check-item"><span class="check-mark">✓</span>Make payments according to the agreed plan</li>
+    <li class="check-item"><span class="check-mark">✓</span>Reply to important messages when needed</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2 class="section-title">Things You Should Know</h2>
+  <p class="section-sub">Every celebration is different, but here's what's helpful to know before we begin.</p>
+
+  <div class="accordion-group" id="accordionGroup">
+
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        Booking Confirmation
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <p>Your booking is confirmed once we receive your payment.</p>
+          <p>From that moment, we begin planning your celebration. Depending on your booking, we may start ordering items, booking vendors, preparing personalised gifts, and coordinating everything needed to bring it to life.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        Payment
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <p>Full payment is our standard option for most bookings.</p>
+          <p>In select cases — larger celebrations or certain corporate projects — a payment plan may be agreed before work begins: 80% to confirm your booking and begin planning, with the remaining balance due before delivery, setup, or installation. This is the exception, not the default, and would always be discussed with you directly first.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        Changes
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <p>Need to make a change? We'll always do our best to help.</p>
+          <p>If the change affects the cost, timeline, or items we've already ordered, we'll explain everything clearly before making any changes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        Rescheduling
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <p>If your celebration date changes, let us know as soon as you can.</p>
+          <p>We'll do our best to move your booking to another available date. If extra costs are involved, we'll let you know before moving forward.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        Cancellation
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <p>Plans change, and we understand. If you need to cancel, please let us know as soon as possible.</p>
+          <p>We'll look at what's already been arranged on our end — work completed, items ordered, vendors booked — before talking through the next steps with you together.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        Refunds
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <p>Every celebration is different, so refunds are considered individually rather than by a fixed formula.</p>
+          <p>If a refund is requested, here's what shapes the outcome:</p>
+          <ul>
+            <li>Work already completed</li>
+            <li>Items already purchased</li>
+            <li>Personalised or custom-made pieces</li>
+            <li>Vendor and delivery costs already committed</li>
+          </ul>
+          <p>If a refund is available, we'll walk you through exactly how it was calculated.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        Privacy
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <p>Some celebrations are very personal.</p>
+          <p>If you'd prefer we don't share photos or videos of your celebration on our website or social media, just let us know before the day. We'll always respect that.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="closing">
+  <p class="closing-title">Thank you for reading through this with us.</p>
+  <p class="closing-body">
+    We're genuinely excited to bring your celebration to life, and we can't wait to get started. If anything here raises a question, we're always happy to talk it through before you confirm.
+  </p>
+  <div class="next-note">
+    Once your payment is confirmed, we'll send your Start Your Celebration guide so we can begin capturing every detail that makes this feel entirely yours.
+  </div>
+</div>
+
+<div class="cta-bar">
+  <button class="btn-proceed" onclick="proceedToPayment()">Proceed to Payment</button>
+</div>
+
+<script>
+function toggleAccordion(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.accordion-item').forEach(function(el) {
+    el.classList.remove('open');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+  }
+}
+
+function proceedToPayment() {
+  const msg = encodeURIComponent(
+    "Hi Fabsurprise, I've read through the booking guide and I'm ready to proceed with payment."
+  );
+  window.location.href = 'https://wa.me/2349025141322?text=' + msg;
+}
+</script>
+</body>
+</html>

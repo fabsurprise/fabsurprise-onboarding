@@ -1264,6 +1264,12 @@ function submitForm() {
   );
   const waLink = 'https://wa.me/' + WA + '?text=' + waMsg;
 
+  document.getElementById('successTitle').textContent = 'Just a moment...';
+  document.getElementById('successBody').innerHTML = 'We\'re confirming everything has been received.';
+  document.getElementById('form-screen').style.display = 'none';
+  document.getElementById('success-screen').style.display = 'flex';
+  window.scrollTo(0, 0);
+
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -1271,21 +1277,49 @@ function submitForm() {
     body: JSON.stringify(payload)
   }).catch(function() {});
 
-  localStorage.removeItem('fab_enq_' + enquiryId);
-
-  document.getElementById('successTitle').textContent = firstName + ', this is where the exciting part begins.';
-  document.getElementById('successBody').innerHTML =
-    'We\'ve received everything you shared, and it\'s already given us a real sense of what this celebration could be.<br><br>' +
-    'Your next step is a conversation on WhatsApp — we\'ll have everything you\'ve told us right in front of us, so there\'s no need to start over. We\'ll simply pick up from here and begin shaping it together.<br><br>' +
-    '<strong>We can\'t wait to meet you there.</strong>';
-
-  setTimeout(function() {
-    document.getElementById('form-screen').style.display = 'none';
-    const s = document.getElementById('success-screen');
-    s.style.display = 'flex';
+  function showRealSuccess() {
+    localStorage.removeItem('fab_enq_' + enquiryId);
+    document.getElementById('successTitle').textContent = firstName + ', this is where the exciting part begins.';
+    document.getElementById('successBody').innerHTML =
+      'We\'ve received everything you shared, and it\'s already given us a real sense of what this celebration could be.<br><br>' +
+      'Your next step is a conversation on WhatsApp — we\'ll have everything you\'ve told us right in front of us, so there\'s no need to start over. We\'ll simply pick up from here and begin shaping it together.<br><br>' +
+      '<strong>We can\'t wait to meet you there.</strong>';
     document.getElementById('waBtn').href = waLink;
-    window.scrollTo(0, 0);
-  }, 800);
+  }
+
+  function showSaveFailure() {
+    document.getElementById('successTitle').textContent = 'One moment — let\'s try that again';
+    document.getElementById('successBody').innerHTML =
+      'We couldn\'t confirm everything was received. This sometimes happens with a connection hiccup on our end.<br><br>' +
+      'Please tap below to message us directly on WhatsApp, and we\'ll make sure nothing is lost.';
+    document.getElementById('waBtn').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(
+      'Hi Fabsurprise, I just tried submitting my Design Your Moment enquiry (' + enquiryId + ') but wasn\'t sure it went through. Here are my details:\n\nName: ' + fd.fullName + '\nWhatsApp: ' + fd.whatsapp + '\nOccasion: ' + (fd.occasion || '') + '\nCelebrating: ' + (fd.who || '')
+    );
+  }
+
+  window._verifyAttempts = 0;
+  function verifySaved() {
+    window._verifyAttempts++;
+    const cb = 'verifyCb_' + Date.now();
+    window[cb] = function(data) {
+      if (data && data.success && data.status === 'Submitted') {
+        showRealSuccess();
+      } else if (window._verifyAttempts < 3) {
+        setTimeout(verifySaved, 1200);
+      } else {
+        showSaveFailure();
+      }
+    };
+    const s = document.createElement('script');
+    s.src = SCRIPT_URL + '?action=getEnquiry&ref=' + encodeURIComponent(enquiryId) + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function() {
+      if (window._verifyAttempts < 3) setTimeout(verifySaved, 1200);
+      else showSaveFailure();
+    };
+    document.head.appendChild(s);
+  }
+
+  setTimeout(verifySaved, 1000);
 }
 
 document.addEventListener('input', function(e) {

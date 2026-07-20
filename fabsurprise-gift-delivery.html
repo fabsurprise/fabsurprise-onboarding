@@ -502,12 +502,49 @@ function submitForm() {
     body: JSON.stringify({ action: 'giftDelivery', ...payload })
   }).catch(function() {});
 
-  setTimeout(function() {
+  function showSuccess() {
     document.getElementById('form-screen').classList.remove('active');
     const firstName = (fd.clientName || '').split(' ')[0];
     document.getElementById('successTitle').textContent = firstName ? firstName + ', thank you.' : 'Thank you.';
     document.getElementById('success-screen').classList.add('active');
-  }, 700);
+  }
+
+  function showFailure() {
+    document.getElementById('form-screen').classList.remove('active');
+    document.getElementById('successTitle').textContent = 'One moment — let\'s try that again';
+    document.getElementById('successBody').innerHTML =
+      'We couldn\'t confirm everything was received. Please tap below to message us directly so nothing is lost.';
+    const waMsg = encodeURIComponent(
+      'Hi Fabsurprise, I tried submitting my Gift Delivery details (' + submissionId + ') but wasn\'t sure it went through. My name: ' + fd.clientName + ', WhatsApp: ' + fd.clientPhone
+    );
+    document.getElementById('success-screen').innerHTML +=
+      '<a href="https://wa.me/2349025141322?text=' + waMsg + '" style="display:inline-block;margin-top:20px;background:var(--gold);color:var(--wine-dark);padding:14px 28px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;">Message Us Directly</a>';
+    document.getElementById('success-screen').classList.add('active');
+  }
+
+  window._gAttempts = 0;
+  function verifyGiftSaved() {
+    window._gAttempts++;
+    const cb = 'gVerify_' + Date.now();
+    window[cb] = function(data) {
+      if (data && data.success) {
+        showSuccess();
+      } else if (window._gAttempts < 3) {
+        setTimeout(verifyGiftSaved, 1200);
+      } else {
+        showFailure();
+      }
+    };
+    const s = document.createElement('script');
+    s.src = SCRIPT_URL + '?action=getJourney&ref=' + encodeURIComponent(submissionId) + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function() {
+      if (window._gAttempts < 3) setTimeout(verifyGiftSaved, 1200);
+      else showFailure();
+    };
+    document.head.appendChild(s);
+  }
+
+  setTimeout(verifyGiftSaved, 1000);
 }
 </script>
 </body>

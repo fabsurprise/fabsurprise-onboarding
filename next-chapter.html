@@ -790,14 +790,40 @@ function submitQuickPath() {
     })
   }).catch(function() {});
 
-  setTimeout(function() {
+  function goToWhatsApp() {
     const dateLine = celebDate ? '\nDate: ' + new Date(celebDate).toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'}) : '';
     const locationLine = location ? '\nLocation: ' + location : '';
     const waMsg = encodeURIComponent(
       'Hi Fabsurprise, I\'m ' + name + '. I already know what I want for ' + occasion + ':' + dateLine + locationLine + '\n\n' + message
     );
     window.location.href = 'https://wa.me/2349025141322?text=' + waMsg;
-  }, 600);
+  }
+
+  window._qAttempts = 0;
+  function verifyQuickSave() {
+    window._qAttempts++;
+    const cb = 'qVerify_' + Date.now();
+    window[cb] = function(data) {
+      if (data && data.success && data.status === 'Submitted') {
+        goToWhatsApp();
+      } else if (window._qAttempts < 3) {
+        setTimeout(verifyQuickSave, 1200);
+      } else {
+        btn.textContent = 'Could not confirm — tap to message us directly';
+        btn.disabled = false;
+        btn.onclick = goToWhatsApp;
+      }
+    };
+    const s = document.createElement('script');
+    s.src = SCRIPT_URL + '?action=getEnquiry&ref=' + encodeURIComponent(enquiryId) + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function() {
+      if (window._qAttempts < 3) setTimeout(verifyQuickSave, 1200);
+      else { btn.textContent = 'Could not confirm — tap to message us directly'; btn.disabled = false; btn.onclick = goToWhatsApp; }
+    };
+    document.head.appendChild(s);
+  }
+
+  setTimeout(verifyQuickSave, 1000);
 }
 
 function submitReconnect() {
@@ -808,6 +834,7 @@ function submitReconnect() {
   btn.disabled = true;
 
   const now = new Date();
+  const email = document.getElementById('email').value.trim();
   const payload = {
     action: 'reconnect',
     dateJoined: now.toLocaleDateString('en-GB'),
@@ -815,7 +842,7 @@ function submitReconnect() {
     firstName: document.getElementById('firstName').value.trim(),
     lastName: document.getElementById('lastName').value.trim(),
     phone: normalizePhone(document.getElementById('phone').value.trim()),
-    email: document.getElementById('email').value.trim(),
+    email: email,
     birthday: document.getElementById('birthday').value,
     anniversary: document.getElementById('anniversary').value,
     howKnow: document.getElementById('howKnow').value,
@@ -830,11 +857,36 @@ function submitReconnect() {
     body: JSON.stringify(payload)
   }).catch(function() {});
 
-  setTimeout(function() {
+  function showTransition() {
     document.getElementById('screen-form').classList.remove('active');
     document.getElementById('screen-transition').classList.add('active');
     window.scrollTo(0, 0);
-  }, 700);
+  }
+
+  window._rAttempts = 0;
+  function verifyReconnectSaved() {
+    window._rAttempts++;
+    const cb = 'rVerify_' + Date.now();
+    window[cb] = function(data) {
+      if (data && data.success) {
+        showTransition();
+      } else if (window._rAttempts < 3) {
+        setTimeout(verifyReconnectSaved, 1200);
+      } else {
+        btn.textContent = 'Could not confirm — please try again';
+        btn.disabled = false;
+      }
+    };
+    const s = document.createElement('script');
+    s.src = SCRIPT_URL + '?action=checkReconnectSaved&email=' + encodeURIComponent(email) + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function() {
+      if (window._rAttempts < 3) setTimeout(verifyReconnectSaved, 1200);
+      else { btn.textContent = 'Could not confirm — please try again'; btn.disabled = false; }
+    };
+    document.head.appendChild(s);
+  }
+
+  setTimeout(verifyReconnectSaved, 1000);
 }
 
 document.addEventListener('input', function(e) {

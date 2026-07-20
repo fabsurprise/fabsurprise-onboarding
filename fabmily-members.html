@@ -343,11 +343,36 @@ function submitFabmily() {
     })
   }).catch(function() {});
 
-  setTimeout(function() {
+  function showConfirm() {
     document.getElementById('screen-join').classList.remove('active');
     document.getElementById('screen-confirm').classList.add('active');
     window.scrollTo(0, 0);
-  }, 700);
+  }
+
+  window._fAttempts = 0;
+  function verifyFabmilySaved() {
+    window._fAttempts++;
+    const cb = 'fVerify_' + Date.now();
+    window[cb] = function(data) {
+      if (data && data.success) {
+        showConfirm();
+      } else if (window._fAttempts < 3) {
+        setTimeout(verifyFabmilySaved, 1200);
+      } else {
+        btn.textContent = 'Could not confirm — please try again';
+        btn.disabled = false;
+      }
+    };
+    const s = document.createElement('script');
+    s.src = SCRIPT_URL + '?action=checkReconnectSaved&email=' + encodeURIComponent(email) + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function() {
+      if (window._fAttempts < 3) setTimeout(verifyFabmilySaved, 1200);
+      else { btn.textContent = 'Could not confirm — please try again'; btn.disabled = false; }
+    };
+    document.head.appendChild(s);
+  }
+
+  setTimeout(verifyFabmilySaved, 1000);
 }
 </script>
 </body>

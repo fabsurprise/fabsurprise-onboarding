@@ -1179,13 +1179,52 @@ function submitForm() {
   );
   const waLink = `https://wa.me/2349025141322?text=${waMsg}`;
 
-  setTimeout(() => {
+  function showSuccess() {
     document.getElementById('form-screen').style.display = 'none';
     const s = document.getElementById('success-screen');
     s.style.display = 'flex';
     const waBtn = document.getElementById('waNotifyBtn');
     if (waBtn) waBtn.href = waLink;
-  }, 1200);
+  }
+
+  function showFailure() {
+    document.getElementById('form-screen').style.display = 'none';
+    const s = document.getElementById('success-screen');
+    s.style.display = 'flex';
+    const successBody = document.querySelector('#success-screen .success-body');
+    if (successBody) {
+      successBody.innerHTML = 'We couldn\'t confirm everything was received. Please tap below to message us directly so nothing is lost.';
+    }
+    const waBtn = document.getElementById('waNotifyBtn');
+    const waFailMsg = encodeURIComponent(
+      `Hi Fabsurprise, I tried submitting my Start Your Celebration form (Ref: ${payload.submissionId}) but wasn't sure it went through. My name: ${payload.clientName}, phone: ${payload.clientPhone}`
+    );
+    if (waBtn) waBtn.href = `https://wa.me/2349025141322?text=${waFailMsg}`;
+  }
+
+  window._sAttempts = 0;
+  function verifyStartSaved() {
+    window._sAttempts++;
+    const cb = 'sVerify_' + Date.now();
+    window[cb] = function(data) {
+      if (data && data.success) {
+        showSuccess();
+      } else if (window._sAttempts < 3) {
+        setTimeout(verifyStartSaved, 1200);
+      } else {
+        showFailure();
+      }
+    };
+    const s = document.createElement('script');
+    s.src = APPS_SCRIPT_URL + '?action=getJourney&ref=' + encodeURIComponent(submissionId) + '&callback=' + cb + '&t=' + Date.now();
+    s.onerror = function() {
+      if (window._sAttempts < 3) setTimeout(verifyStartSaved, 1200);
+      else showFailure();
+    };
+    document.head.appendChild(s);
+  }
+
+  setTimeout(verifyStartSaved, 1200);
 }
 
 function saveProgress() {

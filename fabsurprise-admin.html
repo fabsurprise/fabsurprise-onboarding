@@ -418,6 +418,7 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
     <div class="tab-bar">
       <button class="tab-btn active" onclick="switchTab('journeys')">Journey Manager</button>
       <button class="tab-btn" onclick="switchTab('enquiries')">Enquiries</button>
+      <button class="tab-btn" onclick="switchTab('gifts')">Gift Deliveries</button>
     </div>
 
     <!-- JOURNEY MANAGER TAB -->
@@ -474,6 +475,25 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
       <div id="enquiryList"><div class="loading-inline">Tap Refresh to load enquiries.</div></div>
 
     </div><!-- /tab-enquiries -->
+
+    <!-- GIFT DELIVERIES TAB -->
+    <div class="tab-panel" id="tab-gifts">
+
+      <div class="search-box" style="margin-bottom:16px;">
+        <label class="search-label">Find a Gift Delivery</label>
+        <div class="search-row">
+          <input class="search-input" id="giftSearchInput" type="text" placeholder="GIFT-reference, client name, or recipient" onkeydown="if(event.key==='Enter')searchGifts()" oninput="if(!this.value.trim())renderGifts()">
+          <button class="btn-search" onclick="searchGifts()">Search</button>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+        <button class="btn-search" onclick="loadGifts()" style="padding:10px 20px;">Refresh</button>
+      </div>
+
+      <div id="giftList"><div class="loading-inline">Tap Refresh to load gift deliveries.</div></div>
+
+    </div><!-- /tab-gifts -->
 
   </div><!-- /admin-body -->
 
@@ -654,6 +674,78 @@ function copyLink(link, btn) {
   });
 }
 
+// ── GIFT DELIVERIES ──
+var allGifts = [];
+
+async function loadGifts() {
+  document.getElementById('giftList').innerHTML = '<div class="loading-inline">Loading gift deliveries...</div>';
+  try {
+    const url = APPS_SCRIPT_URL + '?action=getAllGiftDeliveries&t=' + Date.now();
+    const r = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const data = JSON.parse(await r.text());
+    allGifts = data.gifts || [];
+    renderGifts();
+  } catch(err) {
+    document.getElementById('giftList').innerHTML = '<div class="loading-inline">Failed to load. Please try again.</div>';
+  }
+}
+
+function searchGifts() {
+  const query = document.getElementById('giftSearchInput').value.trim().toLowerCase();
+  if (!query) { renderGifts(); return; }
+  const matches = allGifts.filter(function(g) {
+    return (g.submissionId || '').toLowerCase().includes(query)
+      || (g.clientName || '').toLowerCase().includes(query)
+      || (g.recipientName || '').toLowerCase().includes(query);
+  });
+  renderGiftCards(matches);
+}
+
+function renderGifts() {
+  renderGiftCards(allGifts);
+}
+
+function renderGiftCards(list) {
+  const container = document.getElementById('giftList');
+  if (!list.length) {
+    container.innerHTML = '<div class="loading-inline">No gift deliveries found.</div>';
+    return;
+  }
+
+  const sorted = list.slice().sort(function(a, b) {
+    return parseAdminDate(b.date) - parseAdminDate(a.date);
+  });
+
+  container.innerHTML = sorted.map(function(g) {
+    var waNumber = normalizeWA(g.clientPhone);
+    var waMsg = encodeURIComponent('Hi ' + (g.clientName || 'there').split(' ')[0] + ', following up on your gift delivery (' + g.submissionId + ') — just checking in on the details.');
+    return '<div class="enq-card">' +
+      '<div class="enq-card-header submitted">' +
+        '<div>' +
+          '<div class="enq-name">' + (g.clientName || 'Unknown') + '</div>' +
+          '<div class="enq-ref">' + (g.submissionId || '') + ' &nbsp;|&nbsp; ' + formatAdminDate(g.date || '') + '</div>' +
+        '</div>' +
+        '<span class="stage-badge badge-planning">' + (g.status || 'Planning') + '</span>' +
+      '</div>' +
+      '<div class="enq-details">' +
+        '<div class="detail-row"><span class="detail-key">Occasion</span><span class="detail-val">' + (g.occasion || '—') + '</span></div>' +
+        '<div class="detail-row"><span class="detail-key">Recipient</span><span class="detail-val">' + (g.recipientName || '—') + ' (' + (g.relationship || '—') + ')</span></div>' +
+        (g.recipientPhone ? '<div class="detail-row"><span class="detail-key">Recipient Phone</span><span class="detail-val">' + g.recipientPhone + '</span></div>' : '') +
+        '<div class="detail-row"><span class="detail-key">Delivery Address</span><span class="detail-val">' + (g.deliveryAddress || '—') + '</span></div>' +
+        '<div class="detail-row"><span class="detail-key">Delivery Date</span><span class="detail-val">' + (g.deliveryDate ? formatAdminDate(g.deliveryDate) : '—') + (g.deliveryTime ? ' at ' + g.deliveryTime : '') + '</span></div>' +
+        (g.pickupName ? '<div class="detail-row"><span class="detail-key">Collected By</span><span class="detail-val">' + g.pickupName + (g.pickupPhone ? ' (' + g.pickupPhone + ')' : '') + '</span></div>' : '') +
+        (g.giftMessage ? '<div class="detail-row"><span class="detail-key">Gift Message</span><span class="detail-val" style="white-space:pre-wrap;">' + g.giftMessage + '</span></div>' : '') +
+        (g.extraNotes ? '<div class="detail-row"><span class="detail-key">Notes</span><span class="detail-val" style="white-space:pre-wrap;">' + g.extraNotes + '</span></div>' : '') +
+        '<div class="detail-row"><span class="detail-key">Client Phone</span><span class="detail-val">' + (g.clientPhone || 'Not provided') + '</span></div>' +
+        '<div class="detail-row"><span class="detail-key">Client Email</span><span class="detail-val">' + (g.clientEmail || 'Not provided') + '</span></div>' +
+      '</div>' +
+      '<div class="enq-actions">' +
+        (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waMsg + '" target="_blank" class="btn-enq-wa">WhatsApp</a>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
 function shareOnWa(link, name, ref) {
   const msg = encodeURIComponent(`Hi ${name}! 🎉 You can track your celebration journey with us here:\n\n${link}\n\nThis page will update as we progress through each stage. — Team Fabsurprise`);
   window.open(`https://wa.me/?text=${msg}`, '_blank');
@@ -666,6 +758,7 @@ function switchTab(tab) {
   document.getElementById('tab-' + tab).classList.add('active');
   event.target.classList.add('active');
   if (tab === 'enquiries') loadEnquiries();
+  if (tab === 'gifts') loadGifts();
 }
 
 // ── ENQUIRIES ──
@@ -1036,7 +1129,7 @@ function convertToBooking(enquiryId, type) {
   var onboardingLink, msg;
 
   if (type === 'gift') {
-    onboardingLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-gift-delivery.html';
+    onboardingLink = 'https://tinyurl.com/fabsurprise-gift';
     msg = encodeURIComponent(
       'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to get this ready for you. Your booking is confirmed, and the next step is a quick guide so we can capture exactly who it is for and where it should go. Here is your personal link: ' + onboardingLink
     );

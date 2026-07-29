@@ -166,6 +166,14 @@ body {
 
 .field-error { font-size: 11.5px; color: var(--error); margin-top: 7px; display: none; }
 
+select.field-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6B5A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 42px;
+  cursor: pointer;
+}
+
 .q-screen { display: none; }
 .q-screen.active { display: block; }
 
@@ -298,8 +306,28 @@ body {
         <div class="field-error" id="err-deliveryAddress">Please share the delivery address.</div>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
-        <label class="field-label">Preferred Delivery Date <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <label class="field-label">Preferred Delivery Date</label>
         <input class="field-input" id="deliveryDate" type="date">
+        <div class="field-error" id="err-deliveryDate">Please let us know your preferred delivery date.</div>
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Preferred Delivery Time</label>
+        <select class="field-input" id="deliveryTime" onchange="handleDeliveryTimeChange()">
+          <option value="">Select a time</option>
+          <option value="Morning (9am - 12pm)">Morning (9am - 12pm)</option>
+          <option value="Afternoon (12pm - 4pm)">Afternoon (12pm - 4pm)</option>
+          <option value="Evening (4pm - 7pm)">Evening (4pm - 7pm)</option>
+          <option value="Anytime">Anytime works for me</option>
+          <option value="Specific">I have a specific time in mind</option>
+        </select>
+        <div class="field-error" id="err-deliveryTime">Please let us know your preferred delivery time.</div>
+        <input class="field-input" id="deliveryTimeSpecific" type="text" placeholder="e.g. 2:30pm, or right after lunch" style="display:none;margin-top:10px;">
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">If Someone Else Will Receive It <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Only fill this in if it's different from the recipient above — for example, a friend collecting on their behalf.</p>
+        <input class="field-input" id="pickupName" type="text" placeholder="Their name" style="margin-bottom:12px;">
+        <input class="field-input" id="pickupPhone" type="tel" placeholder="Their phone number">
       </div>
       <div class="q-nav">
         <button class="btn-back" onclick="goPrev(3)">Back</button>
@@ -342,8 +370,9 @@ body {
         <div class="field-error" id="err-clientPhone">Please enter a valid WhatsApp number.</div>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
-        <label class="field-label">Your Email <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <label class="field-label">Your Email</label>
         <input class="field-input" id="clientEmail" type="email" placeholder="your@email.com">
+        <div class="field-error" id="err-clientEmail">Please enter a valid email address.</div>
       </div>
       <div class="q-nav">
         <button class="btn-back" onclick="goPrev(5)">Back</button>
@@ -357,10 +386,11 @@ body {
 <div id="success-screen">
   <div class="success-mark">&#10003;</div>
   <h2 class="success-title" id="successTitle">Thank you.</h2>
-  <p class="success-body">
+  <p class="success-body" id="successBody">
     We've received everything, and we're already making sure it's exactly right before it's on its way.<br><br>
     If anything needs confirming, we'll reach out personally.
   </p>
+  <div id="successExtra"></div>
 </div>
 
 <script>
@@ -389,6 +419,17 @@ function clr(id) {
   const er = document.getElementById('err-' + id);
   if (er) er.style.display = 'none';
 }
+function handleDeliveryTimeChange() {
+  const select = document.getElementById('deliveryTime');
+  const specific = document.getElementById('deliveryTimeSpecific');
+  if (select.value === 'Specific') {
+    specific.style.display = 'block';
+  } else {
+    specific.style.display = 'none';
+    specific.value = '';
+  }
+}
+
 function fail(id) {
   document.getElementById(id).classList.add('error');
   const er = document.getElementById('err-' + id);
@@ -411,11 +452,17 @@ function validate(s) {
   }
   if (s === 3) {
     check('deliveryAddress', document.getElementById('deliveryAddress').value.trim());
+    check('deliveryDate', document.getElementById('deliveryDate').value);
+    const timeVal = document.getElementById('deliveryTime').value;
+    const timeValid = timeVal && (timeVal !== 'Specific' || document.getElementById('deliveryTimeSpecific').value.trim());
+    check('deliveryTime', timeValid);
   }
   if (s === 5) {
     check('clientName', document.getElementById('clientName').value.trim());
     const phone = document.getElementById('clientPhone').value.trim();
     check('clientPhone', phone && phone.replace(/\D/g,'').length >= 10);
+    const email = document.getElementById('clientEmail').value.trim();
+    check('clientEmail', email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
   }
 
   return ok;
@@ -434,6 +481,12 @@ function collect(s) {
   if (s === 3) {
     fd.deliveryAddress = document.getElementById('deliveryAddress').value.trim();
     fd.deliveryDate = document.getElementById('deliveryDate').value;
+    const timeChoice = document.getElementById('deliveryTime').value;
+    fd.deliveryTime = timeChoice === 'Specific'
+      ? document.getElementById('deliveryTimeSpecific').value.trim()
+      : timeChoice;
+    fd.pickupName = document.getElementById('pickupName').value.trim();
+    fd.pickupPhone = document.getElementById('pickupPhone').value.trim();
   }
   if (s === 4) {
     fd.giftMessage = document.getElementById('giftMessage').value.trim();
@@ -491,6 +544,9 @@ function submitForm() {
     specialDate: fd.specialDate || '',
     deliveryAddress: fd.deliveryAddress,
     deliveryDate: fd.deliveryDate || '',
+    deliveryTime: fd.deliveryTime || '',
+    pickupName: fd.pickupName || '',
+    pickupPhone: fd.pickupPhone || '',
     giftMessage: fd.giftMessage || '',
     extraNotes: fd.extraNotes || ''
   };
@@ -517,7 +573,7 @@ function submitForm() {
     const waMsg = encodeURIComponent(
       'Hi Fabsurprise, I tried submitting my Gift Delivery details (' + submissionId + ') but wasn\'t sure it went through. My name: ' + fd.clientName + ', WhatsApp: ' + fd.clientPhone
     );
-    document.getElementById('success-screen').innerHTML +=
+    document.getElementById('successExtra').innerHTML =
       '<a href="https://wa.me/2349025141322?text=' + waMsg + '" style="display:inline-block;margin-top:20px;background:var(--gold);color:var(--wine-dark);padding:14px 28px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;">Message Us Directly</a>';
     document.getElementById('success-screen').classList.add('active');
   }
@@ -536,7 +592,7 @@ function submitForm() {
       }
     };
     const s = document.createElement('script');
-    s.src = SCRIPT_URL + '?action=getJourney&ref=' + encodeURIComponent(submissionId) + '&callback=' + cb + '&t=' + Date.now();
+    s.src = SCRIPT_URL + '?action=getGiftDelivery&ref=' + encodeURIComponent(submissionId) + '&callback=' + cb + '&t=' + Date.now();
     s.onerror = function() {
       if (window._gAttempts < 3) setTimeout(verifyGiftSaved, 1200);
       else showFailure();

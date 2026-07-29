@@ -298,12 +298,14 @@ body {
         <div class="field-error" id="err-deliveryAddress">Please share the delivery address.</div>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
-        <label class="field-label">Preferred Delivery Date <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <label class="field-label">Preferred Delivery Date</label>
         <input class="field-input" id="deliveryDate" type="date">
+        <div class="field-error" id="err-deliveryDate">Please let us know your preferred delivery date.</div>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
-        <label class="field-label">Preferred Delivery Time <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <label class="field-label">Preferred Delivery Time</label>
         <input class="field-input" id="deliveryTime" type="time">
+        <div class="field-error" id="err-deliveryTime">Please let us know your preferred delivery time.</div>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
         <label class="field-label">Who Should Receive It? <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
@@ -350,8 +352,9 @@ body {
         <div class="field-error" id="err-clientPhone">Please enter a valid WhatsApp number.</div>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
-        <label class="field-label">Your Email <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <label class="field-label">Your Email</label>
         <input class="field-input" id="clientEmail" type="email" placeholder="your@email.com">
+        <div class="field-error" id="err-clientEmail">Please enter a valid email address.</div>
       </div>
       <div class="q-nav">
         <button class="btn-back" onclick="goPrev(5)">Back</button>
@@ -420,11 +423,15 @@ function validate(s) {
   }
   if (s === 3) {
     check('deliveryAddress', document.getElementById('deliveryAddress').value.trim());
+    check('deliveryDate', document.getElementById('deliveryDate').value);
+    check('deliveryTime', document.getElementById('deliveryTime').value);
   }
   if (s === 5) {
     check('clientName', document.getElementById('clientName').value.trim());
     const phone = document.getElementById('clientPhone').value.trim();
     check('clientPhone', phone && phone.replace(/\D/g,'').length >= 10);
+    const email = document.getElementById('clientEmail').value.trim();
+    check('clientEmail', email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
   }
 
   return ok;

@@ -551,6 +551,12 @@ function submitForm() {
     extraNotes: fd.extraNotes || ''
   };
 
+  document.getElementById('successTitle').textContent = 'Just a moment...';
+  document.getElementById('successBody').innerHTML = 'We\'re confirming everything has been received.';
+  document.getElementById('form-screen').classList.remove('active');
+  document.getElementById('success-screen').classList.add('active');
+  window.scrollTo(0, 0);
+
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -559,14 +565,14 @@ function submitForm() {
   }).catch(function() {});
 
   function showSuccess() {
-    document.getElementById('form-screen').classList.remove('active');
     const firstName = (fd.clientName || '').split(' ')[0];
     document.getElementById('successTitle').textContent = firstName ? firstName + ', thank you.' : 'Thank you.';
-    document.getElementById('success-screen').classList.add('active');
+    document.getElementById('successBody').innerHTML =
+      'We\'ve received everything, and we\'re already making sure it\'s exactly right before it\'s on its way.<br><br>' +
+      'If anything needs confirming, we\'ll reach out personally.';
   }
 
   function showFailure() {
-    document.getElementById('form-screen').classList.remove('active');
     document.getElementById('successTitle').textContent = 'One moment — let\'s try that again';
     document.getElementById('successBody').innerHTML =
       'We couldn\'t confirm everything was received. Please tap below to message us directly so nothing is lost.';
@@ -575,7 +581,6 @@ function submitForm() {
     );
     document.getElementById('successExtra').innerHTML =
       '<a href="https://wa.me/2349025141322?text=' + waMsg + '" style="display:inline-block;margin-top:20px;background:var(--gold);color:var(--wine-dark);padding:14px 28px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;">Message Us Directly</a>';
-    document.getElementById('success-screen').classList.add('active');
   }
 
   window._gAttempts = 0;

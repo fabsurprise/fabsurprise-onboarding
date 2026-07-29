@@ -725,7 +725,6 @@ function renderGiftCards(list) {
           '<div class="enq-name">' + (g.clientName || 'Unknown') + '</div>' +
           '<div class="enq-ref">' + (g.submissionId || '') + ' &nbsp;|&nbsp; ' + formatAdminDate(g.date || '') + '</div>' +
         '</div>' +
-        '<span class="stage-badge badge-planning">' + (g.status || 'Planning') + '</span>' +
       '</div>' +
       '<div class="enq-details">' +
         '<div class="detail-row"><span class="detail-key">Occasion</span><span class="detail-val">' + (g.occasion || '—') + '</span></div>' +
@@ -739,6 +738,7 @@ function renderGiftCards(list) {
         '<div class="detail-row"><span class="detail-key">Client Phone</span><span class="detail-val">' + (g.clientPhone || 'Not provided') + '</span></div>' +
         '<div class="detail-row"><span class="detail-key">Client Email</span><span class="detail-val">' + (g.clientEmail || 'Not provided') + '</span></div>' +
       '</div>' +
+      renderGiftStagePills(g.submissionId, g.status) +
       '<div class="enq-actions">' +
         (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waMsg + '" target="_blank" class="btn-enq-wa">WhatsApp</a>' : '') +
       '</div>' +
@@ -956,6 +956,7 @@ async function markNoResponse(enquiryId, btn) {
 }
 
 const PAYMENT_STAGES = ['Enquired', 'Discussing', 'Proposal Sent', 'Invoice Sent', 'Paid & Booked'];
+const GIFT_STAGES = ['Planning', 'Preparing', 'Out for Delivery', 'Delivered'];
 
 function renderPaymentStagePills(enquiryId, currentStage, stageAt) {
   const stage = currentStage || 'Enquired';
@@ -978,6 +979,41 @@ function renderPaymentStagePills(enquiryId, currentStage, stageAt) {
     '<div style="display:flex;gap:6px;flex-wrap:wrap;">' + pills + '</div>' +
     warning +
   '</div>';
+}
+
+function renderGiftStagePills(submissionId, currentStage) {
+  const stage = currentStage || 'Planning';
+  const pills = GIFT_STAGES.map(function(s) {
+    const active = s === stage;
+    return '<button onclick="updateGiftStage(\'' + submissionId + '\', \'' + s + '\', this)" style="padding:7px 10px;font-size:10px;font-weight:600;border:1px solid ' + (active ? 'var(--wine)' : 'var(--ivory-dark)') + ';background:' + (active ? 'var(--wine)' : 'var(--white)') + ';color:' + (active ? 'white' : 'var(--text-mid)') + ';cursor:pointer;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;">' + s + '</button>';
+  }).join('');
+
+  return '<div style="padding:12px 18px;background:var(--ivory);border-bottom:1px solid var(--ivory-mid);">' +
+    '<div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">Delivery Status</div>' +
+    '<div style="display:flex;gap:6px;flex-wrap:wrap;">' + pills + '</div>' +
+  '</div>';
+}
+
+async function updateGiftStage(submissionId, newStage, btn) {
+  const original = btn.parentElement.innerHTML;
+  btn.parentElement.style.opacity = '0.5';
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=updateGiftStage&ref=${encodeURIComponent(submissionId)}&stage=${encodeURIComponent(newStage)}`;
+    const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+    const data = JSON.parse(await response.text());
+    if (data.success) {
+      const idx = allGifts.findIndex(function(g){ return g.submissionId === submissionId; });
+      if (idx > -1) allGifts[idx].status = newStage;
+      renderGifts();
+      showToast('Delivery status updated to ' + newStage);
+    } else {
+      btn.parentElement.style.opacity = '1';
+      showToast('Could not update. Please try again.');
+    }
+  } catch (err) {
+    btn.parentElement.style.opacity = '1';
+    showToast('Connection error. Please try again.');
+  }
 }
 
 async function updatePaymentStage(enquiryId, newStage, btn) {

@@ -1055,7 +1055,7 @@ function renderEnquiryCards(list) {
     var occPhrase = isSubmitted ? buildOccasionPhrase(e.occasion, e.celebrating, e.whoDetail) : '';
     var waFollowUp = isSubmitted
       ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ',\n\nI\'ve just finished reading your Design Your Moment for ' + occPhrase + ', and I\'d love to hear a little more about what you have in mind.\n\nLet\'s start there.')
-      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it.\n\nWe\'ve saved everything you\'ve shared so far, so you can pick up from exactly where you stopped.\n\nTell me a little more: ' + resumeUrl);
+      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it.\n\nWe\'ve saved everything you\'ve shared so far, so you can pick up from exactly where you stopped.\n\nContinue where you left off: ' + resumeUrl);
 
     var waNumber = normalizeWA(e.whatsapp);
 

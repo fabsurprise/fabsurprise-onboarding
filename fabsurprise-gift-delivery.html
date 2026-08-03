@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Gift Delivery — Fabsurprise</title>
+<title>Your Gift Delivery | Fabsurprise</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -234,7 +234,7 @@ select.field-input {
     <div class="brand-mark">Fabsurprise</div>
     <h1 class="landing-title">Your Gift,<br><em>On Its Way</em></h1>
     <p class="landing-body">
-      Thank you for trusting us with this. This short guide helps us capture exactly who it's for, and where it should go, so nothing gets lost between us and them.
+      Thank you for trusting us with this. This short guide helps us capture everything we need, so your gift arrives exactly as you've imagined.
     </p>
     <div class="landing-meta">Just a few quick details</div>
     <button class="btn-begin" onclick="startForm()">Begin</button>
@@ -279,7 +279,7 @@ select.field-input {
     <div class="q-screen" id="q2">
       <div class="q-thread">What's the occasion?</div>
       <h2 class="q-title">What are we<br><em>celebrating?</em></h2>
-      <p class="q-subtext">This helps us choose details that feel right for the moment.</p>
+      <p class="q-subtext">This helps us make sure every detail feels right for the occasion.</p>
       <div class="field-wrap">
         <label class="field-label">Occasion</label>
         <input class="field-input" id="occasion" type="text" placeholder="e.g. Birthday, Just Because, Appreciation">
@@ -302,7 +302,8 @@ select.field-input {
       <p class="q-subtext">Exact and complete, so it arrives without a hitch.</p>
       <div class="field-wrap">
         <label class="field-label">Delivery Address</label>
-        <textarea class="field-textarea" id="deliveryAddress" placeholder="Full address, including any landmark that helps us find it"></textarea>
+        <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Please include apartment numbers, estate names, or any landmarks that will help our team find the location easily.</p>
+        <textarea class="field-textarea" id="deliveryAddress" placeholder="Full address"></textarea>
         <div class="field-error" id="err-deliveryAddress">Please share the delivery address.</div>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
@@ -325,9 +326,19 @@ select.field-input {
       </div>
       <div class="field-wrap" style="margin-top:18px;">
         <label class="field-label">If Someone Else Will Receive It <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
-        <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Only fill this in if it's different from the recipient above — for example, a friend collecting on their behalf.</p>
+        <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Only complete this if someone else will be receiving the delivery on their behalf.</p>
         <input class="field-input" id="pickupName" type="text" placeholder="Their name" style="margin-bottom:12px;">
         <input class="field-input" id="pickupPhone" type="tel" placeholder="Their phone number">
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Should We Let Them Know Before We Arrive?</label>
+        <select class="field-input" id="recipientContactPref">
+          <option value="">Select an option</option>
+          <option value="No, keep it a surprise">No, keep it a surprise</option>
+          <option value="Yes, you can contact them directly">Yes, you can contact them directly</option>
+          <option value="Contact me first">Contact me first</option>
+        </select>
+        <div class="field-error" id="err-recipientContactPref">Please let us know how you'd like this handled.</div>
       </div>
       <div class="q-nav">
         <button class="btn-back" onclick="goPrev(3)">Back</button>
@@ -339,10 +350,14 @@ select.field-input {
     <div class="q-screen" id="q4">
       <div class="q-thread">The words that matter</div>
       <h2 class="q-title">What would you<br>like <em>said?</em></h2>
-      <p class="q-subtext">Whatever you'd like included, in your own words — we'll make sure it's there.</p>
+      <p class="q-subtext">Whatever you'd like included, in your own words, we'll make sure it's there.</p>
       <div class="field-wrap">
         <label class="field-label">Card or Gift Message <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
         <textarea class="field-textarea" id="giftMessage" placeholder="What would you like the note to say?"></textarea>
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Is There Anything You'd Like Us to Avoid? <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <textarea class="field-textarea" id="thingsToAvoid" placeholder="Any scent, flower, or detail you'd rather we didn't include, no detail is too small to mention"></textarea>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
         <label class="field-label">Anything Else We Should Know? <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
@@ -387,8 +402,7 @@ select.field-input {
   <div class="success-mark">&#10003;</div>
   <h2 class="success-title" id="successTitle">Thank you.</h2>
   <p class="success-body" id="successBody">
-    We've received everything, and we're already making sure it's exactly right before it's on its way.<br><br>
-    If anything needs confirming, we'll reach out personally.
+    We've received everything we need and we'll now begin preparing your delivery. If anything needs confirming, we'll reach out personally.
   </p>
   <div id="successExtra"></div>
 </div>
@@ -456,6 +470,7 @@ function validate(s) {
     const timeVal = document.getElementById('deliveryTime').value;
     const timeValid = timeVal && (timeVal !== 'Specific' || document.getElementById('deliveryTimeSpecific').value.trim());
     check('deliveryTime', timeValid);
+    check('recipientContactPref', document.getElementById('recipientContactPref').value);
   }
   if (s === 5) {
     check('clientName', document.getElementById('clientName').value.trim());
@@ -487,9 +502,11 @@ function collect(s) {
       : timeChoice;
     fd.pickupName = document.getElementById('pickupName').value.trim();
     fd.pickupPhone = document.getElementById('pickupPhone').value.trim();
+    fd.recipientContactPref = document.getElementById('recipientContactPref').value;
   }
   if (s === 4) {
     fd.giftMessage = document.getElementById('giftMessage').value.trim();
+    fd.thingsToAvoid = document.getElementById('thingsToAvoid').value.trim();
     fd.extraNotes = document.getElementById('extraNotes').value.trim();
   }
   if (s === 5) {
@@ -547,7 +564,9 @@ function submitForm() {
     deliveryTime: fd.deliveryTime || '',
     pickupName: fd.pickupName || '',
     pickupPhone: fd.pickupPhone || '',
+    recipientContactPref: fd.recipientContactPref || '',
     giftMessage: fd.giftMessage || '',
+    thingsToAvoid: fd.thingsToAvoid || '',
     extraNotes: fd.extraNotes || ''
   };
 
@@ -573,7 +592,7 @@ function submitForm() {
   }
 
   function showFailure() {
-    document.getElementById('successTitle').textContent = 'One moment — let\'s try that again';
+    document.getElementById('successTitle').textContent = 'One moment, let\'s try that again';
     document.getElementById('successBody').innerHTML =
       'We couldn\'t confirm everything was received. Please tap below to message us directly so nothing is lost.';
     const waMsg = encodeURIComponent(

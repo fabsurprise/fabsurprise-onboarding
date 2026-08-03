@@ -475,10 +475,10 @@ select.field-input {
     <p class="welcome-opening">There is a moment that matters to you.</p>
     <p class="welcome-text">
       Whether you are celebrating yourself, someone you love, your team or an important milestone, you have already decided this deserves care, not convenience.<br><br>
-      We will get to know what you are planning, understand what matters most to you, and begin shaping something that feels entirely yours.
+      We will get to know what you are planning, understand what matters most to you, and begin creating it together.
     </p>
     <button class="btn-begin" onclick="startForm()">Let's Begin</button>
-    <p class="welcome-reassure">Every memorable celebration begins with a single decision. Today, you have made yours.</p>
+    <p class="welcome-reassure">Every celebration begins with a decision. Today, you've made yours.</p>
   </div>
 </div>
 
@@ -547,7 +547,7 @@ select.field-input {
         </div>
         <div class="opt" onclick="pickWho(this,'A Friend')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
-          <div><div class="opt-text">A Friend</div><div class="opt-sub">Someone who deserves to know how much they mean to you</div></div>
+          <div><div class="opt-text">A Friend</div><div class="opt-sub">A close friend, your best friend, or someone you'd love to celebrate</div></div>
         </div>
         <div class="opt" onclick="pickWho(this,'A Colleague or Client')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
@@ -653,7 +653,7 @@ select.field-input {
         </div>
         <div class="opt" data-val="I want to create something truly extraordinary" onclick="pickGuide(this,'I want to create something truly extraordinary')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
-          <div><div class="opt-text">I want something extraordinary</div><div class="opt-sub">This moment deserves something remarkable</div></div>
+          <div><div class="opt-text">I want something extraordinary</div><div class="opt-sub">I'd love you to recommend something beyond what I've imagined</div></div>
         </div>
       </div>
       <div class="field-error" id="err-guide">Please let us know how you would like us to guide you.</div>
@@ -677,7 +677,7 @@ select.field-input {
         </div>
         <div class="opt" data-val="open" onclick="pickBudgetMode(this,'open')">
           <div class="opt-dot"><div class="opt-inner"></div></div>
-          <div><div class="opt-text">Recommend the best experience for my vision</div><div class="opt-sub">Guide me based on everything I have shared, regardless of budget</div></div>
+          <div><div class="opt-text">Recommend what fits my vision best</div><div class="opt-sub">Guide me based on everything I have shared, regardless of budget</div></div>
         </div>
       </div>
       <div class="field-error" id="err-budgetMode">Please let us know which feels right for you.</div>
@@ -720,7 +720,7 @@ select.field-input {
     </div>
 
     <h2 class="q-title" id="title9">Tell us what<br>you are <em>imagining</em></h2>
-    <p class="q-subtext">Your ideas, what inspired this, the experience you'd love to create, you don't need every detail figured out. Just tell us enough to picture it too.</p>
+    <p class="q-subtext">Share your ideas, what inspired them, or the feeling you'd like this celebration to create. You don't need every detail figured out. Just tell us enough for us to picture it too.</p>
     <div class="field-wrap">
       <textarea class="field-textarea" id="details" placeholder="Tell us everything you would love us to know..."></textarea>
       <div class="field-error" id="err-details">Please share a little about what you have in mind.</div>
@@ -1042,8 +1042,6 @@ function personalise(s) {
     if (selWho === 'Myself') {
       document.getElementById('title4').innerHTML = 'What are you<br><em>celebrating?</em>';
       document.getElementById('sub4').textContent = 'Self love is one of the most powerful celebrations there is. Tell us what the occasion is.';
-    } else if (selWho === 'My Partner') {
-      document.getElementById('thread4').textContent = 'For the one you love';
     }
   }
   if (s === 5 && selOcc) {
@@ -1055,7 +1053,7 @@ function personalise(s) {
       'Self Love': 'You deserve this'
     };
     if (threads[selOcc]) document.getElementById('thread5').textContent = threads[selOcc];
-    document.getElementById('title5').innerHTML = 'When is the<br><em>' + selOcc.toLowerCase() + '?</em>';
+    document.getElementById('title5').innerHTML = 'When would you<br>like to <em>celebrate?</em>';
   }
   if (s === 9) {
     const name2 = (fd.fullName || '').split(' ')[0];

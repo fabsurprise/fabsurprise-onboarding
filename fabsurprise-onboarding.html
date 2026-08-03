@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Start Your Celebration — Fabsurprise</title>
+<title>Start Your Celebration | Fabsurprise</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -539,12 +539,12 @@ body {
     <div class="brand-mark">Fabsurprise</div>
     <h1 class="landing-title">Start Your<br><em>Celebration</em></h1>
     <p class="landing-body">
-      Thank you for trusting us with this — we're so glad it's really happening.<br><br>
+      Thank you for trusting us with this, we're so glad it's really happening.<br><br>
       This guide helps us gather the details that will make everything feel personal, seamless and exactly as you imagined it when we first spoke.<br><br>
       Once you've completed it, our team will carefully review everything before we begin bringing it to life.<br><br>
-      Take your time, and if anything feels unclear, we're always right here.
+      Take your time. If anything feels unclear, we're always here to help.
     </p>
-    <div class="landing-meta">Estimated time: 3–5 minutes</div>
+    <div class="landing-meta">Estimated time: 3 to 5 minutes</div>
     <button class="btn-begin" onclick="startForm()">Begin Planning</button>
     <p class="save-note">You can save your progress and return at any time.</p>
   </div>
@@ -683,7 +683,7 @@ body {
     <div class="section-block" id="section-3">
       <div class="section-eyebrow">Section 3 of 4</div>
       <h2 class="section-title">The Heart of It</h2>
-      <p class="section-subtitle">Every meaningful celebration begins with understanding the person at the centre of it.</p>
+      <p class="section-subtitle">Every celebration begins with understanding the person at the centre of it.</p>
       <div class="section-divider"></div>
 
       <div class="field-row">
@@ -722,7 +722,7 @@ body {
         <div class="field-error-msg" id="err-relationship">Please select a relationship.</div>
         <div class="reveal-block" id="selfLoveReveal" style="background:#F9F2F4;border-color:#7A1428;margin-top:12px;">
           <p style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#7A1428;margin-bottom:6px;">Self Love is a celebration too.</p>
-          <p style="font-size:13px;color:#4A2030;line-height:1.6;">You deserve to be celebrated just as intentionally as anyone else. We'll make this moment as beautiful as if someone planned it especially for you — because they did. You did.</p>
+          <p style="font-size:13px;color:#4A2030;line-height:1.6;">Choosing to celebrate yourself is worth every bit as much as celebrating someone else. We'll approach this celebration with the same care and attention we'd bring to any other.</p>
         </div>
       </div>
 
@@ -811,10 +811,10 @@ body {
       <div class="field-group">
         <label class="field-label">Who should our team contact on the day?</label>
         <div class="option-group">
-          <label class="option-item" onclick="selectOption(this,'dayContact','Me — the client'); document.getElementById('altContactReveal').classList.remove('open')">
-            <input type="radio" name="dayContact" value="Me — the client">
+          <label class="option-item" onclick="selectOption(this,'dayContact','Me, the client'); document.getElementById('altContactReveal').classList.remove('open')">
+            <input type="radio" name="dayContact" value="Me, the client">
             <div class="option-marker"><div class="option-marker-dot"></div></div>
-            <span class="option-label">Me — the client</span>
+            <span class="option-label">Me, the client</span>
           </label>
           <label class="option-item" onclick="selectOption(this,'dayContact','The celebrated person'); document.getElementById('altContactReveal').classList.remove('open')">
             <input type="radio" name="dayContact" value="The celebrated person">
@@ -852,6 +852,11 @@ body {
             <div class="option-marker"><div class="option-marker-dot"></div></div>
             <span class="option-label">They know about it but not the details</span>
           </label>
+          <label class="option-item" onclick="selectOption(this,'unfoldStyle','Knows but not when')">
+            <input type="radio" name="unfoldStyle" value="Knows but not when">
+            <div class="option-marker"><div class="option-marker-dot"></div></div>
+            <span class="option-label">They know it's happening but not when</span>
+          </label>
           <label class="option-item" onclick="selectOption(this,'unfoldStyle','Call me before delivery')">
             <input type="radio" name="unfoldStyle" value="Call me before delivery">
             <div class="option-marker"><div class="option-marker-dot"></div></div>
@@ -866,17 +871,22 @@ body {
       </div>
 
       <div class="field-group">
-        <label class="field-label">Access / Venue Instructions <span class="optional">Optional</span></label>
-        <textarea class="field-textarea" id="accessInstructions" placeholder="Gate codes, security name, which floor, parking..." style="min-height:90px;"></textarea>
+        <label class="field-label">Anything Our Team Should Know Before Arriving? <span class="optional">Optional</span></label>
+        <textarea class="field-textarea" id="accessInstructions" placeholder="Gate codes, security name, which floor, parking, or if the venue needs prior permission and who we should coordinate with..." style="min-height:90px;"></textarea>
       </div>
 
       <div class="field-group">
         <label class="field-label">Files to Send <span class="optional">Optional</span></label>
         <div style="background:#F9F2F4;border:1px solid #7A1428;border-left:4px solid #7A1428;padding:18px 16px;margin-bottom:12px;">
-          <p style="font-size:13px;color:#4A2030;line-height:1.6;margin-bottom:12px;">Please send photos, logos or inspiration images directly to us on WhatsApp after submitting. The button opens WhatsApp in a new tab — your form stays open.</p>
+          <p style="font-size:13px;color:#4A2030;line-height:1.6;margin-bottom:12px;">If you'd like us to work from reference photos, logos or inspiration images, you can send them on WhatsApp after submitting this form. The button opens WhatsApp in a new tab, your form stays open.</p>
           <a href="https://wa.me/2349025141322?text=Hi%20Fabsurprise%2C%20I%20have%20just%20completed%20my%20onboarding%20form%20and%20I%20am%20sending%20my%20files%20now." target="_blank" style="display:inline-block;background:#25D366;color:white;padding:10px 20px;font-family:'Inter',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:1px;text-decoration:none;">Open WhatsApp to Send Files</a>
         </div>
-        <input class="field-input" id="fileNote" type="text" placeholder="e.g. 3 photos, logo, mood board — what you'll be sending">
+        <input class="field-input" id="fileNote" type="text" placeholder="e.g. 3 photos, logo, mood board, what you'll be sending">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Is There Anything You'd Like Us to Avoid? <span class="optional">Optional</span></label>
+        <textarea class="field-textarea" id="thingsToAvoid" placeholder="Anything you'd rather we didn't include, do, say, or bring, no detail is too small to mention"></textarea>
       </div>
 
       <div class="field-group">
@@ -920,10 +930,10 @@ body {
       Thank you for trusting us with all of this.<br><br>
       Our team is now going through everything carefully, making sure every detail is exactly as thoughtful as it should be.<br><br>
       If anything needs clarifying, or if we think of a way to make this even more meaningful, we'll reach out personally.<br><br>
-      For now, truly — leave the rest to us.
+      From here, we'll begin bringing everything together. If we need anything else, we'll be in touch.
     </p>
     <p class="success-tagline">Thank you for trusting us with such a meaningful moment.</p>
-    <p class="success-sig">— The Fabsurprise Team</p>
+    <p class="success-sig">The Fabsurprise Team</p>
     <div style="margin-top:36px;padding-top:28px;border-top:1px solid rgba(245,240,232,0.15);">
       <p style="font-size:12px;color:rgba(245,240,232,0.55);letter-spacing:0.5px;margin-bottom:16px;">Send us a quick WhatsApp so we know to expect you.</p>
       <a id="waNotifyBtn" href="#" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:14px 32px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-decoration:none;">Notify Us on WhatsApp</a>
@@ -1077,6 +1087,7 @@ function collectSection(num) {
     formData.unfoldStyle = radioVal('unfoldStyle');
     formData.accessInstructions = val('accessInstructions');
     formData.fileNote = val('fileNote');
+    formData.thingsToAvoid = val('thingsToAvoid');
     formData.extraNotes = val('extraNotes');
   }
 }
@@ -1116,6 +1127,7 @@ function buildReview() {
       { key: 'Day Contact', val: formData.dayContact || '—' },
       { key: 'Celebration Style', val: formData.unfoldStyle || '—' },
       { key: 'Access Instructions', val: formData.accessInstructions || '—' },
+      { key: 'Things to Avoid', val: formData.thingsToAvoid || '—' },
       { key: 'Extra Notes', val: formData.extraNotes || '—' },
     ]},
   ];
@@ -1233,7 +1245,7 @@ function saveProgress() {
   ['clientName','clientPhone','clientEmail','occasion','celebDate','setupTime','celebLocation',
    'venueAddress','landmark','recipientName','preferredName','relationship','religion','allergies',
    'threeWords','hopeTheyFeel','theme','colourPalette','cakeInscription','cardMessage','messageHelper',
-   'specialDate','initials','quote','accessInstructions','fileNote','extraNotes','altContactName','altContactPhone'
+   'specialDate','initials','quote','accessInstructions','fileNote','thingsToAvoid','extraNotes','altContactName','altContactPhone'
   ].forEach(id => { const el = document.getElementById(id); if (el) saved.fields[id] = el.value; });
   saved.radios = {
     contactMethod: radioVal('contactMethod'),

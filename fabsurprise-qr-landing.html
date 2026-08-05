@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fabsurprise</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --wine: #7A1428;
+  --wine-dark: #5A0E1C;
+  --wine-light: #921830;
+  --gold: #C9A84C;
+  --gold-light: #E2C97A;
+  --gold-pale: #F9F3E3;
+  --ivory: #F5F0E8;
+  --ivory-mid: #EDE7DC;
+  --ivory-dark: #DDD5C5;
+  --white: #FDFAF6;
+  --text-dark: #1A0A0E;
+  --text-mid: #4A2030;
+  --text-light: #8B6B5A;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--ivory);
+  color: var(--text-dark);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 30px;
+  text-align: center;
+  position: relative;
+}
+
+/* ── 1: IVORY OPENING ── */
+#s1 { overflow: hidden; }
+
+#s1::before {
+  content: '';
+  position: absolute;
+  top: -25%;
+  left: -30%;
+  width: 65%;
+  height: 150%;
+  border: 1px solid rgba(122,20,40,0.08);
+  border-radius: 50%;
+}
+
+.s1-brand {
+  position: relative;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--wine);
+  opacity: 0.6;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+#s1.has-photo {
+  background-size: cover;
+  background-position: center;
+}
+
+#s1.has-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(245,240,232,0.6) 0%, rgba(245,240,232,0.9) 100%);
+}
+
+.s1-title {
+  position: relative;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 8.5vw, 46px);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+.s1-title em { font-style: italic; color: var(--wine); }
+
+.s1-body {
+  position: relative;
+  font-size: 13.5px;
+  color: var(--text-light);
+  max-width: 300px;
+  font-weight: 300;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 34px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--wine);
+  opacity: 0.55;
+  animation: bob 2s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ── 2: BURGUNDY, WHO WE ARE + PHILOSOPHY ── */
+#s2 {
+  background: var(--wine-dark);
+  color: var(--white);
+  overflow: hidden;
+}
+
+.scroll-hint-dark {
+  position: absolute;
+  bottom: 24px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gold-light);
+  opacity: 0.65;
+  animation: bob 2s ease-in-out infinite;
+}
+
+#s2::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -25%;
+  width: 70%;
+  height: 160%;
+  border: 1px solid rgba(201,168,76,0.10);
+  border-radius: 50%;
+}
+
+.eyebrow {
+  position: relative;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.s-title {
+  position: relative;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 7.5vw, 36px);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.28;
+  margin-bottom: 18px;
+}
+
+.s-title em { font-style: italic; color: var(--gold-light); }
+
+.s-body {
+  position: relative;
+  font-size: 14.5px;
+  color: rgba(245,240,232,0.78);
+  max-width: 320px;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+.s2-divider {
+  position: relative;
+  width: 24px;
+  height: 1px;
+  background: rgba(201,168,76,0.35);
+  margin: 30px 0;
+}
+
+/* ── 3: IVORY, WHAT WE CREATE + INVITATION ── */
+#s3 { background: var(--ivory); }
+
+#s3 .eyebrow { color: var(--gold); }
+#s3 .s-title { color: var(--text-dark); }
+
+.offer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 300px;
+  width: 100%;
+  margin: 6px 0 36px;
+}
+
+.offer-item {
+  text-align: left;
+  border-left: 2px solid var(--gold);
+  padding-left: 14px;
+}
+
+.offer-item h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--wine);
+  margin-bottom: 3px;
+}
+
+.offer-item p {
+  font-size: 12.5px;
+  color: var(--text-light);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.s3-invite-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 7.5vw, 36px);
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.28;
+  margin-bottom: 12px;
+}
+
+.s3-invite-title em { font-style: italic; color: var(--wine); }
+
+.s3-invite-body {
+  font-size: 14px;
+  color: var(--text-light);
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+
+.btn-primary {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  background: var(--wine);
+  color: var(--white);
+  border: none;
+  padding: 18px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:hover { background: var(--wine-light); }
+
+.footer {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-brand {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+.secondary-links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-size: 11px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.secondary-links a {
+  color: var(--text-light);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: color 0.2s;
+}
+
+.secondary-links a:hover { color: var(--wine); }
+.secondary-links span { color: var(--ivory-dark); }
+</style>
+</head>
+<body>
+
+<div class="section" id="s1">
+  <div class="s1-brand">Fabsurprise</div>
+  <h1 class="s1-title">Someone wanted<br>you to <em>feel celebrated.</em></h1>
+  <p class="s1-body">Every celebration begins with someone choosing to make another person feel seen, appreciated or deeply loved. Thank you for letting Fabsurprise be part of that story.</p>
+  <div class="scroll-hint">Scroll</div>
+</div>
+
+<div class="section" id="s2">
+  <div class="eyebrow">Who We Are</div>
+  <h2 class="s-title">A Luxury<br><em>Celebration Studio</em></h2>
+  <p class="s-body">We believe presentation is communication. Whether it's a gift, a proposal, or an entire celebration, how something is given carries the feeling behind it, and that's why every detail deserves intention.</p>
+
+  <div class="s2-divider"></div>
+
+  <div class="eyebrow">What We Create</div>
+  <div class="offer-list">
+    <div class="offer-item">
+      <h3>Gifting</h3>
+      <p>Thoughtfully curated gifts, chosen with real intention.</p>
+    </div>
+    <div class="offer-item">
+      <h3>Celebration Styling</h3>
+      <p>Proposals, birthdays, anniversaries and surprises, styled with intention.</p>
+    </div>
+    <div class="offer-item">
+      <h3>Corporate Celebrations</h3>
+      <p>Intentional gifting and appreciation experiences.</p>
+    </div>
+  </div>
+  <div class="scroll-hint-dark">Scroll</div>
+</div>
+
+<div class="section" id="s3">
+  <div class="eyebrow">Your Turn</div>
+  <h2 class="s3-invite-title">Tell Us What<br><em>You're Celebrating.</em></h2>
+  <p class="s3-invite-body">Every celebration begins with a story. We'd love to help you create yours.</p>
+
+  <a href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html" class="btn-primary">Create Your Celebration</a>
+
+  <div class="footer">
+    <div class="footer-brand">Fabsurprise</div>
+    <div class="secondary-links">
+      <a href="https://instagram.com/fabsurprise" target="_blank">Instagram</a>
+      <span>&middot;</span>
+      <a href="https://wa.me/2349025141322" target="_blank">WhatsApp</a>
+      <span>&middot;</span>
+      <a href="mailto:fabsurprisez@gmail.com">Email</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

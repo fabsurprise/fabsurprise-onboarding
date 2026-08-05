@@ -48,7 +48,10 @@ body {
 }
 
 /* ── 1: IVORY OPENING ── */
-#s1 { overflow: hidden; }
+#s1 {
+  position: relative;
+  overflow: hidden;
+}
 
 #s1::before {
   content: '';
@@ -72,18 +75,6 @@ body {
   margin-bottom: 40px;
 }
 
-#s1.has-photo {
-  background-size: cover;
-  background-position: center;
-}
-
-#s1.has-photo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(245,240,232,0.6) 0%, rgba(245,240,232,0.9) 100%);
-}
-
 .s1-title {
   position: relative;
   font-family: 'Cormorant Garamond', serif;
@@ -92,6 +83,13 @@ body {
   line-height: 1.25;
   color: var(--text-dark);
   margin-bottom: 20px;
+  opacity: 0;
+  animation: riseIn 1s ease 0.2s forwards;
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .s1-title em { font-style: italic; color: var(--wine); }
@@ -102,6 +100,8 @@ body {
   color: var(--text-light);
   max-width: 300px;
   font-weight: 300;
+  opacity: 0;
+  animation: riseIn 1s ease 0.5s forwards;
 }
 
 .scroll-hint {
@@ -123,6 +123,7 @@ body {
 
 /* ── 2: BURGUNDY, WHO WE ARE + PHILOSOPHY ── */
 #s2 {
+  position: relative;
   background: var(--wine-dark);
   color: var(--white);
   overflow: hidden;
@@ -143,12 +144,16 @@ body {
 #s2::before {
   content: '';
   position: absolute;
-  top: -30%;
-  right: -25%;
-  width: 70%;
-  height: 160%;
-  border: 1px solid rgba(201,168,76,0.10);
-  border-radius: 50%;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80') center/cover no-repeat;
+  opacity: 0.16;
+}
+
+#s2::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(90,14,28,0.7) 0%, rgba(90,14,28,0.93) 100%);
 }
 
 .eyebrow {
@@ -197,6 +202,7 @@ body {
 #s3 .s-title { color: var(--text-dark); }
 
 .offer-list {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -300,6 +306,10 @@ body {
 
 .secondary-links a:hover { color: var(--wine); }
 .secondary-links span { color: var(--ivory-dark); }
+
+@media (prefers-reduced-motion: reduce) {
+  .s1-title, .s1-body { animation: none; opacity: 1; }
+}
 </style>
 </head>
 <body>

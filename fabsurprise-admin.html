@@ -1042,6 +1042,30 @@ async function updatePaymentStage(enquiryId, newStage, btn) {
   }
 }
 
+function buildFollowUpMessage(e, occPhrase) {
+  var firstName = (e.fullName || 'there').split(' ')[0];
+  var parts = [];
+
+  parts.push('Hi ' + firstName + ', I just went through your Design Your Moment for ' + occPhrase + '.');
+
+  var details = [];
+  if (e.celebDate) details.push('for ' + formatAdminDate(e.celebDate));
+  if (e.location) details.push('in ' + e.location);
+  if (details.length) {
+    parts.push('Sounds like something really special coming together ' + details.join(' ') + '.');
+  }
+
+  if (e.budgetMode === 'range' && e.budgetRange) {
+    parts.push('I saw you\'re working with a budget around ' + e.budgetRange + ', so I already have a few ideas in mind that would fit well.');
+  } else {
+    parts.push('I\'d love to put a few ideas together based on everything you shared.');
+  }
+
+  parts.push('Let\'s hop on a quick chat whenever you\'re free, I\'d love to hear more about what you\'re imagining.');
+
+  return parts.join('\\n\\n');
+}
+
 function renderEnquiryCards(list) {
   var container = document.getElementById('enquiryList');
 
@@ -1054,7 +1078,7 @@ function renderEnquiryCards(list) {
     const resumeUrl = 'https://tinyurl.com/fabsurprise-moment?resume=' + e.enquiryId;
     var occPhrase = isSubmitted ? buildOccasionPhrase(e.occasion, e.celebrating, e.whoDetail) : '';
     var waFollowUp = isSubmitted
-      ? encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ',\n\nI\'ve just finished reading your Design Your Moment for ' + occPhrase + ', and I\'d love to hear a little more about what you have in mind.\n\nLet\'s start there.')
+      ? encodeURIComponent(buildFollowUpMessage(e, occPhrase))
       : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it.\n\nWe\'ve saved everything you\'ve shared so far, so you can pick up from exactly where you stopped.\n\nContinue where you left off: ' + resumeUrl);
 
     var waNumber = normalizeWA(e.whatsapp);
@@ -1165,12 +1189,12 @@ function convertToBooking(enquiryId, type) {
   var guideLink, msg;
 
   if (type === 'gift') {
-    guideLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-gift-booking-guide.html';
+    guideLink = 'https://tinyurl.com/before-yourgift';
     msg = encodeURIComponent(
       'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to get this ready for you. Before we begin, please take a moment to read through our Gift Delivery guide, it explains what to expect and a few important details: ' + guideLink
     );
   } else {
-    guideLink = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-booking-guide.html';
+    guideLink = 'https://tinyurl.com/before-wecelebrate';
     msg = encodeURIComponent(
       'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Before we begin, please take a moment to read through our Booking Guide, it explains what to expect and a few important details: ' + guideLink
     );

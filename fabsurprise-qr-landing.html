@@ -141,21 +141,6 @@ body {
   animation: bob 2s ease-in-out infinite;
 }
 
-#s2::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80') center/cover no-repeat;
-  opacity: 0.10;
-}
-
-#s2::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(90,14,28,0.88) 0%, rgba(90,14,28,0.97) 100%);
-}
-
 .eyebrow {
   position: relative;
   font-size: 10px;
@@ -169,11 +154,11 @@ body {
 .s-title {
   position: relative;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 7.5vw, 36px);
+  font-size: clamp(32px, 8.5vw, 46px);
   font-weight: 400;
   color: var(--white);
-  line-height: 1.28;
-  margin-bottom: 18px;
+  line-height: 1.25;
+  margin-bottom: 20px;
 }
 
 .s-title em { font-style: italic; color: var(--gold-light); }
@@ -205,10 +190,10 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 22px;
   max-width: 300px;
   width: 100%;
-  margin: 6px 0 36px;
+  margin: 8px 0 36px;
 }
 
 .offer-item {
@@ -219,17 +204,17 @@ body {
 
 .offer-item h3 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--wine);
-  margin-bottom: 3px;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--gold-light);
+  margin-bottom: 4px;
 }
 
 .offer-item p {
-  font-size: 12.5px;
-  color: var(--text-light);
+  font-size: 14px;
+  color: rgba(245,240,232,0.7);
   font-weight: 300;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .s3-invite-title {
@@ -315,7 +300,6 @@ body {
 <body>
 
 <div class="section" id="s1">
-  <div class="s1-brand">Fabsurprise</div>
   <h1 class="s1-title">Someone wanted<br>you to <em>feel celebrated.</em></h1>
   <p class="s1-body">Every celebration begins with someone choosing to make another person feel seen, appreciated or deeply loved. Thank you for letting Fabsurprise be part of that story.</p>
   <div class="scroll-hint">Scroll</div>

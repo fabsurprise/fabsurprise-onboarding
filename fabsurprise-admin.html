@@ -1046,7 +1046,7 @@ function buildFollowUpMessage(e, occPhrase) {
   var firstName = (e.fullName || 'there').split(' ')[0];
   var parts = [];
 
-  parts.push('Hi ' + firstName + ', I just went through your Design Your Moment for ' + occPhrase + '.');
+  parts.push('Hi ' + firstName + ', I just went through everything you shared with us about ' + occPhrase + '.');
 
   var details = [];
   if (e.celebDate) details.push('for ' + formatAdminDate(e.celebDate));
@@ -1063,7 +1063,7 @@ function buildFollowUpMessage(e, occPhrase) {
 
   parts.push('Let\'s hop on a quick chat whenever you\'re free, I\'d love to hear more about what you\'re imagining.');
 
-  return parts.join('\\n\\n');
+  return parts.join('\n\n');
 }
 
 function renderEnquiryCards(list) {
@@ -1119,6 +1119,7 @@ function renderEnquiryCards(list) {
             '<button onclick="markFollowedUp(\'' + e.enquiryId + '\', this)" style="background:var(--gold-pale);color:var(--text-mid);border:1px solid var(--gold);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">' + (e.followedUpAt ? 'Update Follow-Up' : 'Mark as Followed Up') + '</button>' +
             (e.followedUpAt && e.noResponse !== 'true' ? '<button onclick="markNoResponse(\'' + e.enquiryId + '\', this)" style="background:transparent;color:var(--text-light);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Mark No Response</button>' : '') +
             (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\',\'celebration\')" title="Sends the full event Booking Guide">🎉 Full Celebration</button><button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\',\'gift\')" style="background:var(--gold);color:var(--wine-dark);" title="Sends the Gift Delivery guide">🎁 Gift Delivery</button>' : '') +
+            (isSubmitted && e.paymentStage === 'Paid & Booked' ? '<button class="btn-enq-convert" onclick="sendOnboardingLink(\''+e.enquiryId+'\',\'celebration\')" style="background:var(--wine-dark);" title="Sends the Start Your Celebration form">📋 Send Celebration Form</button><button class="btn-enq-convert" onclick="sendOnboardingLink(\''+e.enquiryId+'\',\'gift\')" style="background:var(--wine-light);" title="Sends the Gift Delivery form">📦 Send Gift Form</button>' : '') +
             '<button onclick="archiveEnquiry(\'' + e.enquiryId + '\', this)" style="background:transparent;color:var(--error);border:1px solid var(--error);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Archive</button>'
           ) +
       '</div>' +
@@ -1197,6 +1198,32 @@ function convertToBooking(enquiryId, type) {
     guideLink = 'https://tinyurl.com/before-wecelebrate';
     msg = encodeURIComponent(
       'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Before we begin, please take a moment to read through our Booking Guide, it explains what to expect and a few important details: ' + guideLink
+    );
+  }
+
+  window.open('https://wa.me/' + waNumber + '?text=' + msg, '_blank');
+}
+
+function sendOnboardingLink(enquiryId, type) {
+  var enq = allEnquiries.find(function(e){ return e.enquiryId === enquiryId; });
+  if (!enq) return;
+  var stage = enq.paymentStage || 'Enquired';
+  if (stage !== 'Paid & Booked') {
+    var proceed = confirm('This enquiry is still marked as "' + stage + '", not Paid & Booked. Send the onboarding form anyway?');
+    if (!proceed) return;
+  }
+  var waNumber = normalizeWA(enq.whatsapp);
+  var formLink, msg;
+
+  if (type === 'gift') {
+    formLink = 'https://tinyurl.com/fabsurprise-gift';
+    msg = encodeURIComponent(
+      'Hi ' + (enq.fullName || '').split(' ')[0] + ', your payment has come through, thank you so much. Here is your Gift Delivery guide, this is where we capture exactly who it is for and where it should go: ' + formLink
+    );
+  } else {
+    formLink = 'https://tinyurl.com/Fabsurprise-Celebration';
+    msg = encodeURIComponent(
+      'Hi ' + (enq.fullName || '').split(' ')[0] + ', your payment has come through, thank you so much, it is really happening now. Here is your Start Your Celebration guide: ' + formLink + '. This is where we get into the details that will make everything feel exactly like what we spoke about, take your time filling it in, nothing rushed.'
     );
   }
 

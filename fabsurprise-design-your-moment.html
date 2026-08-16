@@ -509,29 +509,6 @@ select.field-input {
 
   <!-- Q2: CONTACT (WhatsApp + Email combined) -->
   <div class="q-screen" id="q2">
-    <div class="q-thread" id="thread2">Let's stay connected</div>
-    <h2 class="q-title">How can<br>we <em>reach you?</em></h2>
-    <p class="q-subtext">Your WhatsApp is how we'll continue this personally, and your email is simply where we'll send your confirmation, so nothing gets lost in between.</p>
-    <div class="field-wrap">
-      <input class="field-input" id="whatsapp" type="tel" placeholder="e.g. 08012345678 or +44 7911 123456" autocomplete="tel" style="margin-bottom:6px;" oninput="updateWAPreview()">
-      <div id="waPreview" style="font-size:12px;color:var(--wine);margin-bottom:6px;display:none;font-weight:500;"></div>
-      <p style="font-size:11.5px;color:var(--text-light);margin:0 0 12px;">If you are outside Nigeria, please include your country code.</p>
-      <div class="field-error" id="err-whatsapp">That number looks incomplete, please double check it includes your full WhatsApp number.</div>
-      <input class="field-input" id="email" type="email" placeholder="Email Address" autocomplete="email">
-      <div class="field-error" id="err-email">Please enter a valid email address.</div>
-      <div class="dup-notice" id="dupNotice">
-        It looks like we have heard from this email before. If you would like to follow up on a previous enquiry, we would love to continue the conversation.
-        <a href="https://wa.me/2349025141322?text=Hi%20Fabsurprise%2C%20I%20would%20like%20to%20follow%20up%20on%20a%20previous%20enquiry." target="_blank">Continue on WhatsApp</a>
-      </div>
-    </div>
-    <div class="q-nav">
-      <button class="btn-back" onclick="goPrev(2)">Back</button>
-      <button class="btn-next" id="q2btn" onclick="goNext(2)">Continue</button>
-    </div>
-  </div>
-
-  <!-- Q3: WHO -->
-  <div class="q-screen" id="q3">
     <div class="q-thread">Tell us who this moment is all about</div>
     <h2 class="q-title">Every celebration<br>begins with a <em>person</em></h2>
     <p class="q-subtext">Who we're celebrating helps us understand what will make this feel special to them.</p>
@@ -569,16 +546,16 @@ select.field-input {
       </div>
     </div>
     <div class="q-nav">
-      <button class="btn-back" onclick="goPrev(3)">Back</button>
-      <button class="btn-next" onclick="goNext(3)">Continue</button>
+      <button class="btn-back" onclick="goPrev(2)">Back</button>
+      <button class="btn-next" onclick="goNext(2)">Continue</button>
     </div>
   </div>
 
-  <!-- Q4: OCCASION -->
-  <div class="q-screen" id="q4">
-    <div class="q-thread" id="thread4">Every occasion tells a different story</div>
-    <h2 class="q-title" id="title4">What are you<br><em>celebrating?</em></h2>
-    <p class="q-subtext" id="sub4">Some celebrate themselves. Some celebrate the people they love. Some celebrate achievements and new beginnings. Tell us what yours is.</p>
+  <!-- Q3: OCCASION -->
+  <div class="q-screen" id="q3">
+    <div class="q-thread" id="thread3">Every occasion tells a different story</div>
+    <h2 class="q-title" id="title3">What are you<br><em>celebrating?</em></h2>
+    <p class="q-subtext" id="sub3">Some celebrate themselves. Some celebrate the people they love. Some celebrate achievements and new beginnings. Tell us what yours is.</p>
     <div class="field-wrap">
       <div class="occ-grid">
         <div class="occ-card" onclick="pickOcc(this,'Birthday')"><div class="occ-name">Birthday</div></div>
@@ -597,8 +574,31 @@ select.field-input {
       <div class="field-error" id="err-occ">Please select the occasion.</div>
     </div>
     <div class="q-nav">
+      <button class="btn-back" onclick="goPrev(3)">Back</button>
+      <button class="btn-next" onclick="goNext(3)">Continue</button>
+    </div>
+  </div>
+
+  <!-- Q4: CONTACT (WhatsApp + Email combined) -->
+  <div class="q-screen" id="q4">
+    <div class="q-thread" id="thread4">Let's stay connected</div>
+    <h2 class="q-title">How can<br>we <em>reach you?</em></h2>
+    <p class="q-subtext">Your WhatsApp is how we'll continue this personally, and your email is simply where we'll send your confirmation, so nothing gets lost in between.</p>
+    <div class="field-wrap">
+      <input class="field-input" id="whatsapp" type="tel" placeholder="e.g. 08012345678 or +44 7911 123456" autocomplete="tel" style="margin-bottom:6px;" oninput="updateWAPreview()">
+      <div id="waPreview" style="font-size:12px;color:var(--wine);margin-bottom:6px;display:none;font-weight:500;"></div>
+      <p style="font-size:11.5px;color:var(--text-light);margin:0 0 12px;">If you are outside Nigeria, please include your country code.</p>
+      <div class="field-error" id="err-whatsapp">That number looks incomplete, please double check it includes your full WhatsApp number.</div>
+      <input class="field-input" id="email" type="email" placeholder="Email Address" autocomplete="email">
+      <div class="field-error" id="err-email">Please enter a valid email address.</div>
+      <div class="dup-notice" id="dupNotice">
+        It looks like we have heard from this email before. If you would like to follow up on a previous enquiry, we would love to continue the conversation.
+        <a href="https://wa.me/2349025141322?text=Hi%20Fabsurprise%2C%20I%20would%20like%20to%20follow%20up%20on%20a%20previous%20enquiry." target="_blank">Continue on WhatsApp</a>
+      </div>
+    </div>
+    <div class="q-nav">
       <button class="btn-back" onclick="goPrev(4)">Back</button>
-      <button class="btn-next" onclick="goNext(4)">Continue</button>
+      <button class="btn-next" id="q2btn" onclick="goNext(4)">Continue</button>
     </div>
   </div>
 
@@ -900,10 +900,11 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     // Figure out furthest completed step, resume just after it
-    let resumeStep = 3;
-    if (fd.fullName && fd.whatsapp && fd.email) resumeStep = 3;
-    if (fd.who) resumeStep = 4;
-    if (fd.occasion) resumeStep = 5;
+    let resumeStep = 2;
+    if (fd.fullName) resumeStep = 2;
+    if (fd.who) resumeStep = 3;
+    if (fd.occasion) resumeStep = 4;
+    if (fd.whatsapp && fd.email) resumeStep = 5;
     if (fd.celebDate) resumeStep = 6;
     if (fd.location) resumeStep = 7;
     if (fd.guideStyle) resumeStep = 8;
@@ -943,7 +944,7 @@ function showStep(s) {
 function goNext(s) {
   if (!validate(s)) return;
   collect(s);
-  if (s === 2) {
+  if (s === 4) {
     checkDup();
     return;
   }
@@ -974,8 +975,8 @@ function checkDup() {
       dupBlocked = false;
       document.getElementById('dupNotice').style.display = 'none';
       savePartial();
-      personalise(3);
-      showStep(3);
+      personalise(5);
+      showStep(5);
     }
   };
 
@@ -1035,14 +1036,14 @@ function savePartial() {
 // ── PERSONALISE ──
 function personalise(s) {
   const name = (fd.fullName || '').split(' ')[0];
-  if (s === 2 && name) {
-    document.getElementById('thread2').textContent = 'Hi ' + name + ', let\'s stay connected';
-  }
-  if (s === 4) {
+  if (s === 3) {
     if (selWho === 'Myself') {
-      document.getElementById('title4').innerHTML = 'What are you<br><em>celebrating?</em>';
-      document.getElementById('sub4').textContent = 'Self love is one of the most powerful celebrations there is. Tell us what the occasion is.';
+      document.getElementById('title3').innerHTML = 'What are you<br><em>celebrating?</em>';
+      document.getElementById('sub3').textContent = 'Self love is one of the most powerful celebrations there is. Tell us what the occasion is.';
     }
+  }
+  if (s === 4 && name) {
+    document.getElementById('thread4').textContent = 'Hi ' + name + ', let\'s stay connected';
   }
   if (s === 5 && selOcc) {
     const threads = {
@@ -1088,22 +1089,22 @@ function validate(s) {
   if (s === 1) { clr('fullName'); if (!document.getElementById('fullName').value.trim()) fail('fullName'); }
 
   if (s === 2) {
+    const er = document.getElementById('err-who');
+    if (!selWho) { ok = false; er.style.display = 'block'; } else er.style.display = 'none';
+  }
+
+  if (s === 3) {
+    const er = document.getElementById('err-occ');
+    if (!selOcc) { ok = false; er.style.display = 'block'; } else er.style.display = 'none';
+  }
+
+  if (s === 4) {
     clr('whatsapp'); clr('email');
     document.getElementById('dupNotice').style.display = 'none';
     const wa = document.getElementById('whatsapp').value.trim();
     const em = document.getElementById('email').value.trim();
     if (!looksLikeValidPhone(wa).ok) fail('whatsapp');
     if (!em || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) fail('email');
-  }
-
-  if (s === 3) {
-    const er = document.getElementById('err-who');
-    if (!selWho) { ok = false; er.style.display = 'block'; } else er.style.display = 'none';
-  }
-
-  if (s === 4) {
-    const er = document.getElementById('err-occ');
-    if (!selOcc) { ok = false; er.style.display = 'block'; } else er.style.display = 'none';
   }
 
   if (s === 5) { clr('celebDate'); if (!document.getElementById('celebDate').value) fail('celebDate'); }
@@ -1131,9 +1132,9 @@ function validate(s) {
 // ── COLLECT ──
 function collect(s) {
   if (s === 1) fd.fullName = document.getElementById('fullName').value.trim();
-  if (s === 2) { fd.whatsapp = document.getElementById('whatsapp').value.trim(); fd.email = document.getElementById('email').value.trim(); }
-  if (s === 3) { fd.who = selWho; fd.whoDetail = selWhoDetail; }
-  if (s === 4) fd.occasion = selOcc;
+  if (s === 2) { fd.who = selWho; fd.whoDetail = selWhoDetail; }
+  if (s === 3) fd.occasion = selOcc;
+  if (s === 4) { fd.whatsapp = document.getElementById('whatsapp').value.trim(); fd.email = document.getElementById('email').value.trim(); }
   if (s === 5) fd.celebDate = document.getElementById('celebDate').value;
   if (s === 6) fd.location = document.getElementById('location').value.trim();
   if (s === 7) fd.guideStyle = selGuide;

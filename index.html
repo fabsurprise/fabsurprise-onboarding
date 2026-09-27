@@ -1,0 +1,1802 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fabsurprise — Celebration Studio</title>
+
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6FQWF38Z3K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6FQWF38Z3K');
+</script>
+<meta name="description" content="Fabsurprise is a Lagos luxury celebration studio creating proposals, surprises, gifting and celebrations designed around the person, not a package.">
+<link rel="canonical" href="https://fabsurprise.github.io/fabsurprise-onboarding/">
+
+<!-- Open Graph / social share preview -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fabsurprise">
+<meta property="og:title" content="Fabsurprise — Celebration Studio">
+<meta property="og:description" content="Lagos luxury celebration studio for proposals, surprises, gifting and intimate events. Every moment created around the person, not a package.">
+<meta property="og:url" content="https://fabsurprise.github.io/fabsurprise-onboarding/">
+<meta property="og:image" content="https://fabsurprise.github.io/fabsurprise-onboarding/img/benz-70th-birthday.jpg">
+<meta property="og:locale" content="en_NG">
+
+<!-- Twitter/X card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fabsurprise — Celebration Studio">
+<meta name="twitter:description" content="Lagos luxury celebration studio for proposals, surprises, gifting and intimate events. Every moment created around the person, not a package.">
+<meta name="twitter:image" content="https://fabsurprise.github.io/fabsurprise-onboarding/img/benz-70th-birthday.jpg">
+
+<!-- Favicon: simple burgundy/ivory monogram, no external file needed -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%235A0F1B'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' fill='%23F7F2EA' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+
+<!-- LocalBusiness structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Fabsurprise",
+  "description": "Lagos luxury celebration studio creating proposals, surprises, gifting and celebrations designed around the person, not a package.",
+  "image": "https://fabsurprise.github.io/fabsurprise-onboarding/img/benz-70th-birthday.jpg",
+  "url": "https://fabsurprise.github.io/fabsurprise-onboarding/",
+  "telephone": "+2349025141322",
+  "email": "speaktofabsurprise@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Lagos",
+    "addressCountry": "NG"
+  },
+  "sameAs": [
+    "https://www.instagram.com/fabsurprise",
+    "https://www.tiktok.com/@fabsurprise"
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --burgundy:#5A0F1B;
+    --ivory:#F7F2EA;
+    --champagne:#C9B27C;
+    --charcoal:#1E1A18;
+    --taupe:#A69B91;
+    --ink:#3a332f;
+  }
+  *{box-sizing:border-box;}
+  html{overflow-x:hidden;}
+  body{
+    margin:0;
+    overflow-x:hidden;
+    background:#FFFFFF;
+    color:var(--charcoal);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-weight:500;
+    letter-spacing:0.01em;
+    text-wrap:balance;
+    margin:0;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  .page{
+    max-width:480px;
+    margin:0 auto;
+  }
+  @media (min-width:900px){
+    .page{ max-width:1160px; }
+  }
+
+  /* NAV */
+  .page > nav{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 20px;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(90,15,27,0.1);
+  }
+  .logo{font-size:21px;color:var(--burgundy);}
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+  .nav-whatsapp{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    letter-spacing:0.04em;
+    font-weight:600;
+    color:var(--burgundy);
+    border:1px solid var(--burgundy);
+    border-radius:20px;
+    padding:8px 14px;
+    white-space:nowrap;
+    transition:opacity .2s ease;
+  }
+  .nav-whatsapp:hover{opacity:0.7;}
+  .nav-whatsapp svg{flex-shrink:0;}
+  .nav-whatsapp-label{display:none;}
+  @media (min-width:560px){
+    .nav-whatsapp-label{display:inline;}
+  }
+  .menu-btn{display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;}
+  .menu-btn span{width:22px;height:1.5px;background:var(--charcoal);transition:transform .3s ease, opacity .3s ease;}
+  .menu-btn.open span:first-child{transform:translateY(3.25px) rotate(45deg);}
+  .menu-btn.open span:last-child{transform:translateY(-3.25px) rotate(-45deg);}
+
+  /* MENU OVERLAY */
+  .menu-overlay{
+    position:fixed;
+    inset:0;
+    z-index:30;
+    background:var(--charcoal);
+    display:flex;
+    flex-direction:column;
+    padding:20px 20px 40px;
+    overflow-y:auto;
+    transform:translateY(-100%);
+    transition:transform .5s cubic-bezier(.65,0,.35,1);
+  }
+  .menu-overlay.open{transform:translateY(0);}
+  .menu-top{display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+  .menu-overlay .logo{color:var(--ivory);}
+  .menu-close{background:none;border:none;padding:6px;cursor:pointer;position:relative;width:34px;height:34px;}
+  .menu-close span{position:absolute;top:50%;left:50%;width:22px;height:1.5px;background:var(--ivory);}
+  .menu-close span:first-child{transform:translate(-50%,-50%) rotate(45deg);}
+  .menu-close span:last-child{transform:translate(-50%,-50%) rotate(-45deg);}
+  .menu-links{display:flex;flex-direction:column;margin-top:28px;flex-shrink:0;}
+  .menu-link{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:28px;
+    line-height:1.5;
+    color:var(--ivory);
+    opacity:0.85;
+    padding:14px 0;
+    border-bottom:1px solid rgba(247,242,234,0.14);
+    transition:opacity .2s ease;
+  }
+  .menu-link:last-child{border-bottom:none;}
+  .menu-link:hover, .menu-link:active{opacity:1;}
+  .menu-link-num{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--champagne);
+    flex-shrink:0;
+  }
+  .menu-foot{display:flex;flex-direction:column;gap:14px;margin-top:36px;}
+  .menu-foot .btn-primary{width:auto;padding:16px 26px;}
+  .menu-cta{text-decoration:none;}
+  .menu-contact{font-size:13px;color:rgba(247,242,234,0.55);}
+
+  /* HERO */
+  .hero{
+    padding:44px 0 56px;
+    display:flex;
+    flex-direction:column;
+  }
+  .hero-copy{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    padding:0 20px;
+  }
+  .hero h1{
+    font-size:clamp(36px,9.5vw,46px);
+    line-height:1.14;
+    color:var(--charcoal);
+  }
+  .hero p{
+    font-size:16px;
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .hero-ctas{display:flex;flex-direction:column;gap:12px;max-width:340px;}
+  .hero .hero-image-wrap--mobile{
+    margin:28px 0 28px;
+    width:100%;
+  }
+  .hero .hero-image-wrap--desktop{
+    display:none;
+  }
+  @media (min-width:900px){
+    .hero{
+      flex-direction:row;
+      align-items:center;
+      gap:56px;
+      padding:64px 40px 40px;
+    }
+    .hero-copy{
+      flex:0 0 44%;
+      padding:0;
+    }
+    .hero h1{
+      font-size:clamp(38px,4vw,52px);
+    }
+    .hero p{
+      max-width:340px;
+    }
+    .hero-ctas{
+      flex-direction:row;
+      max-width:none;
+    }
+    .hero-ctas .btn{
+      width:auto;
+      white-space:nowrap;
+    }
+    .hero .hero-image-wrap--mobile{
+      display:none;
+    }
+    .hero .hero-image-wrap--desktop{
+      display:block;
+      flex:1 1 56%;
+      align-self:stretch;
+      height:auto;
+      max-height:640px;
+    }
+    .hero .hero-image-wrap--desktop .hero-image{
+      height:100%;
+    }
+  }
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    font-weight:600;
+    padding:18px 28px;
+    border:1px solid var(--burgundy);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:opacity .2s ease;
+    width:100%;
+  }
+  .btn-primary{background:var(--burgundy);color:var(--ivory);}
+  .btn-primary:hover{opacity:0.86;}
+  .btn-outline{background:transparent;color:var(--burgundy);}
+  .btn-outline:hover{opacity:0.6;}
+
+  .hero-image-wrap{
+    width:100%;
+    aspect-ratio:4/5;
+    overflow:hidden;
+    margin-top:4px;
+  }
+  .hero-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:50% 25%;
+    transform:scale(1.08);
+    transition:transform 1.4s cubic-bezier(.22,.61,.36,1);
+  }
+  .hero-image-wrap.in-view .hero-image{
+    transform:scale(1);
+  }
+
+  /* WHO WE ARE */
+  .section{
+    padding:64px 20px;
+  }
+  .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:24px;
+  }
+  .eyebrow-line{width:28px;height:1px;background:var(--champagne);display:block;}
+  .eyebrow-text{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;font-weight:600;color:var(--taupe);}
+  .section h2{
+    font-size:32px;
+    line-height:1.22;
+    color:var(--charcoal);
+    margin-bottom:20px;
+  }
+  .section p{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--ink);
+  }
+
+  /* MOBILE: tighter spacing + type, ~20-30% reduction on repeated rhythm */
+  @media (max-width:899px){
+    .section{ padding:46px 20px; }
+    .eyebrow{ margin-bottom:17px; }
+    .section h2{ margin-bottom:15px; }
+    .section p{ font-size:14.5px; line-height:1.6; }
+    .belief{ padding:52px 20px 6px; }
+    .belief p + p{ margin-top:13px; }
+    .hero{ padding:32px 0 40px; }
+    .hero-copy{ gap:15px; }
+    .hero .hero-image-wrap--mobile{ margin:20px 0 20px; }
+    .method-steps{ margin-top:14px; }
+    .method-final{ margin-top:20px; padding-top:16px; }
+    .possibilities-lines{ margin:20px 0 28px; }
+    .create-intro{ margin-top:28px; padding-top:20px; }
+    .offerings{ margin-top:20px; padding-top:20px; }
+    .offering{ padding:22px 0; }
+    .create-close{ margin-top:6px; padding-top:22px; }
+    .homeward-list{ margin-top:22px; }
+    .homeward-item{ padding:17px 0; }
+    .b2b-list{ margin-top:22px; }
+    .b2b-item{ padding:17px 0; }
+    .mind-entry{ padding:20px 0; }
+  }
+
+  /* SCROLL REVEAL (text/blocks) */
+  .reveal{
+    opacity:1;
+    transform:none;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{
+      opacity:0;
+      transform:translateY(22px);
+      transition:opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
+    }
+    .reveal.in-view{
+      opacity:1;
+      transform:translateY(0);
+    }
+    .hero-image-wrap{
+      opacity:0;
+      transition:opacity 1s ease;
+    }
+    .hero-image-wrap.in-view{
+      opacity:1;
+    }
+  }
+
+  ::selection{background:var(--burgundy);color:var(--ivory);}
+
+  /* OUR VIEW */
+  .belief{
+    background:var(--charcoal);
+    padding:72px 20px 8px;
+  }
+  .belief .eyebrow-text{color:var(--champagne);}
+  .belief h2{color:var(--ivory);font-size:30px;line-height:1.3;}
+  .belief p{color:rgba(247,242,234,0.72);}
+  .belief p + p{margin-top:18px;}
+
+  /* THE PERSON */
+  .person-question{
+    font-size:clamp(28px,7vw,34px);
+    line-height:1.28;
+    color:var(--charcoal);
+  }
+
+  /* WHO IS ON YOUR MIND (editorial, conversational entries) */
+  .mind-list{display:flex;flex-direction:column;}
+  .mind-entry{padding:28px 0;border-bottom:1px solid rgba(90,15,27,0.12);}
+  .mind-entry:first-child{padding-top:0;}
+  .mind-entry:last-child{border-bottom:none;}
+  .mind-kicker{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic;
+    font-size:20px;
+    color:var(--burgundy);
+    margin-bottom:8px;
+  }
+  .mind-body{font-size:15px;line-height:1.75;color:var(--ink);}
+
+  /* THE POSSIBILITIES */
+  .possibilities{background:var(--ivory);}
+  .possibilities-lines{display:flex;flex-direction:column;gap:16px;margin:28px 0 40px;}
+  .possibilities-lines p{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:19px;
+    line-height:1.5;
+    color:var(--charcoal);
+    font-style:italic;
+    margin:0;
+  }
+  .possibilities-lines p.lede{
+    font-style:normal;
+    font-size:22px;
+    color:var(--burgundy);
+  }
+  .categories{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    padding-top:28px;
+    border-top:1px solid rgba(90,15,27,0.15);
+  }
+  .category{
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--taupe);
+  }
+
+  /* WHAT WE CREATE */
+  .create-intro{margin-top:40px;padding-top:28px;border-top:1px solid rgba(90,15,27,0.15);}
+  .create-intro .lede{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:22px;
+    font-style:normal;
+    color:var(--burgundy);
+    line-height:1.4;
+    margin:0 0 10px;
+  }
+  .create-intro p{font-size:15px;line-height:1.7;color:var(--ink);margin:0;}
+
+  .offerings{display:flex;flex-direction:column;margin-top:28px;padding-top:28px;border-top:1px solid rgba(90,15,27,0.15);}
+  .offering{
+    padding:32px 0;
+    border-bottom:1px solid rgba(90,15,27,0.14);
+  }
+  .offering:last-of-type{border-bottom:none;}
+  .offering-num{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:14px;
+    color:var(--champagne);
+    letter-spacing:0.04em;
+  }
+  .offering-name{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:25px;
+    color:var(--charcoal);
+    margin:6px 0 10px;
+    line-height:1.2;
+  }
+  .offerings .offering-line{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic;
+    font-size:17px;
+    line-height:1.55;
+    color:var(--burgundy);
+    margin:0 0 12px;
+  }
+  .offering-plain{
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--charcoal);
+    margin:0 0 10px;
+  }
+  .offering-body{font-size:14.5px;line-height:1.75;color:var(--ink);margin:0;}
+  .offering-for{
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    color:var(--taupe);
+    margin:14px 0 0;
+    font-style:italic;
+  }
+
+  .create-close{
+    margin-top:8px;
+    padding-top:32px;
+    text-align:left;
+  }
+  .create-close p{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic;
+    font-size:18px;
+    line-height:1.6;
+    color:var(--charcoal);
+    max-width:32ch;
+  }
+
+  /* THE METHOD */
+  .method{background:var(--charcoal);}
+  .method .eyebrow-text{color:var(--champagne);}
+  .method h2{color:var(--ivory);}
+  .method-steps{display:flex;flex-direction:column;margin-top:20px;}
+  .method-step{
+    display:flex;
+    gap:20px;
+    padding:14px 0;
+  }
+  .method-step:first-child{padding-top:0;}
+  .method-step:last-child{padding-bottom:0;}
+  .method-num-col{
+    flex-shrink:0;
+    width:34px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .method-num{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:16px;
+    color:var(--charcoal);
+    background:var(--champagne);
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .method-thread{
+    width:1px;
+    height:20px;
+    flex:0 0 auto;
+    background:rgba(201,178,124,0.3);
+    margin-top:6px;
+  }
+  .method-step:last-child .method-thread{display:none;}
+  .method-text{padding-top:5px;}
+  .method-text h3{font-size:18px;color:var(--ivory);margin-bottom:5px;line-height:1.3;}
+  .method-text p{font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);}
+  .method-final{
+    margin-top:28px;
+    padding-top:22px;
+    border-top:1px solid rgba(247,242,234,0.15);
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic;
+    font-size:20px;
+    color:var(--ivory);
+    text-align:center;
+  }
+
+  /* ACCORDION (mobile only — Method + What We Create) */
+  .accordion-item{border-bottom:1px solid rgba(247,242,234,0.14);}
+  .accordion-item:first-child{border-top:1px solid rgba(247,242,234,0.14);}
+  .accordion-trigger{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    width:100%;
+    background:none;
+    border:none;
+    padding:16px 0;
+    cursor:pointer;
+    text-align:left;
+    color:inherit;
+    font-family:'Cormorant Garamond',Georgia,serif;
+  }
+  .accordion-trigger .accordion-num{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--champagne);
+    flex-shrink:0;
+    width:20px;
+  }
+  .accordion-trigger .accordion-title{
+    flex:1 1 auto;
+    font-size:18px;
+    line-height:1.3;
+    color:var(--ivory);
+  }
+  .accordion-chevron{
+    flex-shrink:0;
+    width:11px;
+    height:11px;
+    border-right:1.5px solid var(--champagne);
+    border-bottom:1.5px solid var(--champagne);
+    transform:rotate(45deg);
+    transition:transform .3s ease;
+    margin-top:-3px;
+  }
+  .accordion-item.is-open .accordion-chevron{transform:rotate(-135deg);margin-top:3px;}
+  .accordion-panel{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .accordion-panel-inner{padding:0 0 18px 34px;}
+  .accordion-item.is-open .accordion-panel-inner{padding-top:0;}
+
+  /* On mobile: hide the always-expanded layout, show accordion. Reverse on desktop. */
+  .method-steps, .offerings{ display:none; }
+  .method-accordion, .offerings-accordion{ display:block; }
+  @media (min-width:900px){
+    .method-steps, .offerings{ display:flex; }
+    .method-accordion, .offerings-accordion{ display:none; }
+  }
+
+  /* Light-theme accordion variant for What We Create */
+  .offerings-accordion .accordion-item{border-bottom:1px solid rgba(90,15,27,0.14);}
+  .offerings-accordion .accordion-item:first-child{border-top:1px solid rgba(90,15,27,0.14);}
+  .offerings-accordion .accordion-trigger .accordion-title{color:var(--charcoal);font-size:19px;}
+  .offerings-accordion .accordion-chevron{border-color:var(--burgundy);}
+  .offerings-accordion .offering-line{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic;
+    font-size:16px;
+    line-height:1.5;
+    color:var(--burgundy);
+    margin:0 0 10px;
+  }
+  .offerings-accordion .offering-body{font-size:14px;line-height:1.7;color:var(--ink);margin:0;}
+
+  /* THE STORIES — peek carousel */
+  .stories-section{background:var(--ivory);}
+  .stories-section .eyebrow-text{color:var(--burgundy);}
+  .stories-section h2{color:var(--charcoal);}
+  .stories-section > p.reveal{color:var(--ink);}
+  .carousel{
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    gap:0;
+    padding:8px 0 4px;
+    background:var(--ivory);
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .carousel::-webkit-scrollbar{display:none;}
+  .story-card{
+    flex:0 0 auto;
+    width:100%;
+    max-width:480px;
+    padding:0 20px;
+    scroll-snap-align:start;
+  }
+  @media (min-width:900px){
+    .carousel{ gap:28px; padding:8px 40px 4px; }
+    .story-card{ width:340px; max-width:340px; padding:0; }
+  }
+  .story-image-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/5;
+    overflow:hidden;
+    background:#e8e1d5;
+  }
+  .story-counter{
+    position:absolute;
+    top:14px;
+    left:14px;
+    z-index:2;
+    font-size:11px;
+    letter-spacing:0.1em;
+    font-family:'Inter',sans-serif;
+    color:rgba(247,242,234,0.9);
+    background:rgba(30,26,24,0.45);
+    padding:5px 9px;
+    border-radius:2px;
+  }
+  .story-card .story-tag{
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--burgundy);
+    margin:14px 0 6px;
+    display:block;
+  }
+  .story-card h3{font-size:19px;line-height:1.3;color:var(--charcoal);margin:14px 0 4px;}
+  .story-card .story-caption{
+    font-size:13px;
+    line-height:1.6;
+    color:var(--ink);
+    margin-top:6px;
+  }
+  .carousel-meta{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .carousel-dots{display:flex;gap:6px;}
+  .carousel-dot{width:5px;height:5px;border-radius:50%;background:rgba(58,51,47,0.25);}
+  .carousel-dot.is-active{background:var(--burgundy);width:16px;border-radius:3px;}
+  .carousel-swipe-label{
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--taupe);
+  }
+
+  /* SENDING IT HOME (diaspora + season) */
+  .homeward{background:var(--charcoal);}
+  .homeward .eyebrow-text{color:var(--champagne);}
+  .homeward h2{color:var(--ivory);}
+  .homeward > p.reveal{color:rgba(247,242,234,0.72);}
+  .homeward-list{display:flex;flex-direction:column;gap:0;margin-top:32px;}
+  .homeward-item{
+    padding:24px 0;
+    border-bottom:1px solid rgba(247,242,234,0.14);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .homeward-item:last-child{border-bottom:none;}
+  .homeward-item h3{font-size:19px;color:var(--ivory);line-height:1.3;}
+  .homeward-item p{font-size:14.5px;line-height:1.7;color:rgba(247,242,234,0.68);}
+
+  /* FOR COMPANIES & BRANDS */
+  .b2b{background:var(--ivory);}
+  .b2b h2{font-size:36px;}
+  .b2b-list{display:flex;flex-direction:column;gap:0;margin-top:32px;}
+  .b2b-item{
+    padding:24px 0;
+    border-bottom:1px solid rgba(90,15,27,0.14);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .b2b-item:last-child{border-bottom:none;}
+  .b2b-item h3{font-size:19px;color:var(--charcoal);line-height:1.3;}
+  .b2b-item p{font-size:14.5px;line-height:1.7;color:var(--ink);}
+
+  /* THE RELATIONSHIP (FABmily) */
+  .relationship{
+    background:var(--charcoal);
+    text-align:left;
+  }
+  .relationship .eyebrow-text{color:var(--champagne);}
+  .relationship h2{color:var(--ivory);font-size:28px;}
+  .relationship p{color:rgba(247,242,234,0.72);}
+  .relationship .relationship-mark{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic;
+    font-size:20px;
+    color:var(--champagne);
+    margin-top:24px;
+  }
+
+  /* FABmily journey trail */
+  .journey-trail{
+    display:flex;
+    flex-direction:column;
+    margin-top:32px;
+    padding-top:28px;
+    border-top:1px solid rgba(247,242,234,0.14);
+  }
+  .journey-trail-label{
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--taupe);
+    margin-bottom:20px;
+  }
+  .journey-steps{
+    display:flex;
+    flex-direction:column;
+  }
+  .journey-step{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+  }
+  .journey-dot-col{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    flex-shrink:0;
+  }
+  .journey-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:var(--champagne);
+    flex-shrink:0;
+  }
+  .journey-step.is-final .journey-dot{
+    background:var(--ivory);
+    box-shadow:0 0 0 3px rgba(247,242,234,0.18);
+  }
+  .journey-line{
+    width:1px;
+    flex:1 1 auto;
+    min-height:22px;
+    background:rgba(247,242,234,0.22);
+    margin:4px 0;
+  }
+  .journey-step:last-child .journey-line{display:none;}
+  .journey-text{padding-bottom:22px;}
+  .journey-step:last-child .journey-text{padding-bottom:0;}
+  .journey-text h4{
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ivory);
+    margin:0 0 3px;
+    letter-spacing:0.01em;
+  }
+  .journey-step.is-final .journey-text h4{color:var(--champagne);}
+  .journey-text p{
+    font-size:12.5px;
+    line-height:1.55;
+    color:rgba(247,242,234,0.6);
+    margin:0;
+  }
+  @media (min-width:900px){
+    .journey-steps{ flex-direction:row; }
+    .journey-step{ flex-direction:column; align-items:flex-start; flex:1 1 0; }
+    .journey-dot-col{ flex-direction:row; align-items:center; width:100%; margin-bottom:14px; }
+    .journey-line{ width:auto; flex:1 1 auto; height:1px; min-height:0; margin:0 0 0 8px; }
+    .journey-text{ padding-bottom:0; padding-right:16px; }
+  }
+
+  /* IN THEIR WORDS (testimonials) */
+  .words{
+    position:relative;
+    overflow:hidden;
+    background:var(--charcoal);
+    width:100vw;
+    left:50%;
+    right:50%;
+    margin-left:-50vw;
+    margin-right:-50vw;
+    padding:0;
+    aspect-ratio:4/5;
+    min-height:420px;
+    max-height:620px;
+    display:flex;
+    flex-direction:column;
+  }
+  .words-bg{
+    position:absolute;
+    inset:0;
+  }
+  .words-bg-layer{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .8s ease, visibility 0s linear .8s;
+  }
+  .words-bg-layer.is-active{
+    opacity:1;
+    visibility:visible;
+    transition:opacity .8s ease, visibility 0s linear 0s;
+  }
+  .words-bg-layer img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .words-scrim{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(20,17,15,0.78) 0%, rgba(20,17,15,0.3) 32%, rgba(20,17,15,0.42) 62%, rgba(20,17,15,0.92) 100%);
+  }
+  .words-content{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:480px;
+    margin:0 auto;
+    padding:56px 20px 40px;
+    flex:1 1 auto;
+    display:flex;
+    flex-direction:column;
+  }
+  .words-content .eyebrow-line{background:var(--champagne);}
+  .words-content .eyebrow-text{color:var(--champagne);}
+  .words-content h2{color:var(--ivory);}
+  .words-copy{
+    margin-top:auto;
+    padding-top:40px;
+    position:relative;
+  }
+  .words-copy-item{
+    display:none;
+  }
+  .words-copy-item.is-active{
+    display:block;
+  }
+  .words-quote{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-style:italic;
+    font-size:19px;
+    line-height:1.5;
+    color:var(--ivory);
+    margin:0 0 12px;
+    max-width:44ch;
+  }
+  .words-attribution{
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--champagne);
+  }
+  .words-dots{
+    display:flex;
+    gap:8px;
+    margin-top:22px;
+  }
+  .words-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:rgba(247,242,234,0.32);
+    border:none;
+    padding:0;
+    cursor:pointer;
+  }
+  .words-dot.is-active{
+    background:var(--champagne);
+    width:18px;
+    border-radius:3px;
+    transition:width .3s ease, background .3s ease;
+  }
+  @media (min-width:900px){
+    .words{ aspect-ratio:21/9; min-height:460px; max-height:620px; }
+    .words-content{ max-width:1160px; padding:64px 40px 48px; }
+    .words-quote{ font-size:23px; }
+  }
+
+  /* THE INVITATION */
+  .invitation{
+    padding:80px 20px 64px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:24px;
+  }
+  .invitation h2{font-size:clamp(30px,7.5vw,36px);line-height:1.28;color:var(--charcoal);}
+  .invitation p{font-size:15px;line-height:1.7;color:var(--ink);max-width:34ch;}
+  .invitation .btn-primary{max-width:320px;}
+
+  footer{
+    padding:32px 20px 40px;
+    border-top:1px solid rgba(90,15,27,0.1);
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  footer .logo{font-size:16px;color:var(--burgundy);}
+  footer .footer-tag{font-size:12px;color:var(--taupe);margin:2px 0 0;}
+  .footer-cols{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+    padding-top:14px;
+    border-top:1px solid rgba(90,15,27,0.08);
+  }
+  .footer-col-label{
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--taupe);
+    margin-bottom:10px;
+  }
+  .footer-nav{display:flex;flex-direction:column;gap:9px;}
+  .footer-nav a{font-size:13px;letter-spacing:0.02em;color:var(--ink);}
+  .footer-nav a.footer-cta{color:var(--burgundy);font-weight:600;}
+  .footer-contact{display:flex;flex-direction:column;gap:9px;}
+  .footer-contact a, .footer-contact span{font-size:13px;letter-spacing:0.02em;color:var(--ink);}
+  .footer-social{display:flex;gap:16px;}
+  .footer-social a{font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--taupe);}
+  .footer-bottom{display:flex;flex-direction:column;gap:4px;padding-top:14px;border-top:1px solid rgba(90,15,27,0.08);}
+  footer p{font-size:12px;color:var(--taupe);margin:0;}
+  .footer-bottom .footer-location{font-size:11px;}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <nav>
+    <div class="logo display">Fabsurprise</div>
+    <div class="nav-actions">
+      <a class="nav-whatsapp" data-cta="whatsapp_nav" href="https://wa.me/2349025141322?text=Hi%2C%20I%27d%20like%20to%20design%20a%20moment%20with%20Fabsurprise." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3z"/><path d="M8.5 9.5c0 3.5 2.5 6 6 6 .8 0 1-.3 1-1v-1.2l-2.2-.8-.8 1a5 5 0 0 1-3-3l1-.8-.8-2.2H8.5c0 .3 0 .6 0 1z" fill="currentColor" stroke="none"/></svg>
+        <span class="nav-whatsapp-label">WhatsApp</span>
+      </a>
+      <button class="menu-btn" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-top">
+      <div class="logo display">Fabsurprise</div>
+      <button class="menu-close" id="menuClose" aria-label="Close menu">
+        <span></span><span></span>
+      </button>
+    </div>
+    <nav class="menu-links">
+      <a class="menu-link" href="#belief"><span class="menu-link-num">01</span>Our View</a>
+      <a class="menu-link" href="#possibilities"><span class="menu-link-num">02</span>What We Create</a>
+      <a class="menu-link" href="#stories"><span class="menu-link-num">03</span>The Stories</a>
+      <a class="menu-link" href="#companies"><span class="menu-link-num">04</span>For Companies &amp; Brands</a>
+      <a class="menu-link" href="#homeward"><span class="menu-link-num">05</span>Sending It Home</a>
+      <a class="menu-link" href="#relationship"><span class="menu-link-num">06</span>FABmily</a>
+    </nav>
+    <div class="menu-foot">
+      <a class="btn btn-primary menu-cta" data-cta="design_moment_menu" href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html" target="_blank" rel="noopener">Design Your Moment</a>
+      <p class="menu-contact">Lagos, Nigeria</p>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <h1 class="display reveal">Someone matters to you.<br>Let's make sure they feel it.</h1>
+      <div class="hero-image-wrap hero-image-wrap--mobile" style="aspect-ratio:1717/1597;">
+        <img class="hero-image" src="img/family-reaction-reveal-crop.jpg" alt="" style="object-position:50% 50%;" loading="eager" fetchpriority="high">
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:12px;">
+        <p style="margin:0;">Some moments come with a date on the calendar. Others begin with someone on your mind and the thought that you want to do something for them.</p>
+        <p style="margin:0;">From that thought, we create the moment around them.</p>
+      </div>
+      <div class="hero-ctas reveal">
+        <a class="btn btn-primary" data-cta="design_moment_hero" href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html" target="_blank" rel="noopener">Design Your Moment</a>
+        <a class="btn btn-outline" href="#possibilities">See What We Create</a>
+      </div>
+    </div>
+    <div class="hero-image-wrap hero-image-wrap--desktop" style="aspect-ratio:1717/1597;">
+      <img class="hero-image" src="img/family-reaction-reveal-crop.jpg" alt="" style="object-position:50% 50%;" loading="eager" fetchpriority="high">
+    </div>
+  </section>
+
+  <!-- POINT OF VIEW -->
+  <section class="section belief" id="belief">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-line" style="background:var(--champagne);"></span>
+      <span class="eyebrow-text">Our View</span>
+    </div>
+    <h2 class="display reveal">There is no one way to celebrate.</h2>
+    <p class="reveal">What makes a moment special is not how much you spend or how elaborate it is. It is how well it reflects the person, the relationship, or the reason behind it.</p>
+    <p class="reveal">That is why we don't start with a package. We start with what matters.</p>
+  </section>
+
+  <!-- THE FABSURPRISE METHOD (moved up: reduces uncertainty before the ask) -->
+  <section class="section method" style="padding-top:0;">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-line" style="background:var(--champagne);"></span>
+      <span class="eyebrow-text">The Fabsurprise Method</span>
+    </div>
+
+    <div class="method-steps" style="margin-top:16px;">
+      <div class="method-step reveal">
+        <div class="method-num-col">
+          <span class="method-num">01</span>
+          <span class="method-thread"></span>
+        </div>
+        <div class="method-text">
+          <h3 class="display">Start with the reason.</h3>
+          <p>You tell us what you're thinking about, who it's for, what you want to celebrate and anything you already have in mind. You don't need to have the whole idea figured out.</p>
+        </div>
+      </div>
+      <div class="method-step reveal">
+        <div class="method-num-col">
+          <span class="method-num">02</span>
+          <span class="method-thread"></span>
+        </div>
+        <div class="method-text">
+          <h3 class="display">We get to know the moment.</h3>
+          <p>We ask the right questions so we understand the person, the relationship, the occasion or reason, the setting and what you want the moment to say.</p>
+        </div>
+      </div>
+      <div class="method-step reveal">
+        <div class="method-num-col">
+          <span class="method-num">03</span>
+          <span class="method-thread"></span>
+        </div>
+        <div class="method-text">
+          <h3 class="display">We create the idea.</h3>
+          <p>We take what we've learned and develop the right concept for the moment. Nothing is pulled from a standard catalogue simply because it's available.</p>
+        </div>
+      </div>
+      <div class="method-step reveal">
+        <div class="method-num-col">
+          <span class="method-num">04</span>
+          <span class="method-thread"></span>
+        </div>
+        <div class="method-text">
+          <h3 class="display">We handle the details.</h3>
+          <p>Once the direction is agreed, we bring the pieces together, coordinate the people involved and manage the details required to make it happen.</p>
+        </div>
+      </div>
+      <div class="method-step reveal">
+        <div class="method-num-col">
+          <span class="method-num">05</span>
+          <span class="method-thread"></span>
+        </div>
+        <div class="method-text">
+          <h3 class="display">You experience the moment.</h3>
+          <p>You don't have to carry the logistics. You get to be present for the part that matters and see the idea become real.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-accordion reveal" style="margin-top:20px;">
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">01</span>
+          <span class="accordion-title display">Start with the reason.</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">You tell us what you're thinking about, who it's for, what you want to celebrate and anything you already have in mind. You don't need to have the whole idea figured out.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">02</span>
+          <span class="accordion-title display">We get to know the moment.</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">We ask the right questions so we understand the person, the relationship, the occasion or reason, the setting and what you want the moment to say.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">03</span>
+          <span class="accordion-title display">We create the idea.</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">We take what we've learned and develop the right concept for the moment. Nothing is pulled from a standard catalogue simply because it's available.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">04</span>
+          <span class="accordion-title display">We handle the details.</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">Once the direction is agreed, we bring the pieces together, coordinate the people involved and manage the details required to make it happen.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">05</span>
+          <span class="accordion-title display">You experience the moment.</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">You don't have to carry the logistics. You get to be present for the part that matters and see the idea become real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-image-wrap reveal" style="aspect-ratio:4/5;max-width:280px;margin:32px 0 8px;">
+      <img class="hero-image" src="img/bts-gift-station.jpg" alt="" style="object-position:50% 25%;" loading="lazy">
+    </div>
+    <p class="reveal" style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:14px;color:rgba(247,242,234,0.55);margin:10px 0 0;">Every gift, placed by hand.</p>
+
+    <div class="reveal" style="margin-top:28px;">
+      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:16px;color:rgba(247,242,234,0.6);margin:0 0 16px;">Every celebration is quoted to what it actually needs — not a fixed package.</p>
+      <a class="btn btn-primary" style="border-color:var(--champagne);" href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-onboarding.html" target="_blank" rel="noopener">Start Your Celebration</a>
+    </div>
+  </section>
+
+  <!-- WHAT WE CREATE -->
+  <section class="section possibilities" id="possibilities">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-line"></span>
+      <span class="eyebrow-text">What We Create</span>
+    </div>
+    <div class="hero-image-wrap reveal" style="aspect-ratio:4/5;max-width:240px;margin:0 0 20px;">
+      <img class="hero-image" src="img/pink-balloon-install.jpg" alt="" style="object-position:50% 40%;" loading="lazy">
+    </div>
+    <h2 class="display reveal">Start with the reason. We create around it.</h2>
+    <div class="reveal" style="display:flex;flex-direction:column;gap:14px;margin-bottom:0;">
+      <p style="margin:0;">Some moments arrive in a box. Some happen in a room. Some involve a question, a table, a surprise or a gathering.</p>
+      <p style="margin:0;">Whatever the moment calls for, we create around the reason behind it.</p>
+    </div>
+
+    <div class="offerings">
+      <div class="offering reveal">
+        <span class="offering-num">01</span>
+        <h3 class="offering-name">The Gesture</h3>
+        <p class="offering-line">Gifts that say something without needing a long explanation.</p>
+        <p class="offering-body">Curated gifts, hampers, keepsakes and thoughtful surprises created around the person receiving them.</p>
+      </div>
+
+      <div class="offering reveal">
+        <span class="offering-num">02</span>
+        <h3 class="offering-name">The Surprise</h3>
+        <p class="offering-line">The moment they did not see coming.</p>
+        <p class="offering-body">Room transformations, surprise reveals, planned entrances and unexpected gestures, handled from setup to reveal.</p>
+      </div>
+
+      <div class="offering reveal">
+        <span class="offering-num">03</span>
+        <h3 class="offering-name">The Celebration</h3>
+        <p class="offering-line">When the moment deserves more than a gift.</p>
+        <p class="offering-body">Birthdays, weddings, new beginnings, family milestones, intimate gatherings and celebrations of all kinds.</p>
+      </div>
+
+      <div class="offering reveal">
+        <span class="offering-num">04</span>
+        <h3 class="offering-name">The Question</h3>
+        <p class="offering-line">One question. One moment. Everything around it considered.</p>
+        <p class="offering-body">Proposals and proposal experiences created around the couple, the story and the way you want to ask.</p>
+      </div>
+
+      <div class="offering reveal">
+        <span class="offering-num">05</span>
+        <h3 class="offering-name">The Romance</h3>
+        <p class="offering-line">For the relationship that deserves to be celebrated beyond the calendar.</p>
+        <p class="offering-body">Anniversaries, romantic dinners, vow renewals and thoughtful gestures created around the relationship.</p>
+      </div>
+
+      <div class="offering reveal">
+        <span class="offering-num">06</span>
+        <h3 class="offering-name">The Season</h3>
+        <p class="offering-line">Some celebrations return every year.</p>
+        <p class="offering-body">Christmas, end of year gifting, festive celebrations and corporate holiday moments.</p>
+      </div>
+    </div>
+
+    <div class="offerings-accordion reveal" style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(90,15,27,0.15);">
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">01</span>
+          <span class="accordion-title display">The Gesture</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p class="offering-line">Gifts that say something without needing a long explanation.</p>
+            <p class="offering-body">Curated gifts, hampers, keepsakes and thoughtful surprises created around the person receiving them.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">02</span>
+          <span class="accordion-title display">The Surprise</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p class="offering-line">The moment they did not see coming.</p>
+            <p class="offering-body">Room transformations, surprise reveals, planned entrances and unexpected gestures, handled from setup to reveal.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">03</span>
+          <span class="accordion-title display">The Celebration</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p class="offering-line">When the moment deserves more than a gift.</p>
+            <p class="offering-body">Birthdays, weddings, new beginnings, family milestones, intimate gatherings and celebrations of all kinds.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">04</span>
+          <span class="accordion-title display">The Question</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p class="offering-line">One question. One moment. Everything around it considered.</p>
+            <p class="offering-body">Proposals and proposal experiences created around the couple, the story and the way you want to ask.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">05</span>
+          <span class="accordion-title display">The Romance</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p class="offering-line">For the relationship that deserves to be celebrated beyond the calendar.</p>
+            <p class="offering-body">Anniversaries, romantic dinners, vow renewals and thoughtful gestures created around the relationship.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" type="button" aria-expanded="false">
+          <span class="accordion-num">06</span>
+          <span class="accordion-title display">The Season</span>
+          <span class="accordion-chevron"></span>
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner">
+            <p class="offering-line">Some celebrations return every year.</p>
+            <p class="offering-body">Christmas, end of year gifting, festive celebrations and corporate holiday moments.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="create-close reveal">
+      <p>Not seeing your moment here? Tell us what you have in mind.</p>
+    </div>
+
+    <div class="reveal" style="margin-top:24px;">
+      <a class="btn btn-primary" data-cta="design_moment_method" href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html" target="_blank" rel="noopener">Design Your Moment</a>
+    </div>
+  </section>
+
+  <!-- SENDING IT HOME (diaspora + Christmas/season) -->
+  <section class="section homeward" id="homeward" style="padding-bottom:40px;">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-line" style="background:var(--champagne);"></span>
+      <span class="eyebrow-text">Sending It Home</span>
+    </div>
+    <h2 class="display reveal">When you can't be there, your thought still can.</h2>
+    <p class="reveal" style="font-size:12px;letter-spacing:0.04em;color:var(--champagne);margin-top:8px;">For those celebrating from abroad.</p>
+    <div class="reveal" style="display:flex;flex-direction:column;gap:14px;margin-top:16px;">
+      <p style="margin:0;color:rgba(247,242,234,0.86);">Distance shouldn't mean missing the moments that matter.</p>
+      <p style="margin:0;color:rgba(247,242,234,0.86);">Whether it's a birthday, anniversary, Christmas, a surprise or simply a reason to remind someone they're loved, we help you celebrate from wherever you are.</p>
+      <p style="margin:0;color:rgba(247,242,234,0.86);">You tell us who you're thinking of and what you have in mind. We take care of the rest here.</p>
+    </div>
+
+    <div class="reveal" style="margin-top:26px;">
+      <a class="btn btn-outline" style="border-color:var(--champagne);color:var(--champagne);" data-cta="celebrate_from_afar" href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html" target="_blank" rel="noopener">Celebrate From Afar</a>
+    </div>
+  </section>
+
+  <!-- THE STORIES: horizontal peek carousel -->
+  <section class="section stories-section" id="stories" style="padding-top:40px;">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-line" style="background:var(--champagne);"></span>
+      <span class="eyebrow-text">The Stories</span>
+    </div>
+    <h2 class="display reveal" style="margin-bottom:16px;">The moments we've been trusted to create.</h2>
+    <p class="reveal">A look at some of the celebrations, surprises and gestures we've brought to life.</p>
+  </section>
+
+  <div class="carousel reveal" id="storiesCarousel">
+    <div class="story-card">
+      <div class="story-image-wrap">
+        <span class="story-counter">01 / 05</span>
+        <img class="hero-image" src="img/christmas-hamper-executive-gifting.jpg" alt="" style="transform:none;width:100%;height:100%;object-fit:cover;object-position:50% 50%;" loading="lazy">
+      </div>
+      <h3 class="display">Two Hampers, Every Detail Considered</h3>
+      <p class="story-caption">A client wanted to gift top executives for Christmas. We curated two luxury hampers for the occasion.</p>
+    </div>
+
+    <div class="story-card">
+      <div class="story-image-wrap">
+        <span class="story-counter">02 / 05</span>
+        <img class="hero-image" src="img/proposal-ocean-heart-arch.jpg" alt="" style="transform:none;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" loading="lazy">
+      </div>
+      <h3 class="display">A Rooftop, A Question</h3>
+      <p class="story-caption">A floral heart arch, styled and built overlooking the water, for the moment someone asked.</p>
+    </div>
+
+    <div class="story-card">
+      <div class="story-image-wrap">
+        <span class="story-counter">03 / 05</span>
+        <img class="hero-image" src="img/blush-soiree-tablescape.jpg" alt="" style="transform:none;width:100%;height:100%;object-fit:cover;object-position:50% 40%;" loading="lazy">
+      </div>
+      <h3 class="display">Ummi's Blush Soirée</h3>
+      <p class="story-caption">A full room, tablescape and styling built in blush and gold for a birthday dinner.</p>
+    </div>
+
+    <div class="story-card">
+      <div class="story-image-wrap">
+        <span class="story-counter">04 / 05</span>
+        <img class="hero-image" src="img/anniversary-gifting-branded.jpg" alt="" style="transform:none;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" loading="lazy">
+      </div>
+      <h3 class="display">Sourced, Styled, Delivered</h3>
+      <p class="story-caption">A curated gift table, sourced and put together end to end, down to the personalised balloon.</p>
+    </div>
+
+    <div class="story-card">
+      <div class="story-image-wrap">
+        <span class="story-counter">05 / 05</span>
+        <img class="hero-image" src="img/surprise-violin-serenade.jpg" alt="" style="transform:none;width:100%;height:100%;object-fit:cover;object-position:50% 25%;" loading="lazy">
+      </div>
+      <h3 class="display">A Violinist at the Door</h3>
+      <p class="story-caption">A live serenade we arranged to walk in mid celebration, timed for the exact moment of surprise.</p>
+    </div>
+  </div>
+
+  <section class="section stories-section" style="padding-top:24px;">
+    <div class="carousel-meta reveal">
+      <div class="carousel-dots" id="storiesDots">
+        <span class="carousel-dot is-active"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+      </div>
+      <span class="carousel-swipe-label" id="storiesLabel">1 / 5 — Swipe →</span>
+    </div>
+    <div class="reveal" style="margin-top:24px;">
+      <a class="btn btn-outline" href="https://www.instagram.com/fabsurprise" target="_blank" rel="noopener">See More Moments</a>
+    </div>
+  </section>
+
+  <!-- FOR COMPANIES & BRANDS -->
+  <section class="section b2b" id="companies">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-line"></span>
+      <span class="eyebrow-text">For Companies &amp; Brands</span>
+    </div>
+    <h2 class="display reveal" style="margin-bottom:16px;">Recognition should feel personal.</h2>
+    <p class="reveal">We create gifting, celebrations and experiences for employees, clients, partners and audiences, with the same attention we bring to every personal celebration.</p>
+
+    <div class="hero-image-wrap reveal" style="aspect-ratio:4/3;margin:20px 0 4px;">
+      <img class="hero-image" src="img/corporate-fincra-bags.jpg" alt="" style="object-position:50% 50%;" loading="lazy">
+    </div>
+
+    <div class="b2b-list">
+      <div class="b2b-item reveal">
+        <h3 class="display">For your people</h3>
+        <p>Employee appreciation, executive gifting, birthdays, work anniversaries, team celebrations, family days and end of year moments.</p>
+      </div>
+      <div class="b2b-item reveal">
+        <h3 class="display">For your clients &amp; partners</h3>
+        <p>Gifting and experiences designed to strengthen relationships, mark important moments and show people they are valued.</p>
+      </div>
+      <div class="b2b-item reveal">
+        <h3 class="display">For your audience</h3>
+        <p>Brand experiences, product moments, activations and bespoke celebrations created for the people you want to reach.</p>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:20px;">
+      <a class="btn btn-outline" data-cta="enquire_company" href="https://wa.me/2349025141322?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20corporate%20gifting%20for%20my%20company." target="_blank" rel="noopener">Enquire for Your Company</a>
+    </div>
+  </section>
+
+  <!-- FABmily -->
+  <section class="section relationship" id="relationship">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-line" style="background:var(--champagne);"></span>
+      <span class="eyebrow-text">FABmily</span>
+    </div>
+    <h2 class="display reveal">The celebration ends. The relationship doesn't have to.</h2>
+    <p class="reveal">Some of the people we create for become part of something that continues beyond one celebration.</p>
+    <p class="reveal">FABmily is our way of staying connected with people who have trusted us with moments that matter.</p>
+    <p class="relationship-mark reveal">Welcome to FABmily.</p>
+
+    <div class="journey-trail reveal">
+      <p class="journey-trail-label">How you get here</p>
+      <div class="journey-steps">
+        <div class="journey-step">
+          <div class="journey-dot-col">
+            <span class="journey-dot"></span>
+            <span class="journey-line"></span>
+          </div>
+          <div class="journey-text">
+            <h4>Design Your Moment</h4>
+            <p>You tell us who it's for and what you have in mind.</p>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="journey-dot-col">
+            <span class="journey-dot"></span>
+            <span class="journey-line"></span>
+          </div>
+          <div class="journey-text">
+            <h4>Consultation &amp; Quotation</h4>
+            <p>We shape the idea together and agree the details.</p>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="journey-dot-col">
+            <span class="journey-dot"></span>
+            <span class="journey-line"></span>
+          </div>
+          <div class="journey-text">
+            <h4>Celebration Journey</h4>
+            <p>We handle the details while you stay updated, right up to the moment itself.</p>
+          </div>
+        </div>
+        <div class="journey-step is-final">
+          <div class="journey-dot-col">
+            <span class="journey-dot"></span>
+          </div>
+          <div class="journey-text">
+            <h4>FABmily</h4>
+            <p>The celebration ends. You stay part of ours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IN THEIR WORDS -->
+  <section class="words" id="words">
+    <div class="words-bg" id="wordsBg">
+      <div class="words-bg-layer is-active"><img src="img/sfbeauty-yellow-package.jpg" alt="" loading="eager" style="object-position:50% 20%;"></div>
+      <div class="words-bg-layer"><img src="img/tunmtunm-benz-reaction.jpg" alt="" loading="eager" style="object-position:50% 20%;"></div>
+      <div class="words-bg-layer"><img src="img/otunba-package.jpg" alt="" loading="eager" style="object-position:35% 65%;"></div>
+      <div class="words-bg-layer"><img src="img/joy-money-bouquet.jpg" alt="" loading="eager" style="object-position:50% 30%;"></div>
+      <div class="words-bg-layer"><img src="img/doyin-civil-wedding.jpg" alt="" loading="eager" style="object-position:50% 35%;"></div>
+      <div class="words-bg-layer"><img src="img/sammy-ezeh-giftbox.jpg" alt="" loading="eager" style="object-position:50% 15%;"></div>
+      <div class="words-bg-layer"><img src="img/becky-stressrelief.jpg" alt="" loading="eager" style="object-position:50% 25%;"></div>
+      <div class="words-bg-layer"><img src="img/juliet-baby-bundle.jpg" alt="" loading="eager" style="object-position:50% 20%;"></div>
+      <div class="words-bg-layer"><img src="img/benz-70th-birthday.jpg" alt="" loading="eager" style="object-position:50% 15%;"></div>
+      <div class="words-bg-layer"><img src="img/football-cake.jpg" alt="" loading="eager" style="object-position:50% 15%;"></div>
+      <div class="words-scrim"></div>
+    </div>
+
+    <div class="words-content">
+      <div class="eyebrow reveal">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">In Their Words</span>
+      </div>
+      <h2 class="display reveal">People we've had the honour of celebrating.</h2>
+
+      <div class="words-copy" id="wordsCopy">
+        <div class="words-copy-item is-active">
+          <p class="words-quote">Early morning surprise from hubby. I didn't even see it coming at all. @fabsurprise did that.</p>
+          <p class="words-attribution">Honourable</p>
+        </div>
+        <div class="words-copy-item">
+          <p class="words-quote">Fab, you again... you delivered number 1, no 2 and number 3. You and my husband know how to get me, thank you.</p>
+          <p class="words-attribution">Tunmtunm</p>
+        </div>
+        <div class="words-copy-item">
+          <p class="words-quote">I would say you are one of the very few Nigerian vendors I have patronized that has given this level of excellent service.</p>
+          <p class="words-attribution">Otunba</p>
+        </div>
+        <div class="words-copy-item">
+          <p class="words-quote">If 20% of Nigerian vendors are like you, doing business with Nigerians for no bad reach as it dey. God bless you, I'm super grateful.</p>
+          <p class="words-attribution">Joy Chineye</p>
+        </div>
+        <div class="words-copy-item">
+          <p class="words-quote">Thank you so much for this beautiful decor. Seriously, am so emotional right now. Thanks a lot, fabsurprise, you're the best.</p>
+          <p class="words-attribution">Doyin</p>
+        </div>
+        <div class="words-copy-item">
+          <p class="words-quote">Thank you so much for delivering with excellence, my own box was wonderful and filled with love. Thank you, the colours, the names, everything was beautiful.</p>
+          <p class="words-attribution">Sammy</p>
+        </div>
+        <div class="words-copy-item">
+          <p class="words-quote">Thank you for always coming through and for being such an amazing part of so many special moments in my life. Your kindness, professionalism and consistency over the years are a big reason why I will always choose and trust you.</p>
+          <p class="words-attribution">Becky</p>
+        </div>
+        <div class="words-copy-item">
+          <p class="words-quote">Thank you so much for everything. Yes, they loved it so much. You always outdo yourself. God bless you.</p>
+          <p class="words-attribution">Juliet</p>
+        </div>
+        <div class="words-copy-item">
+          <p class="words-quote">Thank you sooo much for an excellent delivery. You have an amazing customer service, I must say. Dad was and is still elated.</p>
+          <p class="words-attribution">Chioma</p>
+        </div>
+        <div class="words-copy-item">
+          <p class="words-quote">Every Milestone, Together. Thank you for trusting us from the proposal to the hospital delivery to his first birthday.</p>
+          <p class="words-attribution">Ife</p>
+        </div>
+      </div>
+      <div class="words-dots" id="wordsDots"></div>
+    </div>
+  </section>
+
+  <!-- THE INVITATION -->
+  <section class="invitation" id="invitation">
+    <div class="eyebrow reveal" style="justify-content:center;">
+      <span class="eyebrow-line"></span>
+      <span class="eyebrow-text">The Invitation</span>
+    </div>
+    <h2 class="display reveal">You have the reason. We'll help you create the rest.</h2>
+    <p class="reveal">Tell us who you're celebrating, what you're marking or simply what you've been thinking about. We'll take it from there.</p>
+    <a class="btn btn-primary reveal" data-cta="design_moment_invitation" href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html" target="_blank" rel="noopener">Design Your Moment</a>
+  </section>
+
+  <footer>
+    <div>
+      <div class="logo display">Fabsurprise</div>
+      <p class="footer-tag">Celebration Studio</p>
+    </div>
+
+    <div class="footer-cols">
+      <div>
+        <p class="footer-col-label">Navigate</p>
+        <nav class="footer-nav">
+          <a href="#possibilities">What We Create</a>
+          <a href="#stories">The Stories</a>
+          <a href="#companies">For Companies &amp; Brands</a>
+          <a href="#homeward">Sending It Home</a>
+          <a href="#relationship">FABmily</a>
+          <a href="#invitation" class="footer-cta">Design Your Moment</a>
+        </nav>
+      </div>
+
+      <div>
+        <p class="footer-col-label">Connect</p>
+        <div class="footer-contact">
+          <a href="tel:+2349025141322" data-cta="phone_footer">0902 514 1322</a>
+          <a href="https://wa.me/2349025141322" data-cta="whatsapp_footer">WhatsApp</a>
+          <a href="mailto:speaktofabsurprise@gmail.com" data-cta="email_footer">speaktofabsurprise@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-social">
+      <a href="https://www.instagram.com/fabsurprise" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@fabsurprise" target="_blank" rel="noopener">TikTok</a>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-location">Lagos, Nigeria</p>
+      <p>&copy; Fabsurprise. All rights reserved.</p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  if (typeof gtag !== 'function') return;
+  document.querySelectorAll('[data-cta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      gtag('event', 'cta_click', {
+        cta_id: el.getAttribute('data-cta'),
+        cta_text: el.textContent.trim()
+      });
+    });
+  });
+})();
+
+(function(){
+  var els = document.querySelectorAll('.reveal, .hero-image-wrap');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function(el){ el.classList.add('in-view'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+(function(){
+  var toggle = document.getElementById('menuToggle');
+  var close = document.getElementById('menuClose');
+  var overlay = document.getElementById('menuOverlay');
+  var links = overlay.querySelectorAll('a');
+
+  function openMenu(){
+    overlay.classList.add('open');
+    toggle.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    overlay.classList.remove('open');
+    toggle.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  toggle.addEventListener('click', openMenu);
+  close.addEventListener('click', closeMenu);
+  links.forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
+})();
+
+(function(){
+  var carousel = document.getElementById('storiesCarousel');
+  if (!carousel) return;
+  var cards = carousel.querySelectorAll('.story-card');
+  var dots = document.querySelectorAll('#storiesDots .carousel-dot');
+  var label = document.getElementById('storiesLabel');
+  var total = cards.length;
+  var ticking = false;
+
+  function update(){
+    var center = carousel.scrollLeft + carousel.clientWidth / 2;
+    var closest = 0, min = Infinity;
+    cards.forEach(function(card, i){
+      var mid = card.offsetLeft + card.offsetWidth / 2;
+      var d = Math.abs(mid - center);
+      if (d < min) { min = d; closest = i; }
+    });
+    dots.forEach(function(d, i){ d.classList.toggle('is-active', i === closest); });
+    label.textContent = (closest + 1) + ' / ' + total + ' — Swipe →';
+    ticking = false;
+  }
+
+  carousel.addEventListener('scroll', function(){
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  update();
+})();
+
+(function(){
+  var triggers = document.querySelectorAll('.accordion-trigger');
+  triggers.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = btn.closest('.accordion-item');
+      var panel = item.querySelector('.accordion-panel');
+      var isOpen = item.classList.contains('is-open');
+      if (isOpen) {
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        requestAnimationFrame(function(){ panel.style.maxHeight = '0px'; });
+        item.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+  window.addEventListener('resize', function(){
+    document.querySelectorAll('.accordion-item.is-open .accordion-panel').forEach(function(panel){
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    });
+  });
+})();
+
+(function(){
+  var bgWrap = document.getElementById('wordsBg');
+  var copyWrap = document.getElementById('wordsCopy');
+  if (!bgWrap || !copyWrap) return;
+  var layers = bgWrap.querySelectorAll('.words-bg-layer');
+  var copies = copyWrap.querySelectorAll('.words-copy-item');
+  var dotsWrap = document.getElementById('wordsDots');
+  var current = 0;
+  var timer = null;
+
+  layers.forEach(function(_, i){
+    var dot = document.createElement('button');
+    dot.className = 'words-dot' + (i === 0 ? ' is-active' : '');
+    dot.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
+    dot.addEventListener('click', function(){
+      show(i);
+      restart();
+    });
+    dotsWrap.appendChild(dot);
+  });
+  var dots = dotsWrap.querySelectorAll('.words-dot');
+
+  function show(i){
+    layers[current].classList.remove('is-active');
+    copies[current].classList.remove('is-active');
+    dots[current].classList.remove('is-active');
+    current = i;
+    layers[current].classList.add('is-active');
+    copies[current].classList.add('is-active');
+    dots[current].classList.add('is-active');
+  }
+  function next(){
+    show((current + 1) % layers.length);
+  }
+  function restart(){
+    if (timer) clearInterval(timer);
+    timer = setInterval(next, 6000);
+  }
+  restart();
+})();
+</script>
+
+</body>
+</html>

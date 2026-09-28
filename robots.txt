@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fabsurprise.github.io/fabsurprise-onboarding/sitemap.xml

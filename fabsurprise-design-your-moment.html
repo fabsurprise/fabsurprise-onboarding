@@ -484,6 +484,12 @@ select.field-input {
   .q-screen { padding-top: 48px; }
   .hero-content { padding: 0 4px; }
 }
+
+/* iPhone fix: text boxes must be at least 16px, or Safari zooms in when you tap them and the page stays zoomed */
+input, select, textarea, .field-input, .field-textarea { font-size: 16px !important; }
+/* Shorter occasion cards so more fit on screen */
+.occ-card { padding: 12px 10px; }
+.occ-name { font-size: 16.5px; }
 </style>
 </head>
 <body>

@@ -1026,10 +1026,25 @@
     border-radius:3px;
     transition:width .3s ease, background .3s ease;
   }
-  @media (min-width:900px){
-    .words{ aspect-ratio:21/9; min-height:460px; max-height:620px; }
-    .words-content{ max-width:1160px; padding:64px 40px 48px; }
-    .words-quote{ font-size:23px; }
+  /* Tablets and laptops: photo shown whole in a portrait frame beside the quote, not stretched across the screen */
+  @media (min-width:700px){
+    .words{ aspect-ratio:auto; height:auto; min-height:0; max-height:none; }
+    .words-bg{
+      position:absolute; inset:auto;
+      top:48px; bottom:48px;
+      right:max(32px, calc((100vw - 1100px) / 2));
+      width:min(42vw, 440px);
+    }
+    .words-scrim{ display:none; }
+    .words-content{
+      max-width:1100px; min-height:620px;
+      padding:64px max(32px, calc(min(42vw, 440px) + 72px)) 56px 32px;
+      box-sizing:border-box;
+    }
+    .words-quote{ font-size:22px; }
+  }
+  @media (min-width:1100px){
+    .words-content{ padding-left:0; padding-right:calc(440px + 72px); }
   }
 
   /* THE INVITATION */

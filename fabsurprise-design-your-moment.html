@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6FQWF38Z3K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6FQWF38Z3K');
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Design Your Moment | Fabsurprise</title>
@@ -1277,6 +1286,7 @@ function submitForm() {
   }).catch(function() {});
 
   function showRealSuccess() {
+    if (typeof gtag === 'function') gtag('event', 'generate_lead', { form_name: 'design_your_moment', occasion: (fd.occasion || '') });
     localStorage.removeItem('fab_enq_' + enquiryId);
     document.getElementById('successTitle').textContent = firstName + ', this is where the exciting part begins.';
     document.getElementById('successBody').innerHTML =

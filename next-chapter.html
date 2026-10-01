@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="robots" content="noindex, nofollow">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Next Chapter of Fabsurprise</title>
@@ -690,6 +692,17 @@ function getTrafficSource() {
   const params = new URLSearchParams(window.location.search);
   return params.get('source') || 'Direct';
 }
+
+(function checkDirectQuickPath() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('quick') === 'true') {
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+      const quickScreen = document.getElementById('screen-quick');
+      if (quickScreen) quickScreen.classList.add('active');
+    });
+  }
+})();
 
 function normalizePhone(num) {
   var n = String(num || '').replace(/[^\d]/g, '');

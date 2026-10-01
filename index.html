@@ -966,7 +966,7 @@
   .words-scrim{
     position:absolute;
     inset:0;
-    background:linear-gradient(180deg, rgba(20,17,15,0.85) 0%, rgba(20,17,15,0.55) 30%, rgba(20,17,15,0.72) 55%, rgba(20,17,15,0.95) 100%);
+    background:linear-gradient(180deg, rgba(20,17,15,0.62) 0%, rgba(20,17,15,0.22) 24%, rgba(20,17,15,0.12) 42%, rgba(20,17,15,0.55) 60%, rgba(20,17,15,0.9) 78%, rgba(20,17,15,0.95) 100%);
   }
   .words-content{
     position:relative;
@@ -1029,6 +1029,19 @@
     width:18px;
     border-radius:3px;
     transition:width .3s ease, background .3s ease;
+  }
+  /* Phones: heading, then the photo clear with no dark layer, then the quote underneath */
+  @media (max-width:699px){
+    .words{ aspect-ratio:auto; min-height:0; max-height:none; display:flex; flex-direction:column; padding:52px 0 40px; }
+    .words-content{ display:contents; }
+    .words-content > .eyebrow, .words-content > h2{ order:0; padding:0 20px; }
+    .words-content > .eyebrow{ margin-bottom:12px; }
+    .words-content > h2{ margin-bottom:20px; }
+    .words-bg{ order:1; position:relative; inset:auto; margin:0 20px; aspect-ratio:4/5; overflow:hidden; }
+    .words-scrim{ display:none; }
+    .words-copy{ order:2; margin-top:0; padding:22px 20px 0; min-height:236px; }
+    .words-dots{ order:3; padding:0 20px; }
+    .words-content h2, .words-quote, .words-attribution, .words-content .eyebrow-text{ text-shadow:none; }
   }
   /* Tablets and laptops: photo shown whole in a portrait frame beside the quote, not stretched across the screen */
   @media (min-width:700px){

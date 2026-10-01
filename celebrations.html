@@ -1026,10 +1026,25 @@
     border-radius:3px;
     transition:width .3s ease, background .3s ease;
   }
-  @media (min-width:900px){
-    .words{ aspect-ratio:21/9; min-height:460px; max-height:620px; }
-    .words-content{ max-width:1160px; padding:64px 40px 48px; }
-    .words-quote{ font-size:23px; }
+  /* Tablets and laptops: photo shown whole in a portrait frame beside the quote, not stretched across the screen */
+  @media (min-width:700px){
+    .words{ aspect-ratio:auto; height:auto; min-height:0; max-height:none; }
+    .words-bg{
+      position:absolute; inset:auto;
+      top:48px; bottom:48px;
+      right:max(32px, calc((100vw - 1100px) / 2));
+      width:min(42vw, 440px);
+    }
+    .words-scrim{ display:none; }
+    .words-content{
+      max-width:1100px; min-height:620px;
+      padding:64px max(32px, calc(min(42vw, 440px) + 72px)) 56px 32px;
+      box-sizing:border-box;
+    }
+    .words-quote{ font-size:22px; }
+  }
+  @media (min-width:1100px){
+    .words-content{ padding-left:0; padding-right:calc(440px + 72px); }
   }
 
   /* THE INVITATION */
@@ -1168,6 +1183,32 @@
   <section class="section" style="padding-top:32px;padding-bottom:8px;">
     <div class="eyebrow reveal">
       <span class="eyebrow-line" style="background:var(--champagne);"></span>
+      <span class="eyebrow-text">Intimate Events</span>
+    </div>
+    <h2 class="display reveal" style="margin-bottom:14px;">Small guest lists. Every detail considered.</h2>
+    <p class="reveal">Civil weddings, private dinners, anniversaries and small family gatherings. When only a few people are in the room, every detail is noticed.</p>
+    <p class="reveal">We style the space, the table and the seating so the day feels calm, personal and beautifully put together.</p>
+  </section>
+
+  <section class="section" style="padding-top:32px;padding-bottom:8px;">
+    <div class="hero-image-wrap reveal" style="aspect-ratio:1152/2048;margin:16px 0 8px;">
+      <img class="hero-image" src="img/civil-wedding-signing.jpg" alt="Bride and groom seen from behind, seated on cane chairs tied with white satin bows and baby's breath, signing their marriage register in front of a draped white backdrop with an A&A monogram" style="object-position:50% 50%;" loading="lazy">
+    </div>
+    <h3 class="display reveal" style="margin-top:12px;">A Civil Wedding, Signed in Style</h3>
+    <p class="reveal" style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:rgba(58,51,47,0.75);">Draped backdrop, a monogram, white florals and bowed chairs for the moment the couple signed.</p>
+  </section>
+
+  <section class="section" style="padding-top:32px;padding-bottom:8px;">
+    <div class="hero-image-wrap reveal" style="aspect-ratio:4/5;margin:16px 0 8px;">
+      <img class="hero-image" src="img/wedding-aa-ceremony.jpg" alt="Draped white backdrop with an A&A monogram, floral pillars and chairs tied with white bows at a wedding ceremony" style="object-position:50% 61%;" loading="lazy">
+    </div>
+    <h3 class="display reveal" style="margin-top:12px;">The Setting</h3>
+    <p class="reveal" style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:rgba(58,51,47,0.75);">Florals, drapery and seating designed around the couple and the room.</p>
+  </section>
+
+  <section class="section" style="padding-top:32px;padding-bottom:8px;">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-line" style="background:var(--champagne);"></span>
       <span class="eyebrow-text">Who It's For</span>
     </div>
     <h2 class="display reveal" style="margin-bottom:14px;">However big or small.</h2>
@@ -1242,14 +1283,6 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="section" style="padding-top:32px;padding-bottom:8px;">
-    <div class="hero-image-wrap reveal" style="aspect-ratio:4/5;margin:16px 0 8px;">
-      <img class="hero-image" src="img/wedding-aa-ceremony.jpg" alt="Draped white backdrop with an A&A monogram, floral pillars and chairs tied with white bows at a wedding ceremony" style="object-position:50% 61%;" loading="lazy">
-    </div>
-    <h3 class="display reveal" style="margin-top:12px;">A Ceremony, Styled End to End</h3>
-    <p class="reveal" style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:rgba(58,51,47,0.75);">Florals, drapery and seating designed around the couple and the setting.</p>
   </section>
 
   <section class="section" style="padding-top:32px;padding-bottom:8px;">

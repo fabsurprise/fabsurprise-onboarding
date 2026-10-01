@@ -14,15 +14,15 @@
   gtag('config', 'G-6FQWF38Z3K');
 </script>
 <meta name="description" content="Fabsurprise creates corporate gifting, employee celebrations and brand experiences in Nigeria, for companies who want recognition to feel personal.">
-<link rel="canonical" href="https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html">
+<link rel="canonical" href="https://fabsurprisestudio.com/corporate.html">
 
 <!-- Open Graph / social share preview -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Fabsurprise">
 <meta property="og:title" content="Corporate Gifting &amp; Celebration Experiences in Nigeria | Fabsurprise">
 <meta property="og:description" content="Fabsurprise creates corporate gifting, employee celebrations and brand experiences in Nigeria, for companies who want recognition to feel personal.">
-<meta property="og:url" content="https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html">
-<meta property="og:image" content="https://fabsurprise.github.io/fabsurprise-onboarding/img/corporate-fincra-bags.jpg">
+<meta property="og:url" content="https://fabsurprisestudio.com/corporate.html">
+<meta property="og:image" content="https://fabsurprisestudio.com/img/corporate-fincra-bags.jpg">
 <meta property="og:image:alt" content="Branded jute gift bags for a company Women's Day gift">
 <meta property="og:locale" content="en_NG">
 
@@ -30,7 +30,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Corporate Gifting &amp; Celebration Experiences in Nigeria | Fabsurprise">
 <meta name="twitter:description" content="Fabsurprise creates corporate gifting, employee celebrations and brand experiences in Nigeria, for companies who want recognition to feel personal.">
-<meta name="twitter:image" content="https://fabsurprise.github.io/fabsurprise-onboarding/img/corporate-fincra-bags.jpg">
+<meta name="twitter:image" content="https://fabsurprisestudio.com/img/corporate-fincra-bags.jpg">
 <meta name="twitter:image:alt" content="Branded jute gift bags for a company Women's Day gift">
 
 <!-- Favicon -->
@@ -43,30 +43,30 @@
   "@graph": [
     {
       "@type": "WebPage",
-      "@id": "https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html#webpage",
-      "url": "https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html",
+      "@id": "https://fabsurprisestudio.com/corporate.html#webpage",
+      "url": "https://fabsurprisestudio.com/corporate.html",
       "name": "For Companies & Brands | Fabsurprise",
       "description": "Fabsurprise creates corporate gifting, employee celebrations and brand experiences in Nigeria, for companies who want recognition to feel personal.",
       "inLanguage": "en-NG",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Fabsurprise",
-        "url": "https://fabsurprise.github.io/fabsurprise-onboarding/"
+        "url": "https://fabsurprisestudio.com/"
       },
       "about": {
-        "@id": "https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html#service"
+        "@id": "https://fabsurprisestudio.com/corporate.html#service"
       },
       "breadcrumb": {
-        "@id": "https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html#breadcrumb"
+        "@id": "https://fabsurprisestudio.com/corporate.html#breadcrumb"
       }
     },
     {
       "@type": "Service",
-      "@id": "https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html#service",
+      "@id": "https://fabsurprisestudio.com/corporate.html#service",
       "name": "Corporate Gifting & Experiences",
       "serviceType": "Corporate gifting and employee celebrations",
       "description": "Employee appreciation, executive gifting, team celebrations, client and partner gifting and hampers, and brand experiences for companies.",
-      "url": "https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html",
+      "url": "https://fabsurprisestudio.com/corporate.html",
       "areaServed": [
         {
           "@type": "City",
@@ -81,7 +81,7 @@
         "@type": "LocalBusiness",
         "name": "Fabsurprise",
         "alternateName": "Fabsurprise Celebration Studio",
-        "url": "https://fabsurprise.github.io/fabsurprise-onboarding/",
+        "url": "https://fabsurprisestudio.com/",
         "telephone": "+2349025141322",
         "email": "speaktofabsurprise@gmail.com",
         "address": {
@@ -93,19 +93,19 @@
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html#breadcrumb",
+      "@id": "https://fabsurprisestudio.com/corporate.html#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://fabsurprise.github.io/fabsurprise-onboarding/"
+          "item": "https://fabsurprisestudio.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "For Companies & Brands",
-          "item": "https://fabsurprise.github.io/fabsurprise-onboarding/corporate.html"
+          "item": "https://fabsurprisestudio.com/corporate.html"
         }
       ]
     }
@@ -378,6 +378,12 @@
   }
   .hero-image-wrap.in-view .hero-image{
     transform:scale(1);
+  }
+  /* Tablets and laptops: stop photos stretching across the whole screen */
+  @media (min-width:900px){
+    .hero-image-wrap:not(.hero-image-wrap--desktop){ max-width:min(520px, 62vh); }
+    /* Laptops: keep reading sections in a centred column so lines don't run across the whole screen */
+    .section:not(.stories-section){ padding-left:max(40px, calc((100% - 720px) / 2)); padding-right:max(40px, calc((100% - 720px) / 2)); }
   }
 
   /* WHO WE ARE */
@@ -1086,6 +1092,11 @@
     .method-step{ padding:10px 0; }
     .invitation{ padding:40px 20px 44px; gap:16px; }
   }
+  /* Tablets and laptops: one centred reading column, so text and photos don't stretch */
+  @media (min-width:900px){
+    .section{ padding-left:max(40px, calc((100% - 600px) / 2)); padding-right:max(40px, calc((100% - 600px) / 2)); }
+    .hero-image-wrap:not(.hero-image-wrap--desktop){ max-width:min(100%, 64vh); }
+  }
   </style>
 </head>
 <body>
@@ -1121,7 +1132,7 @@
       <a class="menu-link" href="index.html#relationship"><span class="menu-link-num">06</span>FABmily</a>
     </nav>
     <div class="menu-foot">
-      <a class="btn btn-primary menu-cta" data-cta="design_moment_menu" href="https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-design-your-moment.html">Design Your Moment</a>
+      <a class="btn btn-primary menu-cta" data-cta="design_moment_menu" href="https://fabsurprisestudio.com/fabsurprise-design-your-moment.html">Design Your Moment</a>
       <p class="menu-contact">Lagos, Nigeria</p>
     </div>
   </div>

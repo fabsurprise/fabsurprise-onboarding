@@ -50,6 +50,7 @@
       "inLanguage": "en-NG",
       "isPartOf": {
         "@type": "WebSite",
+        "@id": "https://fabsurprisestudio.com/#website",
         "name": "Fabsurprise",
         "url": "https://fabsurprisestudio.com/"
       },
@@ -79,6 +80,7 @@
       ],
       "provider": {
         "@type": "LocalBusiness",
+        "@id": "https://fabsurprisestudio.com/#business",
         "name": "Fabsurprise",
         "alternateName": "Fabsurprise Celebration Studio",
         "url": "https://fabsurprisestudio.com/",
@@ -963,7 +965,7 @@
   .words-scrim{
     position:absolute;
     inset:0;
-    background:linear-gradient(180deg, rgba(20,17,15,0.78) 0%, rgba(20,17,15,0.3) 32%, rgba(20,17,15,0.42) 62%, rgba(20,17,15,0.92) 100%);
+    background:linear-gradient(180deg, rgba(20,17,15,0.62) 0%, rgba(20,17,15,0.22) 24%, rgba(20,17,15,0.12) 42%, rgba(20,17,15,0.55) 60%, rgba(20,17,15,0.9) 78%, rgba(20,17,15,0.95) 100%);
   }
   .words-content{
     position:relative;
@@ -979,6 +981,7 @@
   .words-content .eyebrow-line{background:var(--champagne);}
   .words-content .eyebrow-text{color:var(--champagne);}
   .words-content h2{color:var(--ivory);}
+  .words-content h2, .words-quote, .words-attribution, .words-content .eyebrow-text{ text-shadow:0 1px 12px rgba(0,0,0,0.65), 0 1px 2px rgba(0,0,0,0.5); }
   .words-copy{
     margin-top:auto;
     padding-top:40px;
@@ -1025,6 +1028,35 @@
     width:18px;
     border-radius:3px;
     transition:width .3s ease, background .3s ease;
+  }
+  /* Testimonials get their own colour so they stand apart from the dark FABmily section above */
+  .words{ background:#EFE4D2; }
+  .words .words-content .eyebrow-text{ color:var(--burgundy); text-shadow:none; }
+  .words .words-content .eyebrow-line{ background:var(--burgundy); }
+  .words .words-content h2{ color:var(--charcoal); text-shadow:none; }
+  .words .words-quote{ color:var(--charcoal); text-shadow:none; }
+  .words .words-attribution{ color:var(--burgundy); text-shadow:none; }
+  .words .words-dot{ background:rgba(90,15,27,0.25); }
+  .words .words-dot.is-active{ background:var(--burgundy); }
+  .words-copy-item::before{ color:var(--burgundy) !important; }
+  .words-copy-item::before{
+    content:"\201C"; display:block;
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:64px; line-height:0.6; color:var(--champagne);
+    margin:6px 0 10px;
+  }
+  /* Phones: heading, then the photo clear with no dark layer, then the quote underneath */
+  @media (max-width:699px){
+    .words{ aspect-ratio:auto; min-height:0; max-height:none; display:flex; flex-direction:column; padding:52px 0 40px; }
+    .words-content{ display:contents; }
+    .words-content > .eyebrow, .words-content > h2{ order:0; padding:0 20px; }
+    .words-content > .eyebrow{ margin-bottom:12px; }
+    .words-content > h2{ margin-bottom:20px; }
+    .words-bg{ order:1; position:relative; inset:auto; margin:0 20px; aspect-ratio:4/5; overflow:hidden; }
+    .words-scrim{ display:none; }
+    .words-copy{ order:2; margin-top:0; padding:22px 20px 0; min-height:270px; }
+    .words-dots{ order:3; padding:0 20px; }
+    .words-content h2, .words-quote, .words-attribution, .words-content .eyebrow-text{ text-shadow:none; }
   }
   /* Tablets and laptops: photo shown whole in a portrait frame beside the quote, not stretched across the screen */
   @media (min-width:700px){
@@ -1299,6 +1331,19 @@
     </div>
   </section>
 
+  <section class="section" style="padding-top:32px;padding-bottom:8px;">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-line"></span>
+      <span class="eyebrow-text">In Their Words</span>
+    </div>
+    <p class="reveal" style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:19px;line-height:1.5;color:var(--charcoal);margin:0 0 10px;">&ldquo;Early morning surprise from hubby. I didn't even see it coming at all. @fabsurprise did that.&rdquo;</p>
+    <p class="reveal" style="font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;color:var(--burgundy);margin:0 0 16px;">Honourable</p>
+    <div class="reveal" style="display:flex;flex-wrap:wrap;gap:10px 22px;">
+      <a class="offering-link" style="margin-top:0;" data-cta="proof_words" href="index.html#words">Read more from our clients &rarr;</a>
+      <a class="offering-link" style="margin-top:0;" data-cta="proof_instagram" href="https://www.instagram.com/fabsurprise" target="_blank" rel="noopener">See our work on Instagram &rarr;</a>
+    </div>
+  </section>
+
   <section class="invitation">
     <div class="eyebrow reveal" style="justify-content:center;">
       <span class="eyebrow-line"></span>
@@ -1346,7 +1391,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-location">Lagos, Nigeria</p>
+      <p class="footer-location">Lagos, Nigeria. Creating celebrations since 2017.</p>
       <p>&copy; Fabsurprise. All rights reserved.</p>
     </div>
   </footer>

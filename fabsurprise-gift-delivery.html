@@ -255,8 +255,8 @@ select.field-input {
 <div id="form-screen">
   <div class="form-header">
     <div class="form-header-brand">Fabsurprise</div>
-    <div class="progress-track"><div class="progress-fill" id="pFill" style="width:20%"></div></div>
-    <div class="progress-text" id="pText">Step 1 of 5</div>
+    <div class="progress-track"><div class="progress-fill" id="pFill" style="width:17%"></div></div>
+    <div class="progress-text" id="pText">Step 1 of 6</div>
   </div>
 
   <div class="form-body">
@@ -295,12 +295,6 @@ select.field-input {
         <label class="field-label">Occasion</label>
         <input class="field-input" id="occasion" type="text" placeholder="e.g. Birthday, Just Because, Appreciation">
         <div class="field-error" id="err-occasion">Please let us know the occasion.</div>
-      </div>
-      <div class="field-wrap" style="margin-top:18px;">
-        <label class="field-label">Special Date <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
-        <input class="field-input" id="specialDate" type="date">
-        <label class="remind-opt"><input type="checkbox" id="remindDate"><span>Remind me three weeks before this date every year</span></label>
-        <div class="field-error" id="err-remindDate">Please add the date above so we know when to remind you.</div>
       </div>
       <div class="q-nav">
         <button class="btn-back" onclick="goPrev(2)">Back</button>
@@ -389,8 +383,30 @@ select.field-input {
       </div>
     </div>
 
-    <!-- Q5: YOUR DETAILS -->
+    <!-- Q5: SPECIAL DAY (optional, yearly reminder) -->
     <div class="q-screen" id="q5">
+      <div class="q-thread">One more thing, if you'd like</div>
+      <h2 class="q-title">Save a<br><em>special day</em></h2>
+      <p class="q-subtext">Your birthday, theirs, an anniversary, any day that matters to you. We'll remind you three weeks before, every year, so there is time to plan. You can skip this.</p>
+      <div class="field-wrap">
+        <label class="field-label">Whose Day Is It?</label>
+        <input class="field-input" id="specialFor" type="text" maxlength="40" placeholder="e.g. Mine, Mum, my partner">
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Special Date</label>
+        <input class="field-input" id="specialDate" type="date">
+        <div class="field-error" id="err-specialDate">Please choose the date, or tap Skip.</div>
+      </div>
+      <p class="field-hint" style="margin-top:14px;">We'll only use this to send your reminder and a few ideas during the year. You can stop at any time.</p>
+      <div class="q-nav">
+        <button class="btn-back" onclick="goPrev(5)">Back</button>
+        <button class="btn-back" onclick="skipSpecial()">Skip</button>
+        <button class="btn-next" onclick="saveSpecial()">Remind Me</button>
+      </div>
+    </div>
+
+    <!-- Q6: YOUR DETAILS -->
+    <div class="q-screen" id="q6">
       <div class="q-thread">Just so we can reach you</div>
       <h2 class="q-title">A Little<br><em>About You</em></h2>
       <p class="q-subtext">So we can confirm everything's in place before it's on its way.</p>
@@ -410,7 +426,7 @@ select.field-input {
         <div class="field-error" id="err-clientEmail">Please enter a valid email address.</div>
       </div>
       <div class="q-nav">
-        <button class="btn-back" onclick="goPrev(5)">Back</button>
+        <button class="btn-back" onclick="goPrev(6)">Back</button>
         <button class="btn-next" id="submitBtn" onclick="submitForm()">Confirm Details</button>
       </div>
     </div>
@@ -429,7 +445,7 @@ select.field-input {
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
-const TOTAL = 5;
+const TOTAL = 6;
 
 // Added 9 Oct 2026: earliest delivery date is tomorrow (Lagos time), item message examples, yearly date reminders (MailerLite)
 const ML_REMIND_URL = 'https://assets.mailerlite.com/jsonp/2697780/forms/200834537777792009/subscribe';
@@ -490,6 +506,10 @@ function startForm() {
 }
 
 function showStep(s) {
+  if (s === 5) {
+    const sf = document.getElementById('specialFor');
+    if (sf && !sf.value) sf.value = document.getElementById('relationship').value.trim();
+  }
   document.querySelectorAll('.q-screen').forEach(function(el) { el.classList.remove('active'); });
   document.getElementById('q' + s).classList.add('active');
   curStep = s;
@@ -534,7 +554,6 @@ function validate(s) {
   }
   if (s === 2) {
     check('occasion', document.getElementById('occasion').value.trim());
-    check('remindDate', !document.getElementById('remindDate').checked || document.getElementById('specialDate').value);
   }
   if (s === 3) {
     check('deliveryAddress', document.getElementById('deliveryAddress').value.trim());
@@ -548,7 +567,7 @@ function validate(s) {
     check('deliveryTime', timeValid);
     check('recipientContactPref', document.getElementById('recipientContactPref').value);
   }
-  if (s === 5) {
+  if (s === 6) {
     check('clientName', document.getElementById('clientName').value.trim());
     const phone = document.getElementById('clientPhone').value.trim();
     check('clientPhone', phone && phone.replace(/\D/g,'').length >= 10);
@@ -567,8 +586,6 @@ function collect(s) {
   }
   if (s === 2) {
     fd.occasion = document.getElementById('occasion').value.trim();
-    fd.specialDate = document.getElementById('specialDate').value;
-    fd.remindDate = document.getElementById('remindDate').checked;
   }
   if (s === 3) {
     fd.deliveryAddress = document.getElementById('deliveryAddress').value.trim();
@@ -587,7 +604,7 @@ function collect(s) {
     fd.thingsToAvoid = document.getElementById('thingsToAvoid').value.trim();
     fd.extraNotes = document.getElementById('extraNotes').value.trim();
   }
-  if (s === 5) {
+  if (s === 6) {
     fd.clientName = document.getElementById('clientName').value.trim();
     fd.clientPhone = document.getElementById('clientPhone').value.trim();
     fd.clientEmail = document.getElementById('clientEmail').value.trim();
@@ -598,6 +615,24 @@ function goNext(s) {
   if (!validate(s)) return;
   collect(s);
   showStep(s + 1);
+}
+
+function skipSpecial() {
+  document.getElementById('specialDate').value = '';
+  fd.specialDate = '';
+  fd.remindDate = false;
+  clr('specialDate');
+  showStep(6);
+}
+
+function saveSpecial() {
+  const v = document.getElementById('specialDate').value;
+  clr('specialDate');
+  if (!v) { fail('specialDate'); return; }
+  fd.specialDate = v;
+  fd.specialFor = document.getElementById('specialFor').value.trim();
+  fd.remindDate = true;
+  showStep(6);
 }
 
 function goPrev(s) {
@@ -614,8 +649,8 @@ function normalizePhone(num) {
 }
 
 function submitForm() {
-  if (!validate(5)) return;
-  collect(5);
+  if (!validate(6)) return;
+  collect(6);
 
   const btn = document.getElementById('submitBtn');
   btn.textContent = 'Sending...';
@@ -665,7 +700,7 @@ function submitForm() {
     fabSaveReminder({
       email: fd.clientEmail,
       name: (fd.clientName || '').split(' ')[0],
-      celebrating: fd.relationship + (fd.recipientName ? ' (' + fd.recipientName + ')' : ''),
+      celebrating: fd.specialFor || (fd.relationship + (fd.recipientName ? ' (' + fd.recipientName + ')' : '')),
       date: fd.specialDate
     });
   }

@@ -12,19 +12,19 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --wine: #7A1428;
-  --wine-dark: #5A0E1C;
-  --wine-light: #921830;
-  --gold: #C9A84C;
-  --gold-light: #E2C97A;
-  --gold-pale: #F9F3E3;
-  --ivory: #F5F0E8;
-  --ivory-mid: #EDE7DC;
-  --ivory-dark: #DDD5C5;
-  --white: #FDFAF6;
+  --wine: #520C17;
+  --wine-dark: #520C17;
+  --wine-light: #6A1220;
+  --gold: #C9B27C;
+  --gold-light: #DCCDA6;
+  --gold-pale: #F4EFE8;
+  --ivory: #F6F2EF;
+  --ivory-mid: #ECE6E2;
+  --ivory-dark: #DDD5D0;
+  --white: #FBF9F7;
   --text-dark: #1A0A0E;
   --text-mid: #4A2030;
-  --text-light: #8B6B5A;
+  --text-light: #7D6B68;
   --error: #B02020;
 }
 
@@ -250,7 +250,7 @@ body {
 }
 
 .field-input::placeholder, .field-textarea::placeholder { color: var(--text-light); font-weight: 300; }
-.field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--wine); box-shadow: 0 0 0 2px rgba(122,20,40,0.08); }
+.field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--wine); box-shadow: 0 0 0 2px rgba(82,12,23,0.08); }
 .field-input.error, .field-select.error, .field-textarea.error { border-color: var(--error); }
 
 .field-error-msg { font-size: 11.5px; color: var(--error); margin-top: 6px; display: none; }
@@ -259,7 +259,7 @@ body {
 .field-textarea.large { min-height: 160px; }
 
 .field-select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6B5A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237D6B68' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 16px center;
   padding-right: 40px;
@@ -285,7 +285,7 @@ body {
 }
 
 .option-item:hover { border-color: var(--wine); }
-.option-item.selected { border-color: var(--wine); background: #F9F2F4; }
+.option-item.selected { border-color: var(--wine); background: #F5ECED; }
 .option-item input[type="radio"] { display: none; }
 
 .option-marker {
@@ -325,7 +325,7 @@ body {
   font-size: 10px;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: rgba(245,240,232,0.6);
+  color: rgba(246,242,239,0.6);
   margin-bottom: 12px;
 }
 
@@ -340,18 +340,18 @@ body {
 }
 
 .signature-card .field-textarea {
-  background: rgba(253,250,246,0.1);
-  border-color: rgba(245,240,232,0.2);
+  background: rgba(251,249,247,0.1);
+  border-color: rgba(246,242,239,0.2);
   color: var(--ivory);
 }
 
-.signature-card .field-textarea::placeholder { color: rgba(245,240,232,0.35); }
-.signature-card .field-textarea:focus { border-color: rgba(245,240,232,0.5); box-shadow: none; }
+.signature-card .field-textarea::placeholder { color: rgba(246,242,239,0.35); }
+.signature-card .field-textarea:focus { border-color: rgba(246,242,239,0.5); box-shadow: none; }
 
 /* HELPER CARD */
 .helper-card {
   background: var(--gold-pale);
-  border: 1px solid rgba(201,168,76,0.25);
+  border: 1px solid rgba(201,178,124,0.25);
   border-left: 3px solid var(--gold);
   padding: 22px;
   margin-bottom: 24px;
@@ -406,7 +406,7 @@ body {
 }
 
 .review-section-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--ivory); font-weight: 400; }
-.review-edit-btn { font-size: 11px; color: rgba(245,240,232,0.7); cursor: pointer; background: none; border: none; text-decoration: underline; text-underline-offset: 3px; }
+.review-edit-btn { font-size: 11px; color: rgba(246,242,239,0.7); cursor: pointer; background: none; border: none; text-decoration: underline; text-underline-offset: 3px; }
 
 .review-rows { padding: 4px 0; }
 
@@ -492,7 +492,7 @@ body {
 .success-icon {
   width: 64px;
   height: 64px;
-  border: 1px solid rgba(245,240,232,0.4);
+  border: 1px solid rgba(246,242,239,0.4);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -503,10 +503,10 @@ body {
 }
 
 .success-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 7vw, 50px); font-weight: 300; color: var(--ivory); margin-bottom: 24px; line-height: 1.15; }
-.success-divider { width: 28px; height: 1px; background: rgba(245,240,232,0.4); margin: 0 auto 28px; }
-.success-body { color: rgba(245,240,232,0.7); font-size: 14.5px; line-height: 1.8; margin-bottom: 16px; font-weight: 300; }
+.success-divider { width: 28px; height: 1px; background: rgba(246,242,239,0.4); margin: 0 auto 28px; }
+.success-body { color: rgba(246,242,239,0.7); font-size: 14.5px; line-height: 1.8; margin-bottom: 16px; font-weight: 300; }
 .success-tagline { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-style: italic; color: var(--gold-light); margin: 32px 0 8px; }
-.success-sig { font-size: 11.5px; color: rgba(245,240,232,0.4); letter-spacing: 1px; }
+.success-sig { font-size: 11.5px; color: rgba(246,242,239,0.4); letter-spacing: 1px; }
 
 /* TOAST */
 .toast {
@@ -531,6 +531,15 @@ body {
   .btn-next { max-width: 100%; }
   #landing { padding: 60px 24px 72px; }
 }
+
+/* Added 9 Oct 2026: short item message, reminder tick box, date hint */
+.field-hint { font-size: 12.5px; color: var(--text-light); line-height: 1.6; margin: -2px 0 10px; }
+.msg-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.msg-chip { font-family: 'Inter', sans-serif; font-size: 12.5px; color: var(--wine); background: var(--white); border: 1px solid var(--ivory-dark); padding: 8px 12px; cursor: pointer; border-radius: 0; }
+.msg-chip:active { border-color: var(--wine); }
+.remind-opt { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 13px; line-height: 1.55; color: var(--text-mid); cursor: pointer; }
+.remind-opt input { width: 18px; height: 18px; margin: 1px 0 0; flex-shrink: 0; accent-color: var(--wine); }
+.date-hint { font-size: 12px; color: var(--text-light); margin-top: 8px; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -650,12 +659,14 @@ body {
           <label class="field-label">Celebration Date</label>
           <input class="field-input" id="celebDate" type="date">
           <div class="field-error-msg" id="err-celebDate">Please select a date.</div>
+          <p class="date-hint">The earliest date you can pick here is tomorrow. For anything happening today, please message us on WhatsApp.</p>
         </div>
         <div class="field-group">
           <label class="field-label">Preferred Setup Time <span class="optional">Optional</span></label>
           <input class="field-input" id="setupTime" type="time">
         </div>
       </div>
+      <label class="remind-opt" style="margin:-6px 0 22px;"><input type="checkbox" id="remindDate"><span>Remind me three weeks before this date every year</span></label>
 
       <div class="field-group">
         <label class="field-label">Celebration Location</label>
@@ -722,8 +733,8 @@ body {
           <option>Other</option>
         </select>
         <div class="field-error-msg" id="err-relationship">Please select a relationship.</div>
-        <div class="reveal-block" id="selfLoveReveal" style="background:#F9F2F4;border-color:#7A1428;margin-top:12px;">
-          <p style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#7A1428;margin-bottom:6px;">Self Love is a celebration too.</p>
+        <div class="reveal-block" id="selfLoveReveal" style="background:#F5ECED;border-color:#520C17;margin-top:12px;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#520C17;margin-bottom:6px;">Self Love is a celebration too.</p>
           <p style="font-size:13px;color:#4A2030;line-height:1.6;">Choosing to celebrate yourself is worth every bit as much as celebrating someone else. We'll approach this celebration with the same care and attention we'd bring to any other.</p>
         </div>
       </div>
@@ -779,6 +790,13 @@ body {
       <div class="field-group">
         <label class="field-label">Cake Inscription <span class="optional">Optional</span></label>
         <input class="field-input" id="cakeInscription" type="text" placeholder="Exactly what you'd like written on the cake">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Short Message for a Balloon or Personalised Item <span class="optional">Optional</span></label>
+        <p class="field-hint">For words written on a balloon, gift box, mug, book or any personalised item. Keep it short. Tap an example to use it, or write your own.</p>
+        <input class="field-input" id="itemMessage" type="text" maxlength="40" placeholder="e.g. Happy Birthday Princess">
+        <div class="msg-chips"><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Princess</button><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Mum</button><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Dad</button><button type="button" class="msg-chip" onclick="useChip(this)">Love You Dad</button><button type="button" class="msg-chip" onclick="useChip(this)">From Your Baby Girl</button></div>
       </div>
 
       <div class="field-group">
@@ -879,7 +897,7 @@ body {
 
       <div class="field-group">
         <label class="field-label">Files to Send <span class="optional">Optional</span></label>
-        <div style="background:#F9F2F4;border:1px solid #7A1428;border-left:4px solid #7A1428;padding:18px 16px;margin-bottom:12px;">
+        <div style="background:#F5ECED;border:1px solid #520C17;border-left:4px solid #520C17;padding:18px 16px;margin-bottom:12px;">
           <p style="font-size:13px;color:#4A2030;line-height:1.6;margin-bottom:12px;">If you'd like us to work from reference photos, logos or inspiration images, you can send them on WhatsApp after submitting this form. The button opens WhatsApp in a new tab, your form stays open.</p>
           <a href="https://wa.me/2349025141322?text=Hi%20Fabsurprise%2C%20I%20have%20just%20completed%20my%20onboarding%20form%20and%20I%20am%20sending%20my%20files%20now." target="_blank" style="display:inline-block;background:#25D366;color:white;padding:10px 20px;font-family:'Inter',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:1px;text-decoration:none;">Open WhatsApp to Send Files</a>
         </div>
@@ -923,7 +941,7 @@ body {
 </div>
 
 <!-- SUCCESS -->
-<div id="success-screen" style="display:none;min-height:100vh;background:#7A1428;align-items:center;justify-content:center;text-align:center;padding:60px 24px;">
+<div id="success-screen" style="display:none;min-height:100vh;background:#520C17;align-items:center;justify-content:center;text-align:center;padding:60px 24px;">
   <div class="success-inner">
     <div class="success-icon">&#10003;</div>
     <h2 class="success-title">Thank You</h2>
@@ -936,8 +954,8 @@ body {
     </p>
     <p class="success-tagline">Thank you for trusting us with such a meaningful moment.</p>
     <p class="success-sig">The Fabsurprise Team</p>
-    <div style="margin-top:36px;padding-top:28px;border-top:1px solid rgba(245,240,232,0.15);">
-      <p style="font-size:12px;color:rgba(245,240,232,0.55);letter-spacing:0.5px;margin-bottom:16px;">Send us a quick WhatsApp so we know to expect you.</p>
+    <div style="margin-top:36px;padding-top:28px;border-top:1px solid rgba(246,242,239,0.15);">
+      <p style="font-size:12px;color:rgba(246,242,239,0.55);letter-spacing:0.5px;margin-bottom:16px;">Send us a quick WhatsApp so we know to expect you.</p>
       <a id="waNotifyBtn" href="#" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:14px 32px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-decoration:none;">Notify Us on WhatsApp</a>
     </div>
   </div>
@@ -946,6 +964,40 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
+
+// Added 9 Oct 2026: earliest delivery date is tomorrow (Lagos time), item message examples, yearly date reminders (MailerLite)
+const ML_REMIND_URL = 'https://assets.mailerlite.com/jsonp/2697780/forms/200834537777792009/subscribe';
+function fabLagosToday() {
+  try { return new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Lagos', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); }
+  catch (e) { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+}
+function fabEarliestDate() {
+  const t = fabLagosToday().split('-').map(Number);
+  return new Date(Date.UTC(t[0], t[1] - 1, t[2] + 1)).toISOString().slice(0, 10);
+}
+function fabDateTooEarly(v) { return !!v && v < fabEarliestDate(); }
+function useChip(btn) {
+  const input = btn.closest('.field-wrap, .field-group').querySelector('input');
+  input.value = btn.textContent;
+  input.focus();
+}
+function combineMessages(card, item) {
+  if (!item) return card || '';
+  return (card ? card + '\n\n' : '') + 'On the balloon or item: ' + item;
+}
+function fabSaveReminder(o) {
+  if (!o.email || !o.date) return;
+  const b = new URLSearchParams();
+  b.append('fields[email]', o.email);
+  b.append('fields[name]', o.name || '');
+  b.append('fields[celebrating]', (o.celebrating || '').slice(0, 60));
+  b.append('fields[special_date]', '2000-' + o.date.slice(5));
+  b.append('ml-submit', '1');
+  b.append('anticsrf', 'true');
+  fetch(ML_REMIND_URL, { method: 'POST', mode: 'no-cors', body: b }).catch(function() {});
+}
+
+document.addEventListener('DOMContentLoaded', function() { const d = document.getElementById('celebDate'); if (d) d.min = fabEarliestDate(); });
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
 
 let currentSection = 1;
@@ -1043,6 +1095,18 @@ function validateSection(num) {
     }
   });
 
+  if (num === 2) {
+    const cd = document.getElementById('celebDate');
+    const cdErr = document.getElementById('err-celebDate');
+    if (cd.value && fabDateTooEarly(cd.value)) {
+      valid = false;
+      cdErr.textContent = 'Please choose tomorrow or a later date.';
+      cdErr.style.display = 'block'; cd.classList.add('error');
+    } else {
+      cdErr.textContent = 'Please select a date.';
+    }
+  }
+
   if (!valid) {
     const firstErr = document.querySelector('.field-error-msg[style*="block"]');
     if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1062,6 +1126,7 @@ function collectSection(num) {
   } else if (num === 2) {
     formData.occasion = val('occasion');
     formData.celebDate = val('celebDate');
+    formData.remindDate = document.getElementById('remindDate').checked ? 'Yes' : '';
     formData.setupTime = val('setupTime');
     formData.celebLocation = val('celebLocation');
     formData.venueAddress = val('venueAddress');
@@ -1078,6 +1143,7 @@ function collectSection(num) {
     formData.theme = val('theme');
     formData.colourPalette = val('colourPalette');
     formData.cakeInscription = val('cakeInscription');
+    formData.itemMessage = val('itemMessage');
     formData.cardMessage = val('cardMessage');
     formData.messageHelper = val('messageHelper');
     formData.specialDate = val('specialDate');
@@ -1124,6 +1190,7 @@ function buildReview() {
       { key: 'Theme', val: formData.theme || '—' },
       { key: 'Colour Palette', val: formData.colourPalette || '—' },
       { key: 'Cake Inscription', val: formData.cakeInscription || '—' },
+      { key: 'Balloon or Item Message', val: formData.itemMessage || '—' },
       { key: 'Card Message', val: formData.cardMessage || '—' },
       { key: 'Special Date', val: formData.specialDate || '—' },
       { key: 'Day Contact', val: formData.dayContact || '—' },
@@ -1177,6 +1244,7 @@ function submitForm() {
     status: 'Planning',
     ...formData
   };
+  payload.cardMessage = combineMessages(formData.cardMessage, formData.itemMessage);
 
   localStorage.setItem('fabsurprise_last_submission', JSON.stringify(payload));
   localStorage.removeItem('fabsurprise_saved_progress');
@@ -1187,6 +1255,15 @@ function submitForm() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   }).catch(() => {});
+
+  if (formData.remindDate && formData.celebDate) {
+    fabSaveReminder({
+      email: formData.clientEmail,
+      name: (formData.clientName || '').split(' ')[0],
+      celebrating: formData.relationship === 'Myself' ? 'Myself' : (formData.relationship + (formData.recipientName ? ' (' + formData.recipientName + ')' : '')),
+      date: formData.celebDate
+    });
+  }
 
   const waMsg = encodeURIComponent(
     `Hi Fabsurprise! I'm ${payload.clientName} and I've just completed my onboarding form (Ref: ${payload.submissionId}). I'm celebrating a ${payload.occasion} for ${payload.recipientName || 'someone special'} on ${payload.celebDate}. Looking forward to working with you!`
@@ -1246,7 +1323,7 @@ function saveProgress() {
   const saved = { section: currentSection, formData, fields: {}, radios: {} };
   ['clientName','clientPhone','clientEmail','occasion','celebDate','setupTime','celebLocation',
    'venueAddress','landmark','recipientName','preferredName','relationship','religion','allergies',
-   'threeWords','hopeTheyFeel','theme','colourPalette','cakeInscription','cardMessage','messageHelper',
+   'threeWords','hopeTheyFeel','theme','colourPalette','cakeInscription','itemMessage','cardMessage','messageHelper',
    'specialDate','initials','quote','accessInstructions','fileNote','thingsToAvoid','extraNotes','altContactName','altContactPhone'
   ].forEach(id => { const el = document.getElementById(id); if (el) saved.fields[id] = el.value; });
   saved.radios = {

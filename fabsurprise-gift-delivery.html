@@ -12,19 +12,19 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --wine: #7A1428;
-  --wine-dark: #5A0E1C;
-  --wine-light: #921830;
-  --gold: #C9A84C;
-  --gold-light: #E2C97A;
-  --gold-pale: #F9F3E3;
-  --ivory: #F5F0E8;
-  --ivory-mid: #EDE7DC;
-  --ivory-dark: #DDD5C5;
-  --white: #FDFAF6;
+  --wine: #520C17;
+  --wine-dark: #520C17;
+  --wine-light: #6A1220;
+  --gold: #C9B27C;
+  --gold-light: #DCCDA6;
+  --gold-pale: #F4EFE8;
+  --ivory: #F6F2EF;
+  --ivory-mid: #ECE6E2;
+  --ivory-dark: #DDD5D0;
+  --white: #FBF9F7;
   --text-dark: #1A0A0E;
   --text-mid: #4A2030;
-  --text-light: #8B6B5A;
+  --text-light: #7D6B68;
   --error: #B02020;
 }
 
@@ -169,7 +169,7 @@ body {
 .field-error { font-size: 11.5px; color: var(--error); margin-top: 7px; display: none; }
 
 select.field-input {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6B5A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237D6B68' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 16px center;
   padding-right: 42px;
@@ -226,7 +226,16 @@ select.field-input {
 }
 
 .success-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px,7vw,38px); font-weight: 300; color: var(--white); margin-bottom: 18px; }
-.success-body { color: rgba(245,240,232,0.75); font-size: 14px; line-height: 1.85; font-weight: 300; max-width: 420px; }
+.success-body { color: rgba(246,242,239,0.75); font-size: 14px; line-height: 1.85; font-weight: 300; max-width: 420px; }
+
+/* Added 9 Oct 2026: short item message, reminder tick box, date hint */
+.field-hint { font-size: 12.5px; color: var(--text-light); line-height: 1.6; margin: -2px 0 10px; }
+.msg-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.msg-chip { font-family: 'Inter', sans-serif; font-size: 12.5px; color: var(--wine); background: var(--white); border: 1px solid var(--ivory-dark); padding: 8px 12px; cursor: pointer; border-radius: 0; }
+.msg-chip:active { border-color: var(--wine); }
+.remind-opt { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 13px; line-height: 1.55; color: var(--text-mid); cursor: pointer; }
+.remind-opt input { width: 18px; height: 18px; margin: 1px 0 0; flex-shrink: 0; accent-color: var(--wine); }
+.date-hint { font-size: 12px; color: var(--text-light); margin-top: 8px; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -290,6 +299,8 @@ select.field-input {
       <div class="field-wrap" style="margin-top:18px;">
         <label class="field-label">Special Date <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
         <input class="field-input" id="specialDate" type="date">
+        <label class="remind-opt"><input type="checkbox" id="remindDate"><span>Remind me three weeks before this date every year</span></label>
+        <div class="field-error" id="err-remindDate">Please add the date above so we know when to remind you.</div>
       </div>
       <div class="q-nav">
         <button class="btn-back" onclick="goPrev(2)">Back</button>
@@ -312,6 +323,7 @@ select.field-input {
         <label class="field-label">Preferred Delivery Date</label>
         <input class="field-input" id="deliveryDate" type="date">
         <div class="field-error" id="err-deliveryDate">Please let us know your preferred delivery date.</div>
+        <p class="date-hint">The earliest date you can pick here is tomorrow. For a delivery today, please message us on WhatsApp.</p>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
         <label class="field-label">Preferred Delivery Time</label>
@@ -356,6 +368,12 @@ select.field-input {
       <div class="field-wrap">
         <label class="field-label">Card or Gift Message <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
         <textarea class="field-textarea" id="giftMessage" placeholder="What would you like the note to say?"></textarea>
+      </div>
+      <div class="field-wrap" style="margin-top:18px;">
+        <label class="field-label">Short Message for a Balloon or Personalised Item <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
+        <p class="field-hint">For words written on a balloon, gift box, mug, book or any personalised item. Keep it short. Tap an example to use it, or write your own.</p>
+        <input class="field-input" id="itemMessage" type="text" maxlength="40" placeholder="e.g. Happy Birthday Princess">
+        <div class="msg-chips"><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Princess</button><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Mum</button><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Dad</button><button type="button" class="msg-chip" onclick="useChip(this)">Love You Dad</button><button type="button" class="msg-chip" onclick="useChip(this)">From Your Baby Girl</button></div>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
         <label class="field-label">Is There Anything You'd Like Us to Avoid? <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
@@ -412,6 +430,40 @@ select.field-input {
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
 const TOTAL = 5;
+
+// Added 9 Oct 2026: earliest delivery date is tomorrow (Lagos time), item message examples, yearly date reminders (MailerLite)
+const ML_REMIND_URL = 'https://assets.mailerlite.com/jsonp/2697780/forms/200834537777792009/subscribe';
+function fabLagosToday() {
+  try { return new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Lagos', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); }
+  catch (e) { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+}
+function fabEarliestDate() {
+  const t = fabLagosToday().split('-').map(Number);
+  return new Date(Date.UTC(t[0], t[1] - 1, t[2] + 1)).toISOString().slice(0, 10);
+}
+function fabDateTooEarly(v) { return !!v && v < fabEarliestDate(); }
+function useChip(btn) {
+  const input = btn.closest('.field-wrap, .field-group').querySelector('input');
+  input.value = btn.textContent;
+  input.focus();
+}
+function combineMessages(card, item) {
+  if (!item) return card || '';
+  return (card ? card + '\n\n' : '') + 'On the balloon or item: ' + item;
+}
+function fabSaveReminder(o) {
+  if (!o.email || !o.date) return;
+  const b = new URLSearchParams();
+  b.append('fields[email]', o.email);
+  b.append('fields[name]', o.name || '');
+  b.append('fields[celebrating]', (o.celebrating || '').slice(0, 60));
+  b.append('fields[special_date]', '2000-' + o.date.slice(5));
+  b.append('ml-submit', '1');
+  b.append('anticsrf', 'true');
+  fetch(ML_REMIND_URL, { method: 'POST', mode: 'no-cors', body: b }).catch(function() {});
+}
+
+document.addEventListener('DOMContentLoaded', function() { const d = document.getElementById('deliveryDate'); if (d) d.min = fabEarliestDate(); });
 let curStep = 1;
 let fd = {};
 
@@ -465,10 +517,15 @@ function validate(s) {
   }
   if (s === 2) {
     check('occasion', document.getElementById('occasion').value.trim());
+    check('remindDate', !document.getElementById('remindDate').checked || document.getElementById('specialDate').value);
   }
   if (s === 3) {
     check('deliveryAddress', document.getElementById('deliveryAddress').value.trim());
-    check('deliveryDate', document.getElementById('deliveryDate').value);
+    const dd = document.getElementById('deliveryDate').value;
+    document.getElementById('err-deliveryDate').textContent = fabDateTooEarly(dd)
+      ? 'Please choose tomorrow or a later date.'
+      : 'Please let us know your preferred delivery date.';
+    check('deliveryDate', dd && !fabDateTooEarly(dd));
     const timeVal = document.getElementById('deliveryTime').value;
     const timeValid = timeVal && (timeVal !== 'Specific' || document.getElementById('deliveryTimeSpecific').value.trim());
     check('deliveryTime', timeValid);
@@ -494,6 +551,7 @@ function collect(s) {
   if (s === 2) {
     fd.occasion = document.getElementById('occasion').value.trim();
     fd.specialDate = document.getElementById('specialDate').value;
+    fd.remindDate = document.getElementById('remindDate').checked;
   }
   if (s === 3) {
     fd.deliveryAddress = document.getElementById('deliveryAddress').value.trim();
@@ -508,6 +566,7 @@ function collect(s) {
   }
   if (s === 4) {
     fd.giftMessage = document.getElementById('giftMessage').value.trim();
+    fd.itemMessage = document.getElementById('itemMessage').value.trim();
     fd.thingsToAvoid = document.getElementById('thingsToAvoid').value.trim();
     fd.extraNotes = document.getElementById('extraNotes').value.trim();
   }
@@ -567,7 +626,7 @@ function submitForm() {
     pickupName: fd.pickupName || '',
     pickupPhone: fd.pickupPhone || '',
     recipientContactPref: fd.recipientContactPref || '',
-    giftMessage: fd.giftMessage || '',
+    giftMessage: combineMessages(fd.giftMessage, fd.itemMessage),
     thingsToAvoid: fd.thingsToAvoid || '',
     extraNotes: fd.extraNotes || ''
   };
@@ -584,6 +643,15 @@ function submitForm() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ action: 'giftDelivery', ...payload })
   }).catch(function() {});
+
+  if (fd.remindDate && fd.specialDate) {
+    fabSaveReminder({
+      email: fd.clientEmail,
+      name: (fd.clientName || '').split(' ')[0],
+      celebrating: fd.relationship + (fd.recipientName ? ' (' + fd.recipientName + ')' : ''),
+      date: fd.specialDate
+    });
+  }
 
   function showSuccess() {
     const firstName = (fd.clientName || '').split(' ')[0];

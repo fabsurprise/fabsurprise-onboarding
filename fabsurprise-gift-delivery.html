@@ -364,18 +364,16 @@ select.field-input {
         <textarea class="field-textarea" id="giftMessage" placeholder="What would you like the note to say?"></textarea>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
-        <label class="field-label">Short Message for a Balloon or Personalised Item <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
-        <p class="field-hint">For words written on a balloon, gift box, mug, book or any personalised item. Keep it short. Tap an example to use it, or write your own.</p>
+        <label class="field-label">Short Message on Personalised Items (e.g. balloons) <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
         <input class="field-input" id="itemMessage" type="text" maxlength="40" placeholder="e.g. Happy Birthday Princess">
-        <div class="msg-chips"><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Princess</button><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Mum</button><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Dad</button><button type="button" class="msg-chip" onclick="useChip(this)">Love You Dad</button><button type="button" class="msg-chip" onclick="useChip(this)">From Your Baby Girl</button></div>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
         <label class="field-label">Is There Anything You'd Like Us to Avoid? <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
-        <textarea class="field-textarea" id="thingsToAvoid" placeholder="Any scent, flower, or detail you'd rather we didn't include, no detail is too small to mention"></textarea>
+        <textarea class="field-textarea" id="thingsToAvoid" style="min-height:84px;" placeholder="Any scent, flower, or detail you'd rather we didn't include, no detail is too small to mention"></textarea>
       </div>
       <div class="field-wrap" style="margin-top:18px;">
         <label class="field-label">Anything Else We Should Know? <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
-        <textarea class="field-textarea" id="extraNotes" placeholder="Allergies, preferences, anything that helps us get it right"></textarea>
+        <textarea class="field-textarea" id="extraNotes" style="min-height:84px;" placeholder="Allergies, preferences, anything that helps us get it right"></textarea>
       </div>
       <div class="q-nav">
         <button class="btn-back" onclick="goPrev(4)">Back</button>

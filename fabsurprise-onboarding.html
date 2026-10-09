@@ -666,7 +666,6 @@ body {
           <input class="field-input" id="setupTime" type="time">
         </div>
       </div>
-      <label class="remind-opt" style="margin:-6px 0 22px;"><input type="checkbox" id="remindDate"><span>Remind me three weeks before this date every year</span></label>
 
       <div class="field-group">
         <label class="field-label">Celebration Location</label>
@@ -793,10 +792,8 @@ body {
       </div>
 
       <div class="field-group">
-        <label class="field-label">Short Message for a Balloon or Personalised Item <span class="optional">Optional</span></label>
-        <p class="field-hint">For words written on a balloon, gift box, mug, book or any personalised item. Keep it short. Tap an example to use it, or write your own.</p>
+        <label class="field-label">Short Message on Personalised Items (e.g. balloons) <span class="optional">Optional</span></label>
         <input class="field-input" id="itemMessage" type="text" maxlength="40" placeholder="e.g. Happy Birthday Princess">
-        <div class="msg-chips"><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Princess</button><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Mum</button><button type="button" class="msg-chip" onclick="useChip(this)">Happy Birthday Dad</button><button type="button" class="msg-chip" onclick="useChip(this)">Love You Dad</button><button type="button" class="msg-chip" onclick="useChip(this)">From Your Baby Girl</button></div>
       </div>
 
       <div class="field-group">
@@ -917,12 +914,37 @@ body {
       <div class="nav-bar">
         <button class="btn-back" onclick="prevSection(4)">Back</button>
         <button class="btn-save" onclick="saveProgress()">Save & continue later</button>
-        <button class="btn-next" onclick="nextSection(4)">Review</button>
+        <button class="btn-next" onclick="nextSection(4)">Continue</button>
       </div>
     </div>
 
-    <!-- SECTION 5: REVIEW -->
+    <!-- SECTION 5: SPECIAL DAY (optional, yearly reminder) -->
     <div class="section-block" id="section-5">
+      <div class="section-eyebrow">One more thing, if you'd like</div>
+      <h2 class="section-title">Save a <em style="color:var(--wine);">special day</em></h2>
+      <p class="section-subtitle">Your birthday, theirs, an anniversary, any day that matters to you. We'll remind you three weeks before, every year, so there is time to plan. You can skip this.</p>
+      <div class="section-divider"></div>
+
+      <div class="field-group">
+        <label class="field-label">Whose Day Is It?</label>
+        <input class="field-input" id="reminderFor" type="text" maxlength="40" placeholder="e.g. Mine, Mum, my partner">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Special Date</label>
+        <input class="field-input" id="reminderDate" type="date">
+        <div class="field-error-msg" id="err-reminderDate">Please choose the date, or tap Skip.</div>
+      </div>
+      <p class="field-hint" style="margin-top:6px;">We'll only use this to send your reminder and a few ideas during the year. You can stop at any time.</p>
+
+      <div class="nav-bar">
+        <button class="btn-back" onclick="prevSection(5)">Back</button>
+        <button class="btn-save" onclick="skipReminder()">Skip</button>
+        <button class="btn-next" onclick="saveReminder()">Remind Me</button>
+      </div>
+    </div>
+
+    <!-- SECTION 6: REVIEW -->
+    <div class="section-block" id="section-6">
       <div class="section-eyebrow">Almost there</div>
       <h2 class="section-title">Review Your Details</h2>
       <p class="section-subtitle">Please take a moment to review everything before we begin planning your celebration.</p>
@@ -931,7 +953,7 @@ body {
       <div id="reviewContent"></div>
 
       <div class="nav-bar">
-        <button class="btn-back" onclick="prevSection(5)">Back</button>
+        <button class="btn-back" onclick="prevSection(6)">Back</button>
         <div></div>
         <button class="btn-next" id="submitBtn" onclick="submitForm()" style="background:var(--gold);color:var(--wine-dark);max-width:240px;">Submit & Begin</button>
       </div>
@@ -1018,8 +1040,8 @@ document.addEventListener('DOMContentLoaded', function() {
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
 
 let currentSection = 1;
-const totalSections = 5;
-const stepLabels = ['About You','Celebration','The Heart','Details','Review'];
+const totalSections = 6;
+const stepLabels = ['About You','Celebration','The Heart','Details','Special Day','Review'];
 let formData = {};
 
 function renderProgress() {
@@ -1052,12 +1074,37 @@ function startForm() {
 function nextSection(from) {
   if (!validateSection(from)) return;
   collectSection(from);
-  if (from === 4) buildReview();
+  if (from === 5) buildReview();
+  if (from === 4) {
+    const rf = document.getElementById('reminderFor');
+    if (rf && !rf.value) rf.value = formData.relationship === 'Myself' ? 'Mine' : (formData.relationship || '');
+  }
   document.getElementById(`section-${from}`).classList.remove('active');
   currentSection = from + 1;
   document.getElementById(`section-${currentSection}`).classList.add('active');
   renderProgress();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function skipReminder() {
+  document.getElementById('reminderDate').value = '';
+  document.getElementById('err-reminderDate').style.display = 'none';
+  document.getElementById('reminderDate').classList.remove('error');
+  formData.reminderDate = '';
+  formData.reminderFor = '';
+  formData.remindMe = '';
+  nextSection(5);
+}
+
+function saveReminder() {
+  const d = document.getElementById('reminderDate');
+  const er = document.getElementById('err-reminderDate');
+  if (!d.value) { er.style.display = 'block'; d.classList.add('error'); return; }
+  er.style.display = 'none'; d.classList.remove('error');
+  formData.reminderDate = d.value;
+  formData.reminderFor = document.getElementById('reminderFor').value.trim();
+  formData.remindMe = 'Yes';
+  nextSection(5);
 }
 
 function prevSection(from) {
@@ -1143,7 +1190,6 @@ function collectSection(num) {
   } else if (num === 2) {
     formData.occasion = val('occasion');
     formData.celebDate = val('celebDate');
-    formData.remindDate = document.getElementById('remindDate').checked ? 'Yes' : '';
     formData.setupTime = val('setupTime');
     formData.celebLocation = val('celebLocation');
     formData.venueAddress = val('venueAddress');
@@ -1273,12 +1319,12 @@ function submitForm() {
     body: JSON.stringify(payload)
   }).catch(() => {});
 
-  if (formData.remindDate && formData.celebDate) {
+  if (formData.remindMe && formData.reminderDate) {
     fabSaveReminder({
       email: formData.clientEmail,
       name: (formData.clientName || '').split(' ')[0],
-      celebrating: formData.relationship === 'Myself' ? 'Myself' : (formData.relationship + (formData.recipientName ? ' (' + formData.recipientName + ')' : '')),
-      date: formData.celebDate
+      celebrating: formData.reminderFor || (formData.relationship === 'Myself' ? 'Mine' : (formData.relationship + (formData.recipientName ? ' (' + formData.recipientName + ')' : ''))),
+      date: formData.reminderDate
     });
   }
 

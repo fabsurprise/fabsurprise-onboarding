@@ -997,7 +997,24 @@ function fabSaveReminder(o) {
   fetch(ML_REMIND_URL, { method: 'POST', mode: 'no-cors', body: b }).catch(function() {});
 }
 
-document.addEventListener('DOMContentLoaded', function() { const d = document.getElementById('celebDate'); if (d) d.min = fabEarliestDate(); });
+document.addEventListener('DOMContentLoaded', function() {
+  const d = document.getElementById('celebDate');
+  if (!d) return;
+  d.min = fabEarliestDate();
+  // Some phones let people pick a date before the minimum, so check it the moment it is picked.
+  d.addEventListener('change', function() {
+    const er = document.getElementById('err-celebDate');
+    if (fabDateTooEarly(d.value)) {
+      d.value = '';
+      d.classList.add('error');
+      er.textContent = 'Please choose tomorrow or a later date.';
+      er.style.display = 'block';
+    } else {
+      d.classList.remove('error');
+      er.style.display = 'none';
+    }
+  });
+});
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgG8ay4zJ13aAlld-JfCM7KEJ1Bk3cViHziqgeQK0n0js3sl91vxq810IxudwBVCuCDA/exec';
 
 let currentSection = 1;

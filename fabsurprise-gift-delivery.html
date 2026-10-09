@@ -463,7 +463,24 @@ function fabSaveReminder(o) {
   fetch(ML_REMIND_URL, { method: 'POST', mode: 'no-cors', body: b }).catch(function() {});
 }
 
-document.addEventListener('DOMContentLoaded', function() { const d = document.getElementById('deliveryDate'); if (d) d.min = fabEarliestDate(); });
+document.addEventListener('DOMContentLoaded', function() {
+  const d = document.getElementById('deliveryDate');
+  if (!d) return;
+  d.min = fabEarliestDate();
+  // Some phones let people pick a date before the minimum, so check it the moment it is picked.
+  d.addEventListener('change', function() {
+    const er = document.getElementById('err-deliveryDate');
+    if (fabDateTooEarly(d.value)) {
+      d.value = '';
+      d.classList.add('error');
+      er.textContent = 'Please choose tomorrow or a later date.';
+      er.style.display = 'block';
+    } else {
+      d.classList.remove('error');
+      er.style.display = 'none';
+    }
+  });
+});
 let curStep = 1;
 let fd = {};
 

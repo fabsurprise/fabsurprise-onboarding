@@ -245,9 +245,8 @@ select.field-input {
     <div class="brand-mark">Fabsurprise</div>
     <h1 class="landing-title">Your Gift,<br><em>On Its Way</em></h1>
     <p class="landing-body">
-      Thank you for trusting us with this. This short guide helps us capture everything we need, so your gift arrives exactly as you've imagined.
+      Thank you for your order. Please fill in the delivery details below.
     </p>
-    <div class="landing-meta">Just a few quick details</div>
     <button class="btn-begin" onclick="startForm()">Begin</button>
   </div>
 </div>
@@ -265,7 +264,6 @@ select.field-input {
     <div class="q-screen active" id="q1">
       <div class="q-thread">Who is this for?</div>
       <h2 class="q-title">Tell us about the<br><em>person receiving this</em></h2>
-      <p class="q-subtext">The little details help us make sure it feels personal the moment it arrives.</p>
       <div class="field-wrap">
         <label class="field-label">Recipient's Full Name</label>
         <input class="field-input" id="recipientName" type="text" placeholder="Their name">
@@ -290,7 +288,6 @@ select.field-input {
     <div class="q-screen" id="q2">
       <div class="q-thread">What's the occasion?</div>
       <h2 class="q-title">What are we<br><em>celebrating?</em></h2>
-      <p class="q-subtext">This helps us make sure every detail feels right for the occasion.</p>
       <div class="field-wrap">
         <label class="field-label">Occasion</label>
         <input class="field-input" id="occasion" type="text" placeholder="e.g. Birthday, Just Because, Appreciation">
@@ -306,7 +303,6 @@ select.field-input {
     <div class="q-screen" id="q3">
       <div class="q-thread">Where should this go?</div>
       <h2 class="q-title">Delivery<br><em>Details</em></h2>
-      <p class="q-subtext">Exact and complete, so it arrives without a hitch.</p>
       <div class="field-wrap">
         <label class="field-label">Delivery Address</label>
         <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Please include apartment numbers, estate names, or any landmarks that will help our team find the location easily.</p>
@@ -358,7 +354,6 @@ select.field-input {
     <div class="q-screen" id="q4">
       <div class="q-thread">The words that matter</div>
       <h2 class="q-title">What would you<br>like <em>said?</em></h2>
-      <p class="q-subtext">Whatever you'd like included, in your own words, we'll make sure it's there.</p>
       <div class="field-wrap">
         <label class="field-label">Card or Gift Message <span style="font-weight:400;color:var(--text-light);">Optional</span></label>
         <textarea class="field-textarea" id="giftMessage" placeholder="What would you like the note to say?"></textarea>
@@ -407,7 +402,6 @@ select.field-input {
     <div class="q-screen" id="q6">
       <div class="q-thread">Just so we can reach you</div>
       <h2 class="q-title">A Little<br><em>About You</em></h2>
-      <p class="q-subtext">So we can confirm everything's in place before it's on its way.</p>
       <div class="field-wrap">
         <label class="field-label">Your Full Name</label>
         <input class="field-input" id="clientName" type="text" placeholder="Your name">
@@ -436,7 +430,7 @@ select.field-input {
   <div class="success-mark">&#10003;</div>
   <h2 class="success-title" id="successTitle">Thank you.</h2>
   <p class="success-body" id="successBody">
-    We've received everything we need and we'll now begin preparing your delivery. If anything needs confirming, we'll reach out personally.
+    We've received your details. If anything needs confirming, we'll message you.
   </p>
   <div id="successExtra"></div>
 </div>
@@ -707,8 +701,8 @@ function submitForm() {
     const firstName = (fd.clientName || '').split(' ')[0];
     document.getElementById('successTitle').textContent = firstName ? firstName + ', thank you.' : 'Thank you.';
     document.getElementById('successBody').innerHTML =
-      'We\'ve received everything, and we\'re already making sure it\'s exactly right before it\'s on its way.<br><br>' +
-      'If anything needs confirming, we\'ll reach out personally.';
+      'We\'ve received your details.<br><br>' +
+      'If anything needs confirming, we\'ll message you.';
   }
 
   function showFailure() {

@@ -125,6 +125,7 @@
     --champagne:#C9B27C;
     --charcoal:#1E1A18;
     --wine-black:#1C0A0E;
+    --burgundy-deep:#3A0911;
     --taupe:#A69B91;
     --ink:#3a332f;
   }
@@ -432,9 +433,21 @@
   .remind-btn{margin-top:6px;}
   .remind-btn[disabled]{opacity:0.6;cursor:default;}
   .remind-form[hidden],.remind-done[hidden],.remind-error[hidden]{display:none;}
+  .hero-remind{font-size:13.5px;line-height:1.6;color:var(--taupe);margin:14px 0 0;}
+  .hero-remind a{color:var(--burgundy);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(82,12,23,0.3);}
+  .remind-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .remind-pop{position:fixed;left:16px;right:16px;bottom:84px;z-index:24;background:var(--ivory);border:1px solid rgba(82,12,23,0.18);box-shadow:0 12px 32px rgba(28,10,14,0.18);padding:20px 20px 18px;text-align:left;transform:translateY(16px);opacity:0;visibility:hidden;transition:opacity .35s ease, transform .35s ease, visibility 0s linear .35s;}
+  .remind-pop.is-open{opacity:1;transform:none;visibility:visible;transition:opacity .35s ease, transform .35s ease;}
+  @media (min-width:700px){ .remind-pop{left:auto;right:32px;bottom:104px;width:340px;} }
+  .remind-pop-x{position:absolute;top:6px;right:8px;background:none;border:none;font-size:24px;line-height:1;color:var(--taupe);cursor:pointer;padding:6px 8px;}
+  .remind-pop-title{font-size:22px;color:var(--charcoal);margin:0 28px 6px 0;}
+  .remind-pop-text{font-size:14px;line-height:1.6;color:var(--ink);margin:0 0 14px;}
+  .remind-pop-btn{padding:14px 20px;}
   .remind-done{padding:8px 0 0;}
   .remind-done h3{font-size:26px;color:var(--burgundy);margin:0 0 10px;}
   .remind-done p{font-size:15px;line-height:1.7;color:var(--ink);margin:0;}
+  .remind-next{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 24px;margin-top:18px;}
+  .remind-next .offering-link{margin-top:0;font-size:13px;font-weight:600;color:var(--burgundy);text-decoration:none;}
 
   /* WHO WE ARE */
   .section{
@@ -913,7 +926,7 @@
 
   /* THE RELATIONSHIP (FABmily) */
   .relationship{
-    background:var(--burgundy);
+    background:var(--wine-black);
     text-align:left;
   }
   .relationship .eyebrow-text{color:var(--champagne);}
@@ -1406,13 +1419,24 @@
           <label class="remind-field"><span>Month</span><select name="month" required><option value="">Month</option><option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select></label>
         </div>
         <label class="remind-consent"><input type="checkbox" name="consent" required><span>Yes, send me the reminder and a few ideas during the year. I can stop at any time.</span></label>
+        <div class="remind-trap" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <p class="remind-error" id="remindError" role="alert" hidden></p>
         <button type="submit" class="btn btn-primary remind-btn" data-cta="remind_signup">Remind Me</button>
       </form>
       <div class="remind-done" id="remindDone" hidden>
-        <h3 class="display">Almost done.</h3>
-        <p>We've sent you an email. Tap the link inside to confirm, and your reminder is saved.</p>
+        <h3 class="display">Your date is saved.</h3>
+        <p>We'll email you three weeks before the day.</p>
+        <div class="remind-next">
+          <a class="offering-link" data-cta="remind_done_stories" href="index.html#stories">See what we've created &rarr;</a>
+          <a class="offering-link" data-cta="remind_done_design" href="https://fabsurprisestudio.com/fabsurprise-design-your-moment.html">Start planning now &rarr;</a>
+        </div>
       </div>
+    </div>
+    <div class="remind-pop" id="remindPop" role="dialog" aria-label="Save a date with us" aria-hidden="true">
+      <button type="button" class="remind-pop-x" id="remindPopX" aria-label="Close">&times;</button>
+      <p class="remind-pop-title display">Save a date with us.</p>
+      <p class="remind-pop-text">A birthday or anniversary coming up? We'll email you three weeks before.</p>
+      <a class="btn btn-primary remind-pop-btn" id="remindPopGo" data-cta="remind_popup_open" href="#remind">Save a Date</a>
     </div>
   </section>
 
@@ -1643,7 +1667,7 @@
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function(entries, obs){
       if (entries[0].isIntersecting && !seen) { seen = true; obs.disconnect();
-        try { fetch('https://assets.mailerlite.com/jsonp/2697780/forms/200834537777792009/takel', {mode:'no-cors'}); } catch(e){} }
+        try { fetch('https://assets.mailerlite.com/jsonp/2697780/forms/200834537777792009/takel', {mode:'no-cors'}).catch(function(){}); } catch(e){} }
     }).observe(form);
   }
   function bad(el, on){ var box = el.closest('.remind-field') || el.closest('.remind-consent'); if (box) box.classList.toggle('is-bad', on); }
@@ -1662,6 +1686,7 @@
     if (!f.consent.checked) ok = false;
     if (!ok) { err.textContent = msg || 'Please fill in every box and tick the box to agree.'; err.hidden = false; return; }
     err.hidden = true;
+    if (f.website && f.website.value) { form.hidden = true; done.hidden = false; return; }  // bot filled the hidden box: do not send
     btn.disabled = true; btn.textContent = 'Saving...';
     var body = new URLSearchParams();
     body.append('fields[email]', f.email.value.trim());
@@ -1674,12 +1699,54 @@
       .then(function(){
         form.hidden = true; done.hidden = false;
         if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'date_reminders' });
+        if (window.fabRemindSigned) window.fabRemindSigned();
       })
       .catch(function(){
         btn.disabled = false; btn.textContent = 'Remind Me';
         err.textContent = 'Something went wrong. Please check your connection and try again.'; err.hidden = false;
       });
   });
+})();
+
+(function(){
+  // Gentle prompt for date reminders: shows once, after 35 seconds or halfway down the page,
+  // never if the visitor closed it in the last 30 days or already signed up.
+  var pop = document.getElementById('remindPop');
+  var section = document.getElementById('remind');
+  if (!pop || !section) return;
+  var KEY = 'fab_remind_pop';
+  function get(){ try { return localStorage.getItem(KEY); } catch(e){ return null; } }
+  function set(v){ try { localStorage.setItem(KEY, v); } catch(e){} }
+  var saved = get();
+  if (saved === 'signed') return;
+  if (saved && Date.now() - parseInt(saved, 10) < 30*24*60*60*1000) return;
+  var shown = false, timer;
+  function inView(el){ var r = el.getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0; }
+  function show(){
+    if (shown || inView(section)) return;
+    shown = true; clearTimeout(timer); removeEventListener('scroll', onScroll);
+    pop.classList.add('is-open'); pop.setAttribute('aria-hidden', 'false');
+    if (typeof gtag === 'function') gtag('event', 'remind_popup_shown');
+  }
+  function hide(remember){
+    pop.classList.remove('is-open'); pop.setAttribute('aria-hidden', 'true');
+    if (remember) set(String(Date.now()));
+  }
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - innerHeight;
+    if (h > 0 && scrollY / h > 0.5) show();
+    if (shown && inView(section)) hide(false);
+  }
+  timer = setTimeout(show, 35000);
+  addEventListener('scroll', onScroll, { passive: true });
+  document.getElementById('remindPopX').addEventListener('click', function(){ hide(true); });
+  document.getElementById('remindPopGo').addEventListener('click', function(e){
+    e.preventDefault(); hide(true);
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(function(){ var n = section.querySelector('input[name=name]'); if (n) n.focus({ preventScroll: true }); }, 700);
+  });
+  addEventListener('scroll', function(){ if (shown && pop.classList.contains('is-open') && inView(section)) hide(false); }, { passive: true });
+  window.fabRemindSigned = function(){ set('signed'); hide(false); };
 })();
 </script>
 

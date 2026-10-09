@@ -32,7 +32,7 @@
 <meta name="twitter:image" content="https://fabsurprisestudio.com/img/benz-70th-birthday.jpg">
 
 <!-- Favicon: simple burgundy/ivory monogram, no external file needed -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%235A0F1B'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' fill='%23F7F2EA' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23520C17'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' fill='%23F6F2EF' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E">
 
 <!-- Structured data: website, page and business as one connected entity -->
 <script type="application/ld+json">
@@ -175,10 +175,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --burgundy:#5A0F1B;
-    --ivory:#F7F2EA;
+    --burgundy:#520C17;
+    --ivory:#F6F2EF;
     --champagne:#C9B27C;
     --charcoal:#1E1A18;
+    --wine-black:#1C0A0E;
     --taupe:#A69B91;
     --ink:#3a332f;
   }
@@ -221,7 +222,7 @@
     padding:18px 20px;
     background:rgba(255,255,255,0.92);
     backdrop-filter:blur(8px);
-    border-bottom:1px solid rgba(90,15,27,0.1);
+    border-bottom:1px solid rgba(82,12,23,0.1);
   }
   .logo{font-size:21px;color:var(--burgundy);}
   .nav-actions{display:flex;align-items:center;gap:10px;}
@@ -307,7 +308,7 @@
     position:fixed;
     inset:0;
     z-index:30;
-    background:var(--charcoal);
+    background:var(--wine-black);
     display:flex;
     flex-direction:column;
     padding:20px 20px 40px;
@@ -333,7 +334,7 @@
     color:var(--ivory);
     opacity:0.85;
     padding:14px 0;
-    border-bottom:1px solid rgba(247,242,234,0.14);
+    border-bottom:1px solid rgba(246,242,239,0.14);
     transition:opacity .2s ease;
   }
   .menu-link:last-child{border-bottom:none;}
@@ -348,7 +349,7 @@
   .menu-foot{display:flex;flex-direction:column;gap:14px;margin-top:36px;}
   .menu-foot .btn-primary{width:auto;padding:16px 26px;}
   .menu-cta{text-decoration:none;}
-  .menu-contact{font-size:13px;color:rgba(247,242,234,0.55);}
+  .menu-contact{font-size:13px;color:rgba(246,242,239,0.55);}
 
   /* HERO */
   .hero{
@@ -463,6 +464,33 @@
     .section:not(.stories-section){ padding-left:max(40px, calc((100% - 720px) / 2)); padding-right:max(40px, calc((100% - 720px) / 2)); }
   }
 
+  /* DATE REMINDERS (email list signup, sends to MailerLite) */
+  .remind{background:var(--ivory);padding:64px 20px 56px;border-top:1px solid rgba(82,12,23,0.1);}
+  .remind-inner{max-width:560px;margin:0 auto;text-align:center;}
+  .remind h2{font-size:clamp(28px,7vw,34px);line-height:1.25;color:var(--charcoal);margin:0 0 14px;}
+  .remind-lede{font-size:15px;line-height:1.7;color:var(--ink);margin:0 auto 28px;max-width:440px;}
+  .remind-form{display:flex;flex-direction:column;gap:14px;text-align:left;}
+  .remind-row{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media (min-width:560px){ .remind-row{grid-template-columns:1fr 1fr;} }
+  .remind-field{display:flex;flex-direction:column;gap:6px;}
+  .remind-field span{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--taupe);}
+  .remind-field input,.remind-field select{font-family:'Inter',sans-serif;font-size:16px;color:var(--charcoal);background:#FFFFFF;border:1px solid rgba(82,12,23,0.22);border-radius:0;padding:13px 14px;width:100%;box-sizing:border-box;-webkit-appearance:none;appearance:none;}
+  .remind-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23520C17' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;}
+  .remind-field input:focus,.remind-field select:focus{outline:none;border-color:var(--burgundy);}
+  .remind-field input::placeholder{color:#9C8F8A;}
+  .remind-field.is-bad input,.remind-field.is-bad select{border-color:#B02020;}
+  .remind-note{font-size:12.5px;color:var(--taupe);margin:-4px 0 0;}
+  .remind-consent{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;line-height:1.55;color:var(--ink);cursor:pointer;}
+  .remind-consent input{width:18px;height:18px;margin:2px 0 0;flex-shrink:0;accent-color:var(--burgundy);}
+  .remind-consent.is-bad span{color:#B02020;}
+  .remind-error{font-size:13px;color:#B02020;margin:0;}
+  .remind-btn{margin-top:6px;}
+  .remind-btn[disabled]{opacity:0.6;cursor:default;}
+  .remind-form[hidden],.remind-done[hidden],.remind-error[hidden]{display:none;}
+  .remind-done{padding:8px 0 0;}
+  .remind-done h3{font-size:26px;color:var(--burgundy);margin:0 0 10px;}
+  .remind-done p{font-size:15px;line-height:1.7;color:var(--ink);margin:0;}
+
   /* WHO WE ARE */
   .section{
     padding:64px 20px;
@@ -571,12 +599,12 @@
 
   /* OUR VIEW */
   .belief{
-    background:var(--charcoal);
+    background:var(--wine-black);
     padding:72px 20px 8px;
   }
   .belief .eyebrow-text{color:var(--champagne);}
   .belief h2{color:var(--ivory);font-size:30px;line-height:1.3;}
-  .belief p{color:rgba(247,242,234,0.72);}
+  .belief p{color:rgba(246,242,239,0.72);}
   .belief p + p{margin-top:18px;}
 
   /* THE PERSON */
@@ -588,7 +616,7 @@
 
   /* WHO IS ON YOUR MIND (editorial, conversational entries) */
   .mind-list{display:flex;flex-direction:column;}
-  .mind-entry{padding:28px 0;border-bottom:1px solid rgba(90,15,27,0.12);}
+  .mind-entry{padding:28px 0;border-bottom:1px solid rgba(82,12,23,0.12);}
   .mind-entry:first-child{padding-top:0;}
   .mind-entry:last-child{border-bottom:none;}
   .mind-kicker{
@@ -621,7 +649,7 @@
     flex-direction:column;
     gap:14px;
     padding-top:28px;
-    border-top:1px solid rgba(90,15,27,0.15);
+    border-top:1px solid rgba(82,12,23,0.15);
   }
   .category{
     font-size:12px;
@@ -632,7 +660,7 @@
   }
 
   /* WHAT WE CREATE */
-  .create-intro{margin-top:40px;padding-top:28px;border-top:1px solid rgba(90,15,27,0.15);}
+  .create-intro{margin-top:40px;padding-top:28px;border-top:1px solid rgba(82,12,23,0.15);}
   .create-intro .lede{
     font-family:'Cormorant Garamond',Georgia,serif;
     font-size:22px;
@@ -643,10 +671,10 @@
   }
   .create-intro p{font-size:15px;line-height:1.7;color:var(--ink);margin:0;}
 
-  .offerings{display:flex;flex-direction:column;margin-top:28px;padding-top:28px;border-top:1px solid rgba(90,15,27,0.15);}
+  .offerings{display:flex;flex-direction:column;margin-top:28px;padding-top:28px;border-top:1px solid rgba(82,12,23,0.15);}
   .offering{
     padding:32px 0;
-    border-bottom:1px solid rgba(90,15,27,0.14);
+    border-bottom:1px solid rgba(82,12,23,0.14);
   }
   .offering:last-of-type{border-bottom:none;}
   .offering-num{
@@ -702,7 +730,7 @@
   }
 
   /* THE METHOD */
-  .method{background:var(--charcoal);}
+  .method{background:var(--wine-black);}
   .method .eyebrow-text{color:var(--champagne);}
   .method h2{color:var(--ivory);}
   .method-steps{display:flex;flex-direction:column;margin-top:20px;}
@@ -743,11 +771,11 @@
   .method-step:last-child .method-thread{display:none;}
   .method-text{padding-top:5px;}
   .method-text h3{font-size:18px;color:var(--ivory);margin-bottom:5px;line-height:1.3;}
-  .method-text p{font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);}
+  .method-text p{font-size:13.5px;line-height:1.6;color:rgba(246,242,239,0.68);}
   .method-final{
     margin-top:28px;
     padding-top:22px;
-    border-top:1px solid rgba(247,242,234,0.15);
+    border-top:1px solid rgba(246,242,239,0.15);
     font-family:'Cormorant Garamond',Georgia,serif;
     font-style:italic;
     font-size:20px;
@@ -756,8 +784,8 @@
   }
 
   /* ACCORDION (mobile only — Method + What We Create) */
-  .accordion-item{border-bottom:1px solid rgba(247,242,234,0.14);}
-  .accordion-item:first-child{border-top:1px solid rgba(247,242,234,0.14);}
+  .accordion-item{border-bottom:1px solid rgba(246,242,239,0.14);}
+  .accordion-item:first-child{border-top:1px solid rgba(246,242,239,0.14);}
   .accordion-trigger{
     display:flex;
     align-items:center;
@@ -813,8 +841,8 @@
   }
 
   /* Light-theme accordion variant for What We Create */
-  .offerings-accordion .accordion-item{border-bottom:1px solid rgba(90,15,27,0.14);}
-  .offerings-accordion .accordion-item:first-child{border-top:1px solid rgba(90,15,27,0.14);}
+  .offerings-accordion .accordion-item{border-bottom:1px solid rgba(82,12,23,0.14);}
+  .offerings-accordion .accordion-item:first-child{border-top:1px solid rgba(82,12,23,0.14);}
   .offerings-accordion .accordion-trigger .accordion-title{color:var(--charcoal);font-size:19px;}
   .offerings-accordion .accordion-chevron{border-color:var(--burgundy);}
   .offerings-accordion .offering-line{
@@ -860,7 +888,7 @@
     width:100%;
     aspect-ratio:4/5;
     overflow:hidden;
-    background:#e8e1d5;
+    background:#E9E3DF;
   }
   .story-counter{
     position:absolute;
@@ -870,7 +898,7 @@
     font-size:11px;
     letter-spacing:0.1em;
     font-family:'Inter',sans-serif;
-    color:rgba(247,242,234,0.9);
+    color:rgba(246,242,239,0.9);
     background:rgba(30,26,24,0.45);
     padding:5px 9px;
     border-radius:2px;
@@ -907,21 +935,21 @@
   }
 
   /* SENDING IT HOME (diaspora + season) */
-  .homeward{background:var(--charcoal);}
+  .homeward{background:var(--wine-black);}
   .homeward .eyebrow-text{color:var(--champagne);}
   .homeward h2{color:var(--ivory);}
-  .homeward > p.reveal{color:rgba(247,242,234,0.72);}
+  .homeward > p.reveal{color:rgba(246,242,239,0.72);}
   .homeward-list{display:flex;flex-direction:column;gap:0;margin-top:32px;}
   .homeward-item{
     padding:24px 0;
-    border-bottom:1px solid rgba(247,242,234,0.14);
+    border-bottom:1px solid rgba(246,242,239,0.14);
     display:flex;
     flex-direction:column;
     gap:8px;
   }
   .homeward-item:last-child{border-bottom:none;}
   .homeward-item h3{font-size:19px;color:var(--ivory);line-height:1.3;}
-  .homeward-item p{font-size:14.5px;line-height:1.7;color:rgba(247,242,234,0.68);}
+  .homeward-item p{font-size:14.5px;line-height:1.7;color:rgba(246,242,239,0.68);}
 
   /* FOR COMPANIES & BRANDS */
   .b2b{background:var(--ivory);}
@@ -929,7 +957,7 @@
   .b2b-list{display:flex;flex-direction:column;gap:0;margin-top:32px;}
   .b2b-item{
     padding:24px 0;
-    border-bottom:1px solid rgba(90,15,27,0.14);
+    border-bottom:1px solid rgba(82,12,23,0.14);
     display:flex;
     flex-direction:column;
     gap:8px;
@@ -940,12 +968,12 @@
 
   /* THE RELATIONSHIP (FABmily) */
   .relationship{
-    background:var(--charcoal);
+    background:var(--burgundy);
     text-align:left;
   }
   .relationship .eyebrow-text{color:var(--champagne);}
   .relationship h2{color:var(--ivory);font-size:28px;}
-  .relationship p{color:rgba(247,242,234,0.72);}
+  .relationship p{color:rgba(246,242,239,0.72);}
   .relationship .relationship-mark{
     font-family:'Cormorant Garamond',Georgia,serif;
     font-style:italic;
@@ -960,7 +988,7 @@
     flex-direction:column;
     margin-top:32px;
     padding-top:28px;
-    border-top:1px solid rgba(247,242,234,0.14);
+    border-top:1px solid rgba(246,242,239,0.14);
   }
   .journey-trail-label{
     font-size:11px;
@@ -994,13 +1022,13 @@
   }
   .journey-step.is-final .journey-dot{
     background:var(--ivory);
-    box-shadow:0 0 0 3px rgba(247,242,234,0.18);
+    box-shadow:0 0 0 3px rgba(246,242,239,0.18);
   }
   .journey-line{
     width:1px;
     flex:1 1 auto;
     min-height:22px;
-    background:rgba(247,242,234,0.22);
+    background:rgba(246,242,239,0.22);
     margin:4px 0;
   }
   .journey-step:last-child .journey-line{display:none;}
@@ -1018,7 +1046,7 @@
   .journey-text p{
     font-size:12.5px;
     line-height:1.55;
-    color:rgba(247,242,234,0.6);
+    color:rgba(246,242,239,0.6);
     margin:0;
   }
   @media (min-width:900px){
@@ -1033,7 +1061,7 @@
   .words{
     position:relative;
     overflow:hidden;
-    background:var(--charcoal);
+    background:var(--wine-black);
     width:100vw;
     left:50%;
     right:50%;
@@ -1124,7 +1152,7 @@
     width:6px;
     height:6px;
     border-radius:50%;
-    background:rgba(247,242,234,0.32);
+    background:rgba(246,242,239,0.32);
     border:none;
     padding:0;
     cursor:pointer;
@@ -1136,13 +1164,13 @@
     transition:width .3s ease, background .3s ease;
   }
   /* Testimonials get their own colour so they stand apart from the dark FABmily section above */
-  .words{ background:#EFE4D2; }
+  .words{ background:#EEE8E3; }
   .words .words-content .eyebrow-text{ color:var(--burgundy); text-shadow:none; }
   .words .words-content .eyebrow-line{ background:var(--burgundy); }
   .words .words-content h2{ color:var(--charcoal); text-shadow:none; }
   .words .words-quote{ color:var(--charcoal); text-shadow:none; }
   .words .words-attribution{ color:var(--burgundy); text-shadow:none; }
-  .words .words-dot{ background:rgba(90,15,27,0.25); }
+  .words .words-dot{ background:rgba(82,12,23,0.25); }
   .words .words-dot.is-active{ background:var(--burgundy); }
   .words-copy-item::before{ color:var(--burgundy) !important; }
   .words-copy-item::before{
@@ -1200,7 +1228,7 @@
 
   footer{
     padding:32px 20px 40px;
-    border-top:1px solid rgba(90,15,27,0.1);
+    border-top:1px solid rgba(82,12,23,0.1);
     display:flex;
     flex-direction:column;
     gap:14px;
@@ -1212,7 +1240,7 @@
     flex-direction:column;
     gap:24px;
     padding-top:14px;
-    border-top:1px solid rgba(90,15,27,0.08);
+    border-top:1px solid rgba(82,12,23,0.08);
   }
   .footer-col-label{
     font-size:11px;
@@ -1229,7 +1257,7 @@
   .footer-contact a, .footer-contact span{font-size:13px;letter-spacing:0.02em;color:var(--ink);}
   .footer-social{display:flex;gap:16px;}
   .footer-social a{font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--taupe);}
-  .footer-bottom{display:flex;flex-direction:column;gap:4px;padding-top:14px;border-top:1px solid rgba(90,15,27,0.08);}
+  .footer-bottom{display:flex;flex-direction:column;gap:4px;padding-top:14px;border-top:1px solid rgba(82,12,23,0.08);}
   footer p{font-size:12px;color:var(--taupe);margin:0;}
   .footer-bottom .footer-location{font-size:11px;}
 </style>
@@ -1379,7 +1407,7 @@
         </button>
         <div class="accordion-panel">
           <div class="accordion-panel-inner">
-            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">You tell us what you're thinking about, who it's for, what you want to celebrate and anything you already have in mind. You don't need to have the whole idea figured out.</p>
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(246,242,239,0.68);margin:0;">You tell us what you're thinking about, who it's for, what you want to celebrate and anything you already have in mind. You don't need to have the whole idea figured out.</p>
           </div>
         </div>
       </div>
@@ -1391,7 +1419,7 @@
         </button>
         <div class="accordion-panel">
           <div class="accordion-panel-inner">
-            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">We ask the right questions so we understand the person, the relationship, the occasion or reason, the setting and what you want the moment to say.</p>
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(246,242,239,0.68);margin:0;">We ask the right questions so we understand the person, the relationship, the occasion or reason, the setting and what you want the moment to say.</p>
           </div>
         </div>
       </div>
@@ -1403,7 +1431,7 @@
         </button>
         <div class="accordion-panel">
           <div class="accordion-panel-inner">
-            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">We take what we've learned and develop the right concept for the moment. Nothing is pulled from a standard catalogue simply because it's available.</p>
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(246,242,239,0.68);margin:0;">We take what we've learned and develop the right concept for the moment. Nothing is pulled from a standard catalogue simply because it's available.</p>
           </div>
         </div>
       </div>
@@ -1415,7 +1443,7 @@
         </button>
         <div class="accordion-panel">
           <div class="accordion-panel-inner">
-            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">Once the direction is agreed, we bring the pieces together, coordinate the people involved and manage the details required to make it happen.</p>
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(246,242,239,0.68);margin:0;">Once the direction is agreed, we bring the pieces together, coordinate the people involved and manage the details required to make it happen.</p>
           </div>
         </div>
       </div>
@@ -1427,7 +1455,7 @@
         </button>
         <div class="accordion-panel">
           <div class="accordion-panel-inner">
-            <p style="font-size:13.5px;line-height:1.6;color:rgba(247,242,234,0.68);margin:0;">You don't have to carry the logistics. You get to be present for the part that matters and see the idea become real.</p>
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(246,242,239,0.68);margin:0;">You don't have to carry the logistics. You get to be present for the part that matters and see the idea become real.</p>
           </div>
         </div>
       </div>
@@ -1437,11 +1465,11 @@
     <div class="hero-image-wrap reveal" style="aspect-ratio:1152/1180;margin:20px 0 8px;">
       <img class="hero-image" src="img/gift-station-hands.jpg" alt="Hands placing white branded gift bags with pink tissue paper onto a gift wall" style="object-position:50% 50%;" loading="lazy">
     </div>
-    <p class="reveal" style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:14px;color:rgba(247,242,234,0.55);margin:10px 0 0;">Every gift, placed by hand.</p>
+    <p class="reveal" style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:14px;color:rgba(246,242,239,0.55);margin:10px 0 0;">Every gift, placed by hand.</p>
     </div>
 
     <div class="reveal" style="margin-top:28px;">
-      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:16px;color:rgba(247,242,234,0.6);margin:0 0 16px;">Every celebration is quoted to what it actually needs, not a fixed package. And when a moment needs to stay private, we keep it that way.</p>
+      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:16px;color:rgba(246,242,239,0.6);margin:0 0 16px;">Every celebration is quoted to what it actually needs, not a fixed package. And when a moment needs to stay private, we keep it that way.</p>
       <a class="btn btn-primary" style="border-color:var(--champagne);" href="https://fabsurprisestudio.com/fabsurprise-design-your-moment.html">Tell Us What You’re Celebrating →</a>
     </div>
   </section>
@@ -1509,7 +1537,7 @@
       </div>
     </div>
 
-    <div class="offerings-accordion reveal" style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(90,15,27,0.15);">
+    <div class="offerings-accordion reveal" style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(82,12,23,0.15);">
       <p style="font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.04em;color:var(--burgundy);margin:0 0 4px;">Tap each one to explore.</p>
       <div class="accordion-item is-open">
         <button class="accordion-trigger" type="button" aria-expanded="true">
@@ -1613,9 +1641,9 @@
     <h2 class="display reveal">When you can't be there, your thought still can.</h2>
     <p class="reveal" style="font-size:12px;letter-spacing:0.04em;color:var(--champagne);margin-top:8px;">For those celebrating from abroad.</p>
     <div class="reveal" style="display:flex;flex-direction:column;gap:14px;margin-top:16px;">
-      <p style="margin:0;color:rgba(247,242,234,0.86);">Distance shouldn't mean missing the moments that matter.</p>
-      <p style="margin:0;color:rgba(247,242,234,0.86);">Whether it's a birthday, anniversary, Christmas, a surprise or simply a reason to remind someone they're loved, we help you celebrate from wherever you are.</p>
-      <p style="margin:0;color:rgba(247,242,234,0.86);">You tell us who you're thinking of and what you have in mind. We take care of the rest here.</p>
+      <p style="margin:0;color:rgba(246,242,239,0.86);">Distance shouldn't mean missing the moments that matter.</p>
+      <p style="margin:0;color:rgba(246,242,239,0.86);">Whether it's a birthday, anniversary, Christmas, a surprise or simply a reason to remind someone they're loved, we help you celebrate from wherever you are.</p>
+      <p style="margin:0;color:rgba(246,242,239,0.86);">You tell us who you're thinking of and what you have in mind. We take care of the rest here.</p>
     </div>
 
     <div class="reveal" style="margin-top:26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
@@ -1873,6 +1901,35 @@
     <a class="btn btn-primary reveal" data-cta="design_moment_invitation" href="https://fabsurprisestudio.com/fabsurprise-design-your-moment.html">Design Your Moment</a>
   </section>
 
+  <section class="remind" id="remind">
+    <div class="remind-inner">
+      <div class="eyebrow" style="justify-content:center;">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Date Reminders</span>
+      </div>
+      <h2 class="display">Save a date with us.</h2>
+      <p class="remind-lede">A birthday, an anniversary, any day that matters to someone you love. We'll email you three weeks before, so you have time to plan.</p>
+      <form class="remind-form" id="remindForm" novalidate>
+        <div class="remind-row">
+          <label class="remind-field"><span>Your first name</span><input type="text" name="name" autocomplete="given-name" required></label>
+          <label class="remind-field"><span>Your email</span><input type="email" name="email" autocomplete="email" required></label>
+        </div>
+        <label class="remind-field"><span>Who is it for?</span><input type="text" name="celebrating" placeholder="For example: My wife, Mum, my best friend" maxlength="60" required></label>
+        <div class="remind-row">
+          <label class="remind-field"><span>Day</span><select name="day" required><option value="">Day</option><option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select></label>
+          <label class="remind-field"><span>Month</span><select name="month" required><option value="">Month</option><option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select></label>
+        </div>
+        <label class="remind-consent"><input type="checkbox" name="consent" required><span>Yes, send me the reminder and a few ideas during the year. I can stop at any time.</span></label>
+        <p class="remind-error" id="remindError" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary remind-btn" data-cta="remind_signup">Remind Me</button>
+      </form>
+      <div class="remind-done" id="remindDone" hidden>
+        <h3 class="display">Almost done.</h3>
+        <p>We've sent you an email. Tap the link inside to confirm, and your reminder is saved.</p>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div>
       <div class="logo display">Fabsurprise</div>
@@ -2085,6 +2142,57 @@
     timer = setInterval(next, 6000);
   }
   restart();
+})();
+
+(function(){
+  // Date reminders: send the signup to MailerLite (form "Website date reminders", group "Date reminders").
+  var form = document.getElementById('remindForm');
+  if (!form) return;
+  var ACTION = 'https://assets.mailerlite.com/jsonp/2697780/forms/200834537777792009/subscribe';
+  var err = document.getElementById('remindError');
+  var done = document.getElementById('remindDone');
+  var btn = form.querySelector('.remind-btn');
+  var seen = false;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(entries, obs){
+      if (entries[0].isIntersecting && !seen) { seen = true; obs.disconnect();
+        try { fetch('https://assets.mailerlite.com/jsonp/2697780/forms/200834537777792009/takel', {mode:'no-cors'}); } catch(e){} }
+    }).observe(form);
+  }
+  function bad(el, on){ var box = el.closest('.remind-field') || el.closest('.remind-consent'); if (box) box.classList.toggle('is-bad', on); }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = form.elements, ok = true, msg = '';
+    ['name','email','celebrating','day','month'].forEach(function(k){
+      var v = (f[k].value || '').trim(), wrong = !v;
+      if (k === 'email' && v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) wrong = true;
+      bad(f[k], wrong); if (wrong) ok = false;
+    });
+    var d = parseInt(f.day.value, 10), m = parseInt(f.month.value, 10);
+    var maxDay = [31,29,31,30,31,30,31,31,30,31,30,31][m - 1] || 31;
+    if (d && m && d > maxDay) { bad(f.day, true); ok = false; msg = 'That day does not exist in that month.'; }
+    bad(f.consent, !f.consent.checked);
+    if (!f.consent.checked) ok = false;
+    if (!ok) { err.textContent = msg || 'Please fill in every box and tick the box to agree.'; err.hidden = false; return; }
+    err.hidden = true;
+    btn.disabled = true; btn.textContent = 'Saving...';
+    var body = new URLSearchParams();
+    body.append('fields[email]', f.email.value.trim());
+    body.append('fields[name]', f.name.value.trim());
+    body.append('fields[celebrating]', f.celebrating.value.trim());
+    body.append('fields[special_date]', '2000-' + f.month.value + '-' + f.day.value);  // year is not asked; 2000 keeps 29 February valid
+    body.append('ml-submit', '1');
+    body.append('anticsrf', 'true');
+    fetch(ACTION, { method:'POST', mode:'no-cors', body: body })
+      .then(function(){
+        form.hidden = true; done.hidden = false;
+        if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'date_reminders' });
+      })
+      .catch(function(){
+        btn.disabled = false; btn.textContent = 'Remind Me';
+        err.textContent = 'Something went wrong. Please check your connection and try again.'; err.hidden = false;
+      });
+  });
 })();
 </script>
 

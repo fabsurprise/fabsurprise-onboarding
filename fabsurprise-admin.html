@@ -1077,19 +1077,27 @@ async function updatePaymentStage(enquiryId, newStage, btn) {
   }
 }
 
+// Short, natural wording for the plans: "the birthday plans", "the proposal plans".
+function plansPhrase(e) {
+  var o = String(e.occasion || '').trim();
+  if (!o || o === 'Self Love' || o === 'Appreciation' || o === 'Other') return 'your plans';
+  return 'the ' + o.toLowerCase() + ' plans';
+}
+
+function shortDate(dateStr) {
+  var d = new Date(dateStr);
+  if (!dateStr || isNaN(d)) return '';
+  return d.getDate() + ' ' + d.toLocaleString('en-GB', { month: 'long' });
+}
+
 function buildFollowUpMessage(e, occPhrase) {
   var firstName = (e.fullName || 'there').split(' ')[0];
-  var parts = [];
-  parts.push('Hello ' + firstName + ', thank you for sharing your plans for ' + occPhrase + ' with us.');
-  var details = [];
-  if (e.celebDate) details.push('on ' + formatAdminDate(e.celebDate));
-  if (e.location) details.push('in ' + e.location);
-  if (details.length) parts.push('I can see it is ' + details.join(' ') + '.');
-  if (e.budgetMode === 'range' && e.budgetRange) {
-    parts.push('I have noted your budget of ' + e.budgetRange + ' and I will plan around it.');
-  }
-  parts.push('I have a few ideas I would like to share with you. When is a good time to talk?');
-  return parts.join('\n\n');
+  var when = shortDate(e.celebDate);
+  var first = 'Hello ' + firstName + ', thank you for sending ' + plansPhrase(e) + (when ? ' for ' + when : '') + '.';
+  var mid = (e.budgetMode === 'range' && e.budgetRange)
+    ? 'I\'ve noted your budget and I already have a few ideas.'
+    : 'I already have a few ideas for it.';
+  return first + ' ' + mid + '\n\nWhen is a good time for a quick call?';
 }
 
 function daysUntil(dateStr) {
@@ -1101,17 +1109,14 @@ function daysUntil(dateStr) {
 
 function buildCheckInMessage(e, occPhrase) {
   var firstName = (e.fullName || 'there').split(' ')[0];
-  var parts = [];
   var left = daysUntil(e.celebDate);
-  if (left !== null && left > 0) {
-    parts.push('Hello ' + firstName + ', I am checking in about ' + occPhrase + ' on ' + formatAdminDate(e.celebDate) + '.');
-    if (left <= 21) parts.push('The day is ' + (left === 1 ? 'tomorrow' : 'only ' + left + ' days away') + ', and I want to make sure we have enough time to get everything right.');
-    else parts.push('The date is getting closer, and I want to make sure we have enough time to get everything right.');
-  } else {
-    parts.push('Hello ' + firstName + ', I am checking in about ' + occPhrase + '.');
+  var when = shortDate(e.celebDate);
+  var open = 'Hello ' + firstName + ', just checking in on ' + plansPhrase(e) + (left !== null && left > 0 ? ' for ' + when : '') + '.';
+  if (left !== null && left > 0 && left <= 21) {
+    var gap = left === 1 ? 'It\'s tomorrow' : 'It\'s only ' + left + ' days away now';
+    return open + ' ' + gap + ', so if you\'d still like us to do it, let me know today and I\'ll get started.';
   }
-  parts.push('Would you like us to go ahead? Just reply here and we will start.');
-  return parts.join('\n\n');
+  return open + ' Are you still thinking about it? I\'m happy to answer any questions.';
 }
 
 // Booking guide / form buttons: plain until sent, then they show a tick.

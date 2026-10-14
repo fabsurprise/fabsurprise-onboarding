@@ -582,6 +582,11 @@ body {
       </div>
 
       <div class="field-group">
+        <label class="field-label">What Should We Call You? <span style="font-weight:400;opacity:0.7;">Optional</span></label>
+        <input class="field-input" id="callName" type="text" placeholder="e.g. Mrs Adeyemi, Dr Bola, or just Tolu" autocorrect="off" maxlength="40">
+      </div>
+
+      <div class="field-group">
         <label class="field-label">Phone Number</label>
         <input class="field-input" id="clientPhone" type="tel" placeholder="+234 000 000 0000" autocomplete="tel">
         <div class="field-error-msg" id="err-clientPhone">Please enter your phone number.</div>
@@ -1175,6 +1180,7 @@ function radioVal(name) { const el = document.querySelector(`input[name="${name}
 function collectSection(num) {
   if (num === 1) {
     formData.clientName = val('clientName');
+    formData.callName = val('callName');
     formData.clientPhone = val('clientPhone');
     formData.clientEmail = val('clientEmail');
     formData.contactMethod = radioVal('contactMethod');
@@ -1219,6 +1225,7 @@ function buildReview() {
   const sections = [
     { title: 'About You', goTo: 1, rows: [
       { key: 'Name', val: formData.clientName },
+      ...(formData.callName ? [{ key: 'Call You', val: formData.callName }] : []),
       { key: 'Phone', val: formData.clientPhone },
       { key: 'Email', val: formData.clientEmail },
       { key: 'Contact Via', val: formData.contactMethod },
@@ -1375,7 +1382,7 @@ function submitForm() {
 function saveProgress() {
   collectSection(currentSection);
   const saved = { section: currentSection, formData, fields: {}, radios: {} };
-  ['clientName','clientPhone','clientEmail','occasion','celebDate','setupTime','celebLocation',
+  ['clientName','callName','clientPhone','clientEmail','occasion','celebDate','setupTime','celebLocation',
    'venueAddress','landmark','recipientName','preferredName','relationship','religion','allergies',
    'threeWords','hopeTheyFeel','theme','colourPalette','cakeInscription','itemMessage','cardMessage','messageHelper',
    'specialDate','initials','quote','accessInstructions','fileNote','thingsToAvoid','extraNotes','altContactName','altContactPhone'

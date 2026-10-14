@@ -543,6 +543,8 @@ input, select, textarea, .field-input, .field-textarea { font-size: 16px !import
     <div class="field-wrap">
       <input class="field-input" id="fullName" type="text" placeholder="Your full name" autocomplete="name" autocorrect="off">
       <div class="field-error" id="err-fullName">Please enter your name so we know who we are speaking with.</div>
+      <label class="field-label" for="callName" style="margin-top:18px;">What should we call you? <span style="font-weight:400;color:var(--text-light);">(optional)</span></label>
+      <input class="field-input" id="callName" type="text" placeholder="e.g. Mrs Adeyemi, Dr Bola, or just Tolu" autocorrect="off" maxlength="40">
     </div>
     <div class="q-nav">
       <div></div>
@@ -870,6 +872,7 @@ window.addEventListener('DOMContentLoaded', function() {
     partialSaved = true;
 
     fd.fullName   = data.fullName || '';
+    fd.callName   = data.callName || '';
     fd.whatsapp   = data.whatsapp || '';
     fd.email      = data.email || '';
     fd.who        = data.celebrating || '';
@@ -883,6 +886,7 @@ window.addEventListener('DOMContentLoaded', function() {
     fd.budgetRange = data.budgetRange || '';
 
     if (fd.fullName) document.getElementById('fullName').value = fd.fullName;
+    if (fd.callName) document.getElementById('callName').value = fd.callName;
     if (fd.whatsapp) document.getElementById('whatsapp').value = fd.whatsapp;
     if (fd.email) document.getElementById('email').value = fd.email;
     if (fd.celebDate) document.getElementById('celebDate').value = fd.celebDate;
@@ -1057,6 +1061,7 @@ function savePartial() {
       submissionDate: now.toLocaleDateString('en-GB'),
       submissionTime: now.toLocaleTimeString('en-GB'),
       fullName: fd.fullName || '',
+      callName: fd.callName || '',
       whatsapp: fd.whatsapp || '',
       email: fd.email || '',
       status: 'Incomplete',
@@ -1078,7 +1083,7 @@ function savePartial() {
 
 // ── PERSONALISE ──
 function personalise(s) {
-  const name = (fd.fullName || '').split(' ')[0];
+  const name = fd.callName || (fd.fullName || '').split(' ')[0];
   if (s === 3) {
     if (selWho === 'Myself') {
       document.getElementById('title3').innerHTML = 'What are you<br><em>celebrating?</em>';
@@ -1100,7 +1105,7 @@ function personalise(s) {
     document.getElementById('title5').innerHTML = 'When would you<br>like to <em>celebrate?</em>';
   }
   if (s === 9) {
-    const name2 = (fd.fullName || '').split(' ')[0];
+    const name2 = fd.callName || (fd.fullName || '').split(' ')[0];
     if (name2 && selOcc) {
       document.getElementById('reassureText').textContent = name2 + ', from everything you have shared, we can already feel the thought behind this ' + selOcc.toLowerCase() + '. Now tell us what is in your mind.';
     }
@@ -1174,7 +1179,7 @@ function validate(s) {
 
 // ── COLLECT ──
 function collect(s) {
-  if (s === 1) fd.fullName = document.getElementById('fullName').value.trim();
+  if (s === 1) { fd.fullName = document.getElementById('fullName').value.trim(); fd.callName = document.getElementById('callName').value.trim(); }
   if (s === 2) { fd.who = selWho; fd.whoDetail = selWhoDetail; }
   if (s === 3) fd.occasion = selOcc;
   if (s === 4) { fd.whatsapp = document.getElementById('whatsapp').value.trim(); fd.email = document.getElementById('email').value.trim(); }
@@ -1277,7 +1282,7 @@ function submitForm() {
   btn.disabled = true;
 
   const now = new Date();
-  const firstName = fd.fullName.split(' ')[0];
+  const firstName = fd.callName || fd.fullName.split(' ')[0];
 
   const payload = {
     action: 'enquiryComplete',
@@ -1286,6 +1291,7 @@ function submitForm() {
     submissionTime: now.toLocaleTimeString('en-GB'),
     status: 'Submitted',
     fullName: fd.fullName,
+    callName: fd.callName || '',
     whatsapp: fd.whatsapp,
     email: fd.email,
     celebrating: fd.who,

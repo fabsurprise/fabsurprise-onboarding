@@ -598,6 +598,7 @@ function renderClientCard(client, container, prepend) {
   const card = document.createElement('div');
   card.className = 'client-card';
   card.id = `card-${ref}`;
+  card.dataset.call = callOf(client.callName, name);
 
   const pri = getPriority(celebDate);
   card.innerHTML = `
@@ -743,7 +744,7 @@ function renderGiftCards(list) {
 
   container.innerHTML = sorted.map(function(g) {
     var waNumber = normalizeWA(g.clientPhone);
-    var waMsg = encodeURIComponent('Hello ' + (g.clientName || 'there').split(' ')[0] + ', following up on your gift delivery (' + g.submissionId + '). Just checking in on the details.');
+    var waMsg = encodeURIComponent('Hello ' + callOf(g.callName, g.clientName) + ', following up on your gift delivery (' + g.submissionId + '). Just checking in on the details.');
     return '<div class="enq-card">' +
       '<div class="enq-card-header submitted">' +
         '<div>' +
@@ -760,6 +761,7 @@ function renderGiftCards(list) {
         (g.pickupName ? '<div class="detail-row"><span class="detail-key">Collected By</span><span class="detail-val">' + g.pickupName + (g.pickupPhone ? ' (' + g.pickupPhone + ')' : '') + '</span></div>' : '') +
         (g.giftMessage ? '<div class="detail-row"><span class="detail-key">Gift Message</span><span class="detail-val" style="white-space:pre-wrap;">' + g.giftMessage + '</span></div>' : '') +
         (g.extraNotes ? '<div class="detail-row"><span class="detail-key">Notes</span><span class="detail-val" style="white-space:pre-wrap;">' + g.extraNotes + '</span></div>' : '') +
+        (g.callName ? '<div class="detail-row"><span class="detail-key">Call Them</span><span class="detail-val">' + escHtml(g.callName) + '</span></div>' : '') +
         '<div class="detail-row"><span class="detail-key">Client Phone</span><span class="detail-val">' + (g.clientPhone || 'Not provided') + '</span></div>' +
         '<div class="detail-row"><span class="detail-key">Client Email</span><span class="detail-val">' + (g.clientEmail || 'Not provided') + '</span></div>' +
       '</div>' +
@@ -769,6 +771,16 @@ function renderGiftCards(list) {
       '</div>' +
     '</div>';
   }).join('');
+}
+
+function escHtml(t) {
+  return String(t || '').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
+}
+
+// What the client asked to be called, or their first name.
+function callOf(callName, fullName) {
+  var c = String(callName || '').trim();
+  return c || String(fullName || 'there').split(' ')[0] || 'there';
 }
 
 function shareOnWa(link, name, ref) {
@@ -1091,13 +1103,13 @@ function shortDate(dateStr) {
 }
 
 function buildFollowUpMessage(e, occPhrase) {
-  var firstName = (e.fullName || 'there').split(' ')[0];
+  var firstName = callOf(e.callName, e.fullName);
   var when = shortDate(e.celebDate);
   var first = 'Hello ' + firstName + ', thank you for sending ' + plansPhrase(e) + (when ? ' for ' + when : '') + '.';
   var mid = (e.budgetMode === 'range' && e.budgetRange)
     ? 'I\'ve noted your budget and I already have a few ideas.'
     : 'I already have a few ideas for it.';
-  return first + ' ' + mid + '\n\nWhen is a good time for a quick call?';
+  return first + ' ' + mid + '\n\nCan I share them with you here?';
 }
 
 function daysUntil(dateStr) {
@@ -1108,15 +1120,15 @@ function daysUntil(dateStr) {
 }
 
 function buildCheckInMessage(e, occPhrase) {
-  var firstName = (e.fullName || 'there').split(' ')[0];
+  var firstName = callOf(e.callName, e.fullName);
   var left = daysUntil(e.celebDate);
   var when = shortDate(e.celebDate);
   var open = 'Hello ' + firstName + ', just checking in on ' + plansPhrase(e) + (left !== null && left > 0 ? ' for ' + when : '') + '.';
   if (left !== null && left > 0 && left <= 21) {
-    var gap = left === 1 ? 'It\'s tomorrow' : 'It\'s only ' + left + ' days away now';
-    return open + ' ' + gap + ', so if you\'d still like us to do it, let me know today and I\'ll get started.';
+    var gap = left === 1 ? 'It\'s tomorrow.' : 'It\'s only ' + left + ' days away now.';
+    return open + ' ' + gap + '\n\nWould you still like us to plan it for you?';
   }
-  return open + ' Are you still thinking about it? I\'m happy to answer any questions.';
+  return open + '\n\nWould you still like us to plan it for you? If you have any questions, I\'m here.';
 }
 
 // Booking guide / form buttons: plain until sent, then they show a tick.
@@ -1156,8 +1168,8 @@ function renderEnquiryCards(list) {
     const resumeUrl = 'https://fabsurprisestudio.com/book?resume=' + e.enquiryId;
     var occPhrase = isSubmitted ? buildOccasionPhrase(e.occasion, e.celebrating, e.whoDetail) : '';
     var waFollowUp = isSubmitted
-      ? encodeURIComponent(e.paymentStage === 'Paid & Booked' ? 'Hello ' + (e.fullName || 'there').split(' ')[0] + ', ' : (e.followedUpAt ? buildCheckInMessage(e, occPhrase) : buildFollowUpMessage(e, occPhrase)))
-      : encodeURIComponent('Hello ' + (e.fullName || 'there').split(' ')[0] + ', I saw you started planning with us but did not finish.\n\nEverything you shared is saved, so you can continue from where you stopped: ' + resumeUrl);
+      ? encodeURIComponent(e.paymentStage === 'Paid & Booked' ? 'Hello ' + callOf(e.callName, e.fullName) + ', ' : (e.followedUpAt ? buildCheckInMessage(e, occPhrase) : buildFollowUpMessage(e, occPhrase)))
+      : encodeURIComponent('Hello ' + callOf(e.callName, e.fullName) + ', I saw you started planning with us but did not finish.\n\nEverything you shared is saved, so you can continue from where you stopped: ' + resumeUrl);
 
     var waNumber = normalizeWA(e.whatsapp);
 
@@ -1181,6 +1193,7 @@ function renderEnquiryCards(list) {
         (e.guideStyle ? '<div class="detail-row"><span class="detail-key">Guide Style</span><span class="detail-val">' + e.guideStyle + '</span></div>' : '') +
         (e.budgetMode ? '<div class="detail-row"><span class="detail-key">Budget</span><span class="detail-val">' + (e.budgetMode === 'range' ? (e.budgetRange || 'Range selected, not specified') : 'Recommend based on vision') + '</span></div>' : '') +
         (e.campaignSource && e.campaignSource !== 'Direct' ? '<div class="detail-row"><span class="detail-key">Source</span><span class="detail-val">' + e.campaignSource + (e.trafficSource && e.trafficSource !== 'Direct' ? ' / ' + e.trafficSource : '') + '</span></div>' : '') +
+        (e.callName ? '<div class="detail-row"><span class="detail-key">Call Them</span><span class="detail-val">' + escHtml(e.callName) + '</span></div>' : '') +
         '<div class="detail-row"><span class="detail-key">WhatsApp</span><span class="detail-val">' + (e.whatsapp || 'Not provided') + '</span></div>' +
         '<div class="detail-row"><span class="detail-key">Email</span><span class="detail-val">' + (e.email || 'Not provided') + '</span></div>' +
         (e.details ? '<div class="detail-row"><span class="detail-key">Their Vision</span><span class="detail-val" style="white-space:pre-wrap;">' + e.details + '</span></div>' : '') +
@@ -1267,12 +1280,12 @@ function convertToBooking(enquiryId, type) {
   if (type === 'gift') {
     guideLink = 'https://tinyurl.com/before-yourgift';
     msg = encodeURIComponent(
-      'Hello ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to get this ready for you. Before we begin, please take a moment to read through our Gift Delivery guide, it explains what to expect and a few important details: ' + guideLink
+      'Hello ' + callOf(enq.callName, enq.fullName) + ', we are so excited to get this ready for you. Before we begin, please take a moment to read through our Gift Delivery guide, it explains what to expect and a few important details: ' + guideLink
     );
   } else {
     guideLink = 'https://tinyurl.com/before-wecelebrate';
     msg = encodeURIComponent(
-      'Hello ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Before we begin, please take a moment to read through our Booking Guide, it explains what to expect and a few important details: ' + guideLink
+      'Hello ' + callOf(enq.callName, enq.fullName) + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Before we begin, please take a moment to read through our Booking Guide, it explains what to expect and a few important details: ' + guideLink
     );
   }
 
@@ -1294,12 +1307,12 @@ function sendOnboardingLink(enquiryId, type) {
   if (type === 'gift') {
     formLink = 'https://fabsurprisestudio.com/delivery';
     msg = encodeURIComponent(
-      'Hello ' + (enq.fullName || '').split(' ')[0] + ', your payment has come through, thank you so much. Here is your Gift Delivery guide, this is where we capture exactly who it is for and where it should go: ' + formLink
+      'Hello ' + callOf(enq.callName, enq.fullName) + ', your payment has come through, thank you so much. Here is your Gift Delivery guide, this is where we capture exactly who it is for and where it should go: ' + formLink
     );
   } else {
     formLink = 'https://fabsurprisestudio.com/start';
     msg = encodeURIComponent(
-      'Hello ' + (enq.fullName || '').split(' ')[0] + ', your payment has come through, thank you so much, it is really happening now. Here is your Start Your Celebration guide: ' + formLink + '. This is where we get into the details that will make everything feel exactly like what we spoke about, take your time filling it in, nothing rushed.'
+      'Hello ' + callOf(enq.callName, enq.fullName) + ', your payment has come through, thank you so much, it is really happening now. Here is your Start Your Celebration guide: ' + formLink + '. This is where we get into the details that will make everything feel exactly like what we spoke about, take your time filling it in, nothing rushed.'
     );
   }
 
@@ -1458,7 +1471,7 @@ async function updateStage(ref) {
         'Fabmily': 'Hello [Name], thank you for trusting us with something so personal. You are now officially part of the Fabmily. We would love to hear how it went. Please leave us a review here: https://g.page/r/Ca6nTBK3YtBdEBM/review',
       };
       const journeyUrl = `https://fabsurprisestudio.com/fabsurprise-journey.html?ref=${ref}`;
-      const clientFirstName = (document.querySelector(`#card-${ref} .client-card-name`)?.textContent || '').split(' ')[0] || '';
+      const clientFirstName = document.getElementById(`card-${ref}`)?.dataset.call || (document.querySelector(`#card-${ref} .client-card-name`)?.textContent || '').split(' ')[0] || '';
       const rawMsg = stageMessages[newStage] || 'Your celebration journey has been updated.';
       const stageMsg = rawMsg.replace('[Name]', clientFirstName);
       const waText = encodeURIComponent(`${stageMsg} ${newStage !== 'Fabmily' ? journeyUrl : ''}`);

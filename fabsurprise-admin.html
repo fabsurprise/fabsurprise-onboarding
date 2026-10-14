@@ -368,6 +368,9 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
 .enq-actions { padding: 14px 18px; display: flex; gap: 10px; flex-wrap: wrap; }
 .btn-enq-wa { background: #25D366; color: white; border: none; padding: 10px 18px; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-block; }
 .btn-enq-convert { background: var(--wine); color: white; border: none; padding: 10px 18px; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; }
+.btn-enq-act { background: var(--white); color: var(--wine); border: 1px solid var(--wine); padding: 10px 14px; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+.btn-enq-act.is-sent { background: var(--ivory-mid); color: var(--text-mid); border-color: var(--ivory-dark); }
+.btn-enq-archive { background: transparent; color: var(--text-light); border: none; padding: 10px 4px; margin-left: auto; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; text-decoration: underline; text-underline-offset: 3px; }
 .filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
 .filter-btn { padding: 8px 16px; border: 1px solid var(--ivory-dark); background: var(--white); font-size: 11px; font-weight: 500; color: var(--text-mid); cursor: pointer; transition: all 0.2s; }
 .filter-btn.active { background: var(--wine); border-color: var(--wine); color: white; }
@@ -418,13 +421,13 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
     <h1 class="admin-title">Fabsurprise Admin</h1>
 
     <div class="tab-bar">
-      <button class="tab-btn active" onclick="switchTab('journeys')">Journey Manager</button>
-      <button class="tab-btn" onclick="switchTab('enquiries')">Enquiries</button>
+      <button class="tab-btn active" onclick="switchTab('enquiries')">Enquiries</button>
       <button class="tab-btn" onclick="switchTab('gifts')">Gift Deliveries</button>
+      <button class="tab-btn" onclick="switchTab('journeys')">Journey Manager</button>
     </div>
 
     <!-- JOURNEY MANAGER TAB -->
-    <div class="tab-panel active" id="tab-journeys">
+    <div class="tab-panel" id="tab-journeys">
     <p class="admin-sub">Search a client by their reference number or name to update their celebration stage.</p>
 
     <div class="search-box">
@@ -447,7 +450,7 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
     </div><!-- /tab-journeys -->
 
     <!-- ENQUIRIES TAB -->
-    <div class="tab-panel" id="tab-enquiries">
+    <div class="tab-panel active" id="tab-enquiries">
 
       <div class="summary-strip">
         <div class="summary-stat"><strong id="statTotal">0</strong>Total</div>
@@ -474,7 +477,7 @@ body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--
         <button class="btn-search" onclick="loadEnquiries()" style="padding:10px 20px;">Refresh</button>
       </div>
 
-      <div id="enquiryList"><div class="loading-inline">Tap Refresh to load enquiries.</div></div>
+      <div id="enquiryList"><div class="loading-inline">Loading enquiries...</div></div>
 
     </div><!-- /tab-enquiries -->
 
@@ -559,6 +562,7 @@ async function checkPassword() {
       sessionStorage.setItem('fab_admin_key', pwd);
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminPanel').style.display = 'block';
+      loadEnquiries();
       return;
     }
   } catch (e) {}
@@ -574,6 +578,7 @@ function logout() {
 if (ADMIN_KEY) {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('adminPanel').style.display = 'block';
+  setTimeout(loadEnquiries, 0);
 }
 
 function journeyLink(ref) {
@@ -950,6 +955,16 @@ async function markFollowedUp(enquiryId, btn) {
   }
 }
 
+// Tapping WhatsApp / Follow Up records the follow-up time on its own.
+function autoFollowUp(enquiryId) {
+  var now = new Date().toISOString();
+  var idx = allEnquiries.findIndex(function(e){ return e.enquiryId === enquiryId; });
+  if (idx > -1) allEnquiries[idx].followedUpAt = now;
+  fetch(APPS_SCRIPT_URL + '?action=markFollowedUp&ref=' + encodeURIComponent(enquiryId) + '&time=' + encodeURIComponent(now), { method: 'GET', redirect: 'follow' })
+    .then(function(){ renderEnquiries(currentFilter); })
+    .catch(function(){});
+}
+
 async function markNoResponse(enquiryId, btn) {
   const original = btn.textContent;
   btn.textContent = 'Saving...';
@@ -982,7 +997,7 @@ function renderPaymentStagePills(enquiryId, currentStage, stageAt) {
   const stage = currentStage || 'Enquired';
   const pills = PAYMENT_STAGES.map(function(s) {
     const active = s === stage;
-    return '<button onclick="updatePaymentStage(\'' + enquiryId + '\', \'' + s + '\', this)" style="padding:7px 10px;font-size:10px;font-weight:600;border:1px solid ' + (active ? 'var(--wine)' : 'var(--ivory-dark)') + ';background:' + (active ? 'var(--wine)' : 'var(--white)') + ';color:' + (active ? 'white' : 'var(--text-mid)') + ';cursor:pointer;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;">' + s + '</button>';
+    return '<button onclick="updatePaymentStage(\'' + enquiryId + '\', \'' + s + '\', this)" style="padding:7px 10px;font-size:10px;font-weight:600;border:1px solid ' + (active ? 'var(--wine)' : 'var(--ivory-dark)') + ';background:' + (active ? 'var(--wine)' : 'var(--white)') + ';color:' + (active ? 'white' : 'var(--text-mid)') + ';cursor:pointer;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;">' + (active ? '✓ ' : '') + s + '</button>';
   }).join('');
 
   let warning = '';
@@ -1005,7 +1020,7 @@ function renderGiftStagePills(submissionId, currentStage) {
   const stage = currentStage || 'Planning';
   const pills = GIFT_STAGES.map(function(s) {
     const active = s === stage;
-    return '<button onclick="updateGiftStage(\'' + submissionId + '\', \'' + s + '\', this)" style="padding:7px 10px;font-size:10px;font-weight:600;border:1px solid ' + (active ? 'var(--wine)' : 'var(--ivory-dark)') + ';background:' + (active ? 'var(--wine)' : 'var(--white)') + ';color:' + (active ? 'white' : 'var(--text-mid)') + ';cursor:pointer;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;">' + s + '</button>';
+    return '<button onclick="updateGiftStage(\'' + submissionId + '\', \'' + s + '\', this)" style="padding:7px 10px;font-size:10px;font-weight:600;border:1px solid ' + (active ? 'var(--wine)' : 'var(--ivory-dark)') + ';background:' + (active ? 'var(--wine)' : 'var(--white)') + ';color:' + (active ? 'white' : 'var(--text-mid)') + ';cursor:pointer;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;">' + (active ? '✓ ' : '') + s + '</button>';
   }).join('');
 
   return '<div style="padding:12px 18px;background:var(--ivory);border-bottom:1px solid var(--ivory-mid);">' +
@@ -1065,25 +1080,63 @@ async function updatePaymentStage(enquiryId, newStage, btn) {
 function buildFollowUpMessage(e, occPhrase) {
   var firstName = (e.fullName || 'there').split(' ')[0];
   var parts = [];
-
-  parts.push('Hello ' + firstName + ', I just went through everything you shared with us about ' + occPhrase + '.');
-
+  parts.push('Hello ' + firstName + ', thank you for sharing your plans for ' + occPhrase + ' with us.');
   var details = [];
-  if (e.celebDate) details.push('for ' + formatAdminDate(e.celebDate));
+  if (e.celebDate) details.push('on ' + formatAdminDate(e.celebDate));
   if (e.location) details.push('in ' + e.location);
-  if (details.length) {
-    parts.push('Sounds like something really special coming together ' + details.join(' ') + '.');
-  }
-
+  if (details.length) parts.push('I can see it is ' + details.join(' ') + '.');
   if (e.budgetMode === 'range' && e.budgetRange) {
-    parts.push('I saw you\'re working with a budget around ' + e.budgetRange + ', so I already have a few ideas in mind that would fit well.');
-  } else {
-    parts.push('I\'d love to put a few ideas together based on everything you shared.');
+    parts.push('I have noted your budget of ' + e.budgetRange + ' and I will plan around it.');
   }
-
-  parts.push('Let\'s hop on a quick chat whenever you\'re free, I\'d love to hear more about what you\'re imagining.');
-
+  parts.push('I have a few ideas I would like to share with you. When is a good time to talk?');
   return parts.join('\n\n');
+}
+
+function daysUntil(dateStr) {
+  var d = new Date(dateStr);
+  if (!dateStr || isNaN(d)) return null;
+  var t = new Date(); t.setHours(0,0,0,0); d.setHours(0,0,0,0);
+  return Math.round((d - t) / 86400000);
+}
+
+function buildCheckInMessage(e, occPhrase) {
+  var firstName = (e.fullName || 'there').split(' ')[0];
+  var parts = [];
+  var left = daysUntil(e.celebDate);
+  if (left !== null && left > 0) {
+    parts.push('Hello ' + firstName + ', I am checking in about ' + occPhrase + ' on ' + formatAdminDate(e.celebDate) + '.');
+    if (left <= 21) parts.push('The day is ' + (left === 1 ? 'tomorrow' : 'only ' + left + ' days away') + ', and I want to make sure we have enough time to get everything right.');
+    else parts.push('The date is getting closer, and I want to make sure we have enough time to get everything right.');
+  } else {
+    parts.push('Hello ' + firstName + ', I am checking in about ' + occPhrase + '.');
+  }
+  parts.push('Would you like us to go ahead? Just reply here and we will start.');
+  return parts.join('\n\n');
+}
+
+// Booking guide / form buttons: plain until sent, then they show a tick.
+function sentList(e) {
+  var list = String(e.sent || '').split(',').filter(Boolean);
+  try { list = list.concat(String(localStorage.getItem('fab_sent_' + e.enquiryId) || '').split(',').filter(Boolean)); } catch (x) {}
+  return list;
+}
+
+function actBtn(e, key, label, fn) {
+  var done = sentList(e).indexOf(key) > -1;
+  var type = key.split('-')[1];
+  return '<button class="btn-enq-act' + (done ? ' is-sent' : '') + '" onclick="' + fn + '(\'' + e.enquiryId + '\',\'' + type + '\')">' + (done ? '✓ ' + label + ' sent' : label) + '</button>';
+}
+
+function markSent(enquiryId, key) {
+  var enq = allEnquiries.find(function(x){ return x.enquiryId === enquiryId; });
+  if (enq) {
+    var list = String(enq.sent || '').split(',').filter(Boolean);
+    if (list.indexOf(key) < 0) list.push(key);
+    enq.sent = list.join(',');
+    try { localStorage.setItem('fab_sent_' + enquiryId, enq.sent); } catch (x) {}
+  }
+  fetch(APPS_SCRIPT_URL + '?action=markSent&ref=' + encodeURIComponent(enquiryId) + '&item=' + encodeURIComponent(key), { method: 'GET', redirect: 'follow' }).catch(function(){});
+  renderEnquiries(currentFilter);
 }
 
 function renderEnquiryCards(list) {
@@ -1098,8 +1151,8 @@ function renderEnquiryCards(list) {
     const resumeUrl = 'https://fabsurprisestudio.com/book?resume=' + e.enquiryId;
     var occPhrase = isSubmitted ? buildOccasionPhrase(e.occasion, e.celebrating, e.whoDetail) : '';
     var waFollowUp = isSubmitted
-      ? encodeURIComponent(buildFollowUpMessage(e, occPhrase))
-      : encodeURIComponent('Hello ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it.\n\nWe\'ve saved everything you\'ve shared so far, so you can pick up from exactly where you stopped.\n\nContinue where you left off: ' + resumeUrl);
+      ? encodeURIComponent(e.paymentStage === 'Paid & Booked' ? 'Hello ' + (e.fullName || 'there').split(' ')[0] + ', ' : (e.followedUpAt ? buildCheckInMessage(e, occPhrase) : buildFollowUpMessage(e, occPhrase)))
+      : encodeURIComponent('Hello ' + (e.fullName || 'there').split(' ')[0] + ', I saw you started planning with us but did not finish.\n\nEverything you shared is saved, so you can continue from where you stopped: ' + resumeUrl);
 
     var waNumber = normalizeWA(e.whatsapp);
 
@@ -1130,18 +1183,14 @@ function renderEnquiryCards(list) {
       '</div>' +
       (isSubmitted ? renderPaymentStagePills(e.enquiryId, e.paymentStage, e.paymentStageAt) : '') +
       (isSubmitted && isDatePassedNoPayment(e.celebDate, e.paymentStage) ? '<div style="padding:10px 18px;background:#3D0E14;color:#FFD9DC;font-size:11.5px;font-weight:600;">⚠ Celebration date has passed with no payment recorded</div>' : '') +
-      (e.noResponse === 'true' ? '<div style="padding:10px 18px;background:var(--ivory-mid);color:var(--text-mid);font-size:11.5px;font-weight:600;">No response after follow-up</div>' : '') +
       (e.followedUpAt ? '<div style="padding:8px 18px;font-size:11px;color:var(--text-light);background:var(--ivory);border-bottom:1px solid var(--ivory-mid);">Followed up ' + formatRelativeTime(e.followedUpAt) + (daysSince(e.followedUpAt) >= 4 && e.paymentStage !== 'Paid & Booked' ? ' <span style="color:var(--error);font-weight:600;">— no stage change since</span>' : '') + '</div>' : '') +
       '<div class="enq-actions">' +
         (isArchived
-          ? '<button onclick="unarchiveEnquiry(\'' + e.enquiryId + '\', this)" style="background:var(--gold);color:var(--wine-dark);border:none;padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Unarchive</button>'
-          : (!isSubmitted ? '<button onclick="copyResumeLink(\'' + e.enquiryId + '\')" style="background:var(--ivory-mid);color:var(--text-mid);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Copy Resume Link</button>' : '') +
-            (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waFollowUp + '" target="_blank" class="btn-enq-wa">' + (isSubmitted ? 'WhatsApp' : 'Follow Up') + '</a>' : '') +
-            '<button onclick="markFollowedUp(\'' + e.enquiryId + '\', this)" style="background:var(--gold-pale);color:var(--text-mid);border:1px solid var(--gold);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">' + (e.followedUpAt ? 'Update Follow-Up' : 'Mark as Followed Up') + '</button>' +
-            (e.followedUpAt && e.noResponse !== 'true' ? '<button onclick="markNoResponse(\'' + e.enquiryId + '\', this)" style="background:transparent;color:var(--text-light);border:1px solid var(--ivory-dark);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Mark No Response</button>' : '') +
-            (isSubmitted ? '<button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\',\'celebration\')" title="Sends the full event Booking Guide">🎉 Full Celebration</button><button class="btn-enq-convert" onclick="convertToBooking(\''+e.enquiryId+'\',\'gift\')" style="background:var(--gold);color:var(--wine-dark);" title="Sends the Gift Delivery guide">🎁 Gift Delivery</button>' : '') +
-            (isSubmitted && e.paymentStage === 'Paid & Booked' ? '<button class="btn-enq-convert" onclick="sendOnboardingLink(\''+e.enquiryId+'\',\'celebration\')" style="background:var(--wine-dark);" title="Sends the Start Your Celebration form">📋 Send Celebration Form</button><button class="btn-enq-convert" onclick="sendOnboardingLink(\''+e.enquiryId+'\',\'gift\')" style="background:var(--wine-light);" title="Sends the Gift Delivery form">📦 Send Gift Form</button>' : '') +
-            '<button onclick="archiveEnquiry(\'' + e.enquiryId + '\', this)" style="background:transparent;color:var(--error);border:1px solid var(--error);padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;">Archive</button>'
+          ? '<button onclick="unarchiveEnquiry(\'' + e.enquiryId + '\', this)" class="btn-enq-convert" style="background:var(--gold);color:var(--wine-dark);">Unarchive</button>'
+          : (waNumber ? '<a href="https://wa.me/' + waNumber + '?text=' + waFollowUp + '" target="_blank" class="btn-enq-wa" onclick="autoFollowUp(\'' + e.enquiryId + '\')">' + (isSubmitted ? (e.followedUpAt && e.paymentStage !== 'Paid & Booked' ? 'Check In' : 'WhatsApp') : 'Follow Up') + '</a>' : '') +
+            (isSubmitted && e.paymentStage !== 'Paid & Booked' ? actBtn(e, 'guide-celebration', 'Booking Guide', 'convertToBooking') + actBtn(e, 'guide-gift', 'Gift Guide', 'convertToBooking') : '') +
+            (isSubmitted && e.paymentStage === 'Paid & Booked' ? actBtn(e, 'form-celebration', 'Celebration Form', 'sendOnboardingLink') + actBtn(e, 'form-gift', 'Gift Form', 'sendOnboardingLink') : '') +
+            '<button onclick="archiveEnquiry(\'' + e.enquiryId + '\', this)" class="btn-enq-archive">Archive</button>'
           ) +
       '</div>' +
     '</div>';
@@ -1223,6 +1272,7 @@ function convertToBooking(enquiryId, type) {
   }
 
   window.open('https://wa.me/' + waNumber + '?text=' + msg, '_blank');
+  markSent(enquiryId, 'guide-' + type);
 }
 
 function sendOnboardingLink(enquiryId, type) {
@@ -1249,6 +1299,7 @@ function sendOnboardingLink(enquiryId, type) {
   }
 
   window.open('https://wa.me/' + waNumber + '?text=' + msg, '_blank');
+  markSent(enquiryId, 'form-' + type);
 }
 
 function getPriority(dateStr) {

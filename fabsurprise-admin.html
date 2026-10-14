@@ -533,7 +533,7 @@ window.fetch = function(url, opts) {
   }
   return _fabFetch(url, opts);
 };
-const JOURNEY_BASE_URL = 'https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-journey.html';
+const JOURNEY_BASE_URL = 'https://fabsurprisestudio.com/fabsurprise-journey.html';
 const WA_NUMBER = '2349025141322';
 
 const STAGES = ['Planning', 'Design', 'Create', 'Celebrate', 'Preserve', 'Fabmily'];
@@ -738,7 +738,7 @@ function renderGiftCards(list) {
 
   container.innerHTML = sorted.map(function(g) {
     var waNumber = normalizeWA(g.clientPhone);
-    var waMsg = encodeURIComponent('Hi ' + (g.clientName || 'there').split(' ')[0] + ', following up on your gift delivery (' + g.submissionId + ') — just checking in on the details.');
+    var waMsg = encodeURIComponent('Hello ' + (g.clientName || 'there').split(' ')[0] + ', following up on your gift delivery (' + g.submissionId + '). Just checking in on the details.');
     return '<div class="enq-card">' +
       '<div class="enq-card-header submitted">' +
         '<div>' +
@@ -767,7 +767,7 @@ function renderGiftCards(list) {
 }
 
 function shareOnWa(link, name, ref) {
-  const msg = encodeURIComponent(`Hi ${name}! 🎉 You can track your celebration journey with us here:\n\n${link}\n\nThis page will update as we progress through each stage. — Team Fabsurprise`);
+  const msg = encodeURIComponent(`Hello ${name}! 🎉 You can track your celebration journey with us here:\n\n${link}\n\nThis page will update as we progress through each stage.\n\nTeam Fabsurprise`);
   window.open(`https://wa.me/?text=${msg}`, '_blank');
 }
 
@@ -1066,7 +1066,7 @@ function buildFollowUpMessage(e, occPhrase) {
   var firstName = (e.fullName || 'there').split(' ')[0];
   var parts = [];
 
-  parts.push('Hi ' + firstName + ', I just went through everything you shared with us about ' + occPhrase + '.');
+  parts.push('Hello ' + firstName + ', I just went through everything you shared with us about ' + occPhrase + '.');
 
   var details = [];
   if (e.celebDate) details.push('for ' + formatAdminDate(e.celebDate));
@@ -1095,11 +1095,11 @@ function renderEnquiryCards(list) {
     var isArchived = eStatus === 'Archived';
     var headerClass = isSubmitted ? 'submitted' : 'incomplete';
 
-    const resumeUrl = 'https://tinyurl.com/fabsurprise-moment?resume=' + e.enquiryId;
+    const resumeUrl = 'https://fabsurprisestudio.com/book?resume=' + e.enquiryId;
     var occPhrase = isSubmitted ? buildOccasionPhrase(e.occasion, e.celebrating, e.whoDetail) : '';
     var waFollowUp = isSubmitted
       ? encodeURIComponent(buildFollowUpMessage(e, occPhrase))
-      : encodeURIComponent('Hi ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it.\n\nWe\'ve saved everything you\'ve shared so far, so you can pick up from exactly where you stopped.\n\nContinue where you left off: ' + resumeUrl);
+      : encodeURIComponent('Hello ' + (e.fullName || 'there').split(' ')[0] + ', your moment is still right where you left it.\n\nWe\'ve saved everything you\'ve shared so far, so you can pick up from exactly where you stopped.\n\nContinue where you left off: ' + resumeUrl);
 
     var waNumber = normalizeWA(e.whatsapp);
 
@@ -1213,12 +1213,12 @@ function convertToBooking(enquiryId, type) {
   if (type === 'gift') {
     guideLink = 'https://tinyurl.com/before-yourgift';
     msg = encodeURIComponent(
-      'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to get this ready for you. Before we begin, please take a moment to read through our Gift Delivery guide, it explains what to expect and a few important details: ' + guideLink
+      'Hello ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to get this ready for you. Before we begin, please take a moment to read through our Gift Delivery guide, it explains what to expect and a few important details: ' + guideLink
     );
   } else {
     guideLink = 'https://tinyurl.com/before-wecelebrate';
     msg = encodeURIComponent(
-      'Hi ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Before we begin, please take a moment to read through our Booking Guide, it explains what to expect and a few important details: ' + guideLink
+      'Hello ' + (enq.fullName || '').split(' ')[0] + ', we are so excited to begin planning your ' + (enq.occasion || 'celebration') + ' with you. Before we begin, please take a moment to read through our Booking Guide, it explains what to expect and a few important details: ' + guideLink
     );
   }
 
@@ -1237,14 +1237,14 @@ function sendOnboardingLink(enquiryId, type) {
   var formLink, msg;
 
   if (type === 'gift') {
-    formLink = 'https://tinyurl.com/fabsurprise-gift';
+    formLink = 'https://fabsurprisestudio.com/delivery';
     msg = encodeURIComponent(
-      'Hi ' + (enq.fullName || '').split(' ')[0] + ', your payment has come through, thank you so much. Here is your Gift Delivery guide, this is where we capture exactly who it is for and where it should go: ' + formLink
+      'Hello ' + (enq.fullName || '').split(' ')[0] + ', your payment has come through, thank you so much. Here is your Gift Delivery guide, this is where we capture exactly who it is for and where it should go: ' + formLink
     );
   } else {
-    formLink = 'https://tinyurl.com/Fabsurprise-Celebration';
+    formLink = 'https://fabsurprisestudio.com/start';
     msg = encodeURIComponent(
-      'Hi ' + (enq.fullName || '').split(' ')[0] + ', your payment has come through, thank you so much, it is really happening now. Here is your Start Your Celebration guide: ' + formLink + '. This is where we get into the details that will make everything feel exactly like what we spoke about, take your time filling it in, nothing rushed.'
+      'Hello ' + (enq.fullName || '').split(' ')[0] + ', your payment has come through, thank you so much, it is really happening now. Here is your Start Your Celebration guide: ' + formLink + '. This is where we get into the details that will make everything feel exactly like what we spoke about, take your time filling it in, nothing rushed.'
     );
   }
 
@@ -1297,7 +1297,7 @@ function formatAdminDate(dateStr) {
 }
 
 function copyResumeLink(enquiryId) {
-  const link = 'https://tinyurl.com/fabsurprise-moment?resume=' + enquiryId;
+  const link = 'https://fabsurprisestudio.com/book?resume=' + enquiryId;
   navigator.clipboard.writeText(link).then(function() {
     showToast('Resume link copied! Send it to the client on WhatsApp.');
   }).catch(function() {
@@ -1394,18 +1394,18 @@ async function updateStage(ref) {
       // Show WhatsApp notify option
       const clientPhone = document.querySelector(`#card-${ref} .detail-val`)?.closest('.client-details')?.querySelector('.detail-row:nth-child(4) .detail-val')?.textContent || '';
       const stageMessages = {
-        'Planning': 'Hi [Name], we have just updated your Celebration Journey. There is a new update waiting for you.',
-        'Design': 'Hi [Name], your Celebration Journey has just moved to its next stage. We would love for you to have a look.',
-        'Create': 'Hi [Name], another milestone has just been completed. Your Celebration Journey has been updated.',
-        'Celebrate': 'Hi [Name], today is the day. Everything is in place and our team is taking care of every detail behind the scenes. Take a deep breath and enjoy the experience.',
-        'Preserve': 'Hi [Name], your Celebration Journey has one more update waiting for you.',
-        'Fabmily': 'Hi [Name], thank you for trusting us with something so personal. You are now officially part of the Fabmily. We would love to hear how it went. Please leave us a review here: https://g.page/r/Ca6nTBK3YtBdEBM/review',
+        'Planning': 'Hello [Name], we have just updated your Celebration Journey. There is a new update waiting for you.',
+        'Design': 'Hello [Name], your Celebration Journey has just moved to its next stage. We would love for you to have a look.',
+        'Create': 'Hello [Name], another milestone has just been completed. Your Celebration Journey has been updated.',
+        'Celebrate': 'Hello [Name], today is the day. Everything is in place and our team is taking care of every detail behind the scenes. Take a deep breath and enjoy the experience.',
+        'Preserve': 'Hello [Name], your Celebration Journey has one more update waiting for you.',
+        'Fabmily': 'Hello [Name], thank you for trusting us with something so personal. You are now officially part of the Fabmily. We would love to hear how it went. Please leave us a review here: https://g.page/r/Ca6nTBK3YtBdEBM/review',
       };
-      const journeyUrl = `https://fabsurprise.github.io/fabsurprise-onboarding/fabsurprise-journey.html?ref=${ref}`;
+      const journeyUrl = `https://fabsurprisestudio.com/fabsurprise-journey.html?ref=${ref}`;
       const clientFirstName = (document.querySelector(`#card-${ref} .client-card-name`)?.textContent || '').split(' ')[0] || '';
       const rawMsg = stageMessages[newStage] || 'Your celebration journey has been updated.';
       const stageMsg = rawMsg.replace('[Name]', clientFirstName);
-      const waText = encodeURIComponent(`Hi! ${stageMsg} ${newStage !== 'Fabmily' ? journeyUrl : ''}`);
+      const waText = encodeURIComponent(`${stageMsg} ${newStage !== 'Fabmily' ? journeyUrl : ''}`);
       // Show notify button
       const existingNotify = document.getElementById(`notify-${ref}`);
       if (existingNotify) existingNotify.remove();
